@@ -1,4 +1,10 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
+
+export const cn = (...inputs: ClassValue[]) => {
+    return twMerge(clsx(inputs));
+};
 
 export const slugify = (str: string) => {
     return String(str)

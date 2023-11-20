@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import DrawerContextProvider from "@/contexts/DrawerContext";
 import Cart from "@/components/Cart";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +22,19 @@ export default function RootLayout({
 }) {
     return (
         <html lang="fr">
-            <DrawerContextProvider>
-                <body className={inter.className}>
-                    <Navbar />
-                    <main className="container mx-auto">
-                        <Toaster duration={6000} richColors />
-                        <Cart />
-                        {children}
-                    </main>
-                    <Footer />
-                </body>
-            </DrawerContextProvider>
+            <body className={inter.className}>
+                <ThemeProvider attribute="class" defaultTheme="system">
+                    <AuthProvider>
+                        <Navbar />
+                        <main className="container mx-auto">
+                            <Toaster duration={6000} richColors />
+                            <Cart />
+                            {children}
+                        </main>
+                        <Footer />
+                    </AuthProvider>
+                </ThemeProvider>
+            </body>
         </html>
     );
 }
