@@ -1,7 +1,13 @@
+import ProductDrawer from "@/components/administration/ProductDrawer";
 import React from "react";
 
 const Administration = () => {
-    return <div>Administration</div>;
+    return (
+        <>
+            <ProductDrawer />
+            <div>Administration</div>
+        </>
+    );
 };
 
 export default Administration;

@@ -1,4 +1,4 @@
-import Product from "@/models/Product";
+import Product from "@/models/product";
 import connectDB from "@/lib/connectdb";
 import { NextResponse } from "next/server";
 
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     try {
         await connectDB();
 
-        const body = request.json();
+        const body = await request.json();
 
         await Product.create(body);
         return NextResponse.json(

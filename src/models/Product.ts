@@ -17,11 +17,11 @@ const ProductSchema = new mongoose.Schema(
         },
         price: { type: Number, min: 0, max: 500000, required: true },
         salePrice: { type: Number, min: 0, max: 500000 },
-        quanity: { type: Number, min: 0, max: 128, required: true },
+        quantity: { type: Number, min: 0, max: 128, required: true },
         priority: { type: Number, default: 0, min: 0, max: 5000 },
         images: { type: [String], maxLength: 256, required: true },
         description: { type: String, maxLength: 2048, required: true },
-        hidden: { type: Boolean, default: false },
+        isHidden: { type: Boolean, default: false },
         hideWhenOutOfStock: { type: Boolean, default: false },
     },
     { timestamps: true }
