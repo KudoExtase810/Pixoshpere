@@ -1,11 +1,13 @@
 "use client";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import UnderlineExt from "@tiptap/extension-underline";
 
 import {
     Bold,
     Strikethrough,
     Italic,
+    Underline,
     List,
     ListOrdered,
     Heading2,
@@ -22,11 +24,11 @@ interface props {
 
 const TextEditor = ({ onChange, description }: props) => {
     const editor = useEditor({
-        extensions: [StarterKit.configure()],
+        extensions: [StarterKit.configure(), UnderlineExt],
         content: description,
         editorProps: {
             attributes: {
-                class: "rounded-md min-h-[250px] border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition",
+                class: "rounded-md min-h-[250px] border border-input bg-background p-3 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition",
             },
         },
         onUpdate({ editor }) {
@@ -34,69 +36,61 @@ const TextEditor = ({ onChange, description }: props) => {
             toast(editor.getHTML());
         },
     });
+
+    const togglesData = [
+        {
+            type: "heading",
+            icon: <Heading2 size={18} />,
+            action: () =>
+                editor?.chain().focus().toggleHeading({ level: 2 }).run(),
+        },
+        {
+            type: "bold",
+            icon: <Bold size={18} />,
+            action: () => editor?.chain().focus().toggleBold().run(),
+        },
+        {
+            type: "underline",
+            icon: <Underline size={18} />,
+            action: () => editor?.chain().focus().toggleUnderline().run(),
+        },
+        {
+            type: "italic",
+            icon: <Italic size={18} />,
+            action: () => editor?.chain().focus().toggleItalic().run(),
+        },
+        {
+            type: "strike",
+            icon: <Strikethrough size={18} />,
+            action: () => editor?.chain().focus().toggleStrike().run(),
+        },
+        {
+            type: "bulletList",
+            icon: <List size={18} />,
+            action: () => editor?.chain().focus().toggleBulletList().run(),
+        },
+        {
+            type: "orderedList",
+            icon: <ListOrdered size={18} />,
+            action: () => editor?.chain().focus().toggleOrderedList().run(),
+        },
+    ];
+
     return (
         <div className="flex flex-col justify-stretch gap-1.5">
-            <div className="border border-input bg-transparent rounded-md p-1 w-full">
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("heading")}
-                    onPressedChange={() =>
-                        editor
-                            ?.chain()
-                            .focus()
-                            .toggleHeading({ level: 2 })
-                            .run()
-                    }
-                >
-                    <Heading2 className="h-4 w-4" />{" "}
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("bold")}
-                    onPressedChange={() =>
-                        editor?.chain().focus().toggleBold().run()
-                    }
-                >
-                    <Bold className="h-4 w-4" />{" "}
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("italic")}
-                    onPressedChange={() =>
-                        editor?.chain().focus().toggleItalic().run()
-                    }
-                >
-                    <Italic className="h-4 w-4" />{" "}
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("strike")}
-                    onPressedChange={() =>
-                        editor?.chain().focus().toggleStrike().run()
-                    }
-                >
-                    <Strikethrough className="h-4 w-4" />{" "}
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("bulletList")}
-                    onPressedChange={() =>
-                        editor?.chain().focus().toggleBulletList().run()
-                    }
-                >
-                    <List className="h-4 w-4" />{" "}
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor?.isActive("orderedList")}
-                    onPressedChange={() =>
-                        editor?.chain().focus().toggleOrderedList().run()
-                    }
-                >
-                    <ListOrdered className="h-4 w-4" />{" "}
-                </Toggle>
+            <div className="flex gap-0.5 border border-input bg-transparent rounded-md p-1">
+                {togglesData.map((toggle, idx) => (
+                    <Toggle
+                        key={idx}
+                        size="sm"
+                        pressed={editor?.isActive(toggle.type)}
+                        onPressedChange={toggle.action}
+                    >
+                        {toggle.icon}
+                    </Toggle>
+                ))}
             </div>
-            <EditorContent editor={editor} />
+            <EditorContent className="tiptap" editor={editor} />
         </div>
     );
 };

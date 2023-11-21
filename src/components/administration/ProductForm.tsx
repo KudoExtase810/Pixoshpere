@@ -20,6 +20,7 @@ import { notifyError, notifySuccess, slugify } from "@/lib/utils";
 
 import axios, { isAxiosError } from "axios";
 import TextEditor from "./TextEditor";
+import { useState } from "react";
 
 const formSchema = z.object({
     title: z.string().min(6, "Ce champ doit comporter au moins 6 caractères."),
@@ -41,7 +42,8 @@ const formSchema = z.object({
 });
 
 const ProductForm = () => {
-    // 1. Define your form.
+    const [images, setImages] = useState<FileList | null>(null);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -62,7 +64,7 @@ const ProductForm = () => {
             const newProduct = {
                 ...values,
                 slug: slugify(values.title),
-                images: undefined,
+                images,
             };
             const res = await axios.post("/api/products", newProduct);
             notifySuccess("Produit ajouté avec succès.");
@@ -79,7 +81,9 @@ const ProductForm = () => {
                     name="title"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Titre</FormLabel>
+                            <FormLabel>
+                                Titre <span className="text-red-600">*</span>
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     placeholder="Apple MacBook Pro"
@@ -95,7 +99,9 @@ const ProductForm = () => {
                     name="price"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Prix</FormLabel>
+                            <FormLabel>
+                                Prix <span className="text-red-600">*</span>
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -137,7 +143,9 @@ const ProductForm = () => {
                     name="quantity"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Quantité</FormLabel>
+                            <FormLabel>
+                                Quantité <span className="text-red-600">*</span>
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -155,7 +163,9 @@ const ProductForm = () => {
                     name="priority"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Priorité</FormLabel>
+                            <FormLabel>
+                                Priorité <span className="text-red-600">*</span>
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -171,11 +181,32 @@ const ProductForm = () => {
                     )}
                 />
                 <FormField
+                    name="images"
+                    render={() => (
+                        <FormItem>
+                            <FormLabel>
+                                Images <span className="text-red-600">*</span>
+                            </FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={(e) => setImages(e.target.files)}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Description</FormLabel>
+                            <FormLabel>
+                                Description{" "}
+                                <span className="text-red-600">*</span>
+                            </FormLabel>
                             <FormControl>
                                 <TextEditor
                                     description={field.value}

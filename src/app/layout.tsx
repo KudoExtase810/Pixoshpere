@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+import "@/styles/tiptap.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Cart from "@/components/Cart";
@@ -27,7 +28,7 @@ export default function RootLayout({
                     <AuthProvider>
                         <Navbar />
                         <main className="container mx-auto">
-                            <Toaster duration={6000} richColors />
+                            <Toaster duration={7500} richColors />
                             <Cart />
                             {children}
                         </main>
