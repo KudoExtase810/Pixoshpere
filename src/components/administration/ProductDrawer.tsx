@@ -12,7 +12,7 @@ const ProductDrawer = () => {
     return (
         <Sheet>
             <SheetTrigger>Open</SheetTrigger>
-            <SheetContent className="md:min-w-[640px] lg:min-w-[768px] overflow-y-auto">
+            <SheetContent className="max-[500px]:px-3 min-w-[310px] md:min-w-[640px] lg:min-w-[768px] overflow-y-auto">
                 <SheetHeader className="mb-4">
                     <SheetTitle>Ajouter un produit</SheetTitle>
                     <SheetDescription>

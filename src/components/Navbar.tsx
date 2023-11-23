@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
@@ -43,7 +44,7 @@ const Navbar = () => {
                             <Input
                                 placeholder="Search for products..."
                                 type="text"
-                                className="bg-transparent"
+                                className="bg-white w-80"
                             />
                             <Search
                                 size={19}
@@ -65,7 +66,11 @@ const Navbar = () => {
                         <span className="sr-only">Toggle theme</span>
                     </Button>
                     {isAdmin ? (
-                        <Button variant="ghost" className="px-2">
+                        <Button
+                            variant="ghost"
+                            className="px-2"
+                            onClick={() => signOut()}
+                        >
                             <LogOut className="text-zinc-900" />
                         </Button>
                     ) : (

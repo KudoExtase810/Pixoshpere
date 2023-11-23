@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -14,29 +15,60 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+
 import { notifyError, notifySuccess, slugify } from "@/lib/utils";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
 import axios, { isAxiosError } from "axios";
+
 import TextEditor from "./TextEditor";
-import { useState } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 
 const formSchema = z.object({
-    title: z.string().min(6, "Ce champ doit comporter au moins 6 caractères."),
-    price: z.coerce.number({
-        invalid_type_error: "Ce champ doit être un nombre",
-    }),
+    title: z
+        .string()
+        .min(6, "Le titre doit comporter au moins 6 caractères")
+        .max(64, "Le titre ne peut pas dépasser 64 caractères"),
+    price: z.coerce
+        .number({
+            invalid_type_error: "Ce champ doit être un nombre",
+        })
+        .min(0, "Le prix doit être supérieur ou égal à zéro")
+        .max(500000, "Le prix ne peut pas dépasser 500000"),
     salePrice: z.coerce
         .number({ invalid_type_error: "Ce champ doit être un nombre" })
+        .min(0, "Le prix en promotion doit être supérieur ou égal à zéro")
+        .max(500000, "Le prix en promotion ne peut pas dépasser 500000")
         .optional(),
-    quantity: z.coerce.number({
-        invalid_type_error: "Ce champ doit être un nombre",
-    }),
-    priority: z.coerce.number({
-        invalid_type_error: "Ce champ doit être un nombre",
-    }),
-    description: z.string(),
+    category: z
+        .string()
+        .min(2, "Ce champ est obligatoire")
+        .max(36, "Le titre ne peut pas dépasser 36 caractères"),
+    quantity: z.coerce
+        .number({
+            invalid_type_error: "Ce champ doit être un nombre",
+        })
+        .min(0, "La quantité doit être supérieure ou égale à zéro")
+        .max(500, "La quantité ne peut pas dépasser 500"),
+    priority: z.coerce
+        .number({
+            invalid_type_error: "Ce champ doit être un nombre",
+        })
+        .min(0, "La priorité doit être supérieure ou égale à zéro")
+        .max(2500, "La priorité ne peut pas dépasser 2500"),
+    description: z
+        .string()
+        .min(36, "La description doit comporter au moins 36 caractères")
+        .max(2048, "La description ne peut pas dépasser 2048 caractères"),
     isHidden: z.boolean(),
     hideWhenOutOfStock: z.boolean(),
 });
@@ -50,6 +82,7 @@ const ProductForm = () => {
             title: "",
             price: undefined,
             salePrice: undefined,
+            category: "",
             quantity: 1,
             priority: 0,
             description: "",
@@ -58,15 +91,30 @@ const ProductForm = () => {
         },
     });
 
-    // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
+            if (values.salePrice && values.price <= values.salePrice)
+                return notifyError(
+                    "Le prix en promotion ne peut pas être supérieur ou égal au prix normal."
+                );
+
+            if (!images?.length)
+                return notifyError("Veuillez ajouter au moins 1 image.");
+            // If we get to this part it means that all data is valid
+            // we can now upload the images to cloudinary
+
+            const imageData = [];
+            for (let i = 0; i < images.length; i++) {
+                const data = await uploadToCloudinary(images[i]);
+                imageData.push(data);
+            }
+
             const newProduct = {
                 ...values,
                 slug: slugify(values.title),
-                images,
+                images: imageData,
             };
-            const res = await axios.post("/api/products", newProduct);
+            await axios.post("/api/products", newProduct);
             notifySuccess("Produit ajouté avec succès.");
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
@@ -94,6 +142,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="price"
@@ -117,6 +166,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="salePrice"
@@ -138,6 +188,40 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
+                <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Catégorie</FormLabel>
+                            <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                            >
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Choisissez une catégorie" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="m@example.com">
+                                        m@example.com
+                                    </SelectItem>
+                                    <SelectItem value="m@google.com">
+                                        m@google.com
+                                    </SelectItem>
+                                    <SelectItem value="m@support.com">
+                                        m@support.com
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <FormField
                     control={form.control}
                     name="quantity"
@@ -158,6 +242,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="priority"
@@ -180,6 +265,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     name="images"
                     render={() => (
@@ -198,6 +284,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="description"
@@ -217,6 +304,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="isHidden"
@@ -234,6 +322,7 @@ const ProductForm = () => {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
                     name="hideWhenOutOfStock"
@@ -255,7 +344,17 @@ const ProductForm = () => {
                     )}
                 />
 
-                <Button type="submit">Publier le produit</Button>
+                <Button
+                    className="w-40"
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                >
+                    {form.formState.isSubmitting ? (
+                        <LoadingSpinner />
+                    ) : (
+                        "Publier le produit"
+                    )}
+                </Button>
             </form>
         </Form>
     );
