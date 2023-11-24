@@ -8,6 +8,8 @@ import Cart from "@/components/Cart";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
+import ProductDrawer from "@/components/administration/ProductDrawer";
+import DrawerContextProvider from "@/contexts/DrawerContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,13 +28,16 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ThemeProvider attribute="class" defaultTheme="system">
                     <AuthProvider>
-                        <Navbar />
-                        <main className="container mx-auto">
-                            <Toaster duration={7500} richColors />
-                            <Cart />
-                            {children}
-                        </main>
-                        <Footer />
+                        <DrawerContextProvider>
+                            <Navbar />
+                            <main className="container mx-auto">
+                                <Toaster duration={7500} richColors />
+                                <Cart />
+                                <ProductDrawer />
+                                {children}
+                            </main>
+                            <Footer />
+                        </DrawerContextProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </body>

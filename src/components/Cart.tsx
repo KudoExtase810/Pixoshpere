@@ -1,16 +1,17 @@
+"use client";
 import {
     Sheet,
     SheetContent,
     SheetDescription,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
 } from "@/components/ui/sheet";
+import { useDrawer } from "@/contexts/DrawerContext";
 
 const Cart = () => {
+    const { toggle, isOpen } = useDrawer();
     return (
-        <Sheet>
-            {/* <SheetTrigger>Open</SheetTrigger> */}
+        <Sheet open={isOpen("cart")} onOpenChange={() => toggle("cart")}>
             <SheetContent>
                 <SheetHeader>
                     <SheetTitle>Are you sure absolutely sure?</SheetTitle>

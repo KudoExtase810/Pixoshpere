@@ -29,7 +29,7 @@ const ProductSchema = new mongoose.Schema(
             required: true,
         },
         description: { type: String, maxLength: 2048, required: true },
-        timesSold: { type: Number, default: 0, max: 10000 },
+        sales: { type: Number, default: 0, max: 10000 },
         isHidden: { type: Boolean, default: false },
         hideWhenOutOfStock: { type: Boolean, default: false },
     },

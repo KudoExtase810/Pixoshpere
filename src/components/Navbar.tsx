@@ -1,34 +1,48 @@
 "use client";
-import { LogOut, Moon, Search, ShoppingCart, Sun } from "lucide-react";
+import { LogOut, Moon, Search, ShoppingBag, Sun } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useDrawer } from "@/contexts/DrawerContext";
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
 
+    const { toggle } = useDrawer();
+
     const pathname = usePathname();
     const isAdmin = pathname.includes("administration");
 
-    const links = [
+    const customerLinks = [
         { label: "All", href: "/" },
         { label: "Apparel", href: "/" },
         { label: "Accessories", href: "/" },
     ];
 
+    const adminLinks = [
+        { label: "Dashboard", href: "/administration" },
+        { label: "Products", href: "/administration/products" },
+        { label: "Orders", href: "/administration/orders" },
+    ];
+
+    const relevantLinks = isAdmin ? adminLinks : customerLinks;
+
     return (
         <header className="sticky top-0 py-3.5 bg-neutral-200/50 backdrop-blur text-sm">
             <div className="flex items-center justify-between container">
                 <nav className="flex items-center gap-8">
-                    <div className="uppercase font-bold text-xl font-mono tracking-wider text-zinc-800">
+                    <Link
+                        href="/"
+                        className="uppercase font-bold text-xl font-mono tracking-wider text-zinc-800"
+                    >
                         MS Tech
-                    </div>
+                    </Link>
 
                     <ul className="flex gap-4 text-zinc-500 font-semibold">
-                        {links.map((link) => (
+                        {relevantLinks.map((link) => (
                             <li
                                 key={link.label}
                                 className="hover:text-zinc-700"
@@ -53,8 +67,8 @@ const Navbar = () => {
                         </form>
                     )}
                     <Button
-                        variant="ghost"
-                        className="px-2"
+                        variant={null}
+                        className="px-2 "
                         onClick={() =>
                             theme === "dark"
                                 ? setTheme("light")
@@ -67,15 +81,19 @@ const Navbar = () => {
                     </Button>
                     {isAdmin ? (
                         <Button
-                            variant="ghost"
+                            variant={null}
                             className="px-2"
                             onClick={() => signOut()}
                         >
-                            <LogOut className="text-zinc-900" />
+                            <LogOut />
                         </Button>
                     ) : (
-                        <Button variant="ghost" className="px-2">
-                            <ShoppingCart className="text-zinc-900" />
+                        <Button
+                            variant={null}
+                            className="px-2"
+                            onClick={() => toggle("cart")}
+                        >
+                            <ShoppingBag />
                         </Button>
                     )}
                 </div>
