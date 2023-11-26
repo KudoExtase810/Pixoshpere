@@ -8,8 +8,9 @@ import Cart from "@/components/Cart";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
-import ProductDrawer from "@/components/administration/ProductDrawer";
+import ProductDrawer from "@/components/administration/products/ProductDrawer";
 import DrawerContextProvider from "@/contexts/DrawerContext";
+import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
                                 <Toaster duration={7500} richColors />
                                 <Cart />
                                 <ProductDrawer />
+                                <CategoryDrawer />
                                 {children}
                             </main>
                             <Footer />

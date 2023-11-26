@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { PackagePlus, Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { useDrawer } from "@/contexts/DrawerContext";
 
 interface props {
@@ -17,7 +17,7 @@ interface props {
 }
 
 const Filters = ({ type }: props) => {
-    const { toggle, isOpen } = useDrawer();
+    const { toggle } = useDrawer();
 
     const isControllable = type === "category" || type === "product";
 
@@ -81,7 +81,7 @@ const Filters = ({ type }: props) => {
                         className="hover:text-orange-500"
                         onClick={() => toggle(type)}
                     >
-                        <PackagePlus size={26} />
+                        <Plus size={28} />
                     </Button>
                 )}
             </div>

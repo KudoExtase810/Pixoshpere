@@ -1,25 +1,23 @@
 import connectDB from "@/lib/connectdb";
-import Product from "@/models/product";
+import Category from "@/models/category";
 import { NextResponse } from "next/server";
 
 export async function GET(
     _request: Request,
-    { params }: { params: { slug: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
         await connectDB();
-        const product = await Product.findOne({ slug: params.slug }).populate(
-            "category"
-        );
+        const category = await Category.findById(params.id);
 
-        if (!product) {
+        if (!category) {
             return NextResponse.json(
-                { message: "Product not found." },
+                { message: "Category not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(product, { status: 200 });
+        return NextResponse.json(category, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
@@ -31,17 +29,17 @@ export async function DELETE(
 ) {
     try {
         await connectDB();
-        const product = await Product.findOneAndDelete({ slug: params.slug });
+        const category = await Category.findOneAndDelete({ slug: params.slug });
 
-        if (!product) {
+        if (!category) {
             return NextResponse.json(
-                { message: "Product not found." },
+                { message: "Category not found." },
                 { status: 404 }
             );
         }
 
         return NextResponse.json(
-            { message: "Product deleted successfully" },
+            { message: "Category deleted successfully" },
             { status: 200 }
         );
     } catch (error: any) {

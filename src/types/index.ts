@@ -52,6 +52,7 @@ type User = Base & {
 
 type Category = Base & {
     label: string;
+    productCount?: number;
 };
 
 type Product<T = string | Category> = Base & {
@@ -69,6 +70,7 @@ type Product<T = string | Category> = Base & {
     hideWhenOutOfStock: boolean;
     salePrice?: number;
     category: T;
+    sales: number;
 };
 
 type Order<T1 = string, T2 = string> = Base & {

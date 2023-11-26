@@ -6,7 +6,7 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
-import ProductForm from "@/components/administration/ProductForm";
+import ProductForm from "@/components/administration/products/ProductForm";
 import { useDrawer } from "@/contexts/DrawerContext";
 
 const ProductDrawer = () => {

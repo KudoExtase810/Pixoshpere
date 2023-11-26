@@ -6,7 +6,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import ProductRow from "@/components/administration/ProductRow";
+import ProductRow from "@/components/administration/products/ProductRow";
 
 import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
@@ -58,6 +58,9 @@ const Orders = () => {
     ];
     return (
         <>
+            <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+                Orders
+            </h1>
             <Filters type="order" />
             <div className="border rounded-md">
                 <Table>

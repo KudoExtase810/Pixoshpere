@@ -26,6 +26,7 @@ const Navbar = () => {
         { label: "Dashboard", href: "/administration" },
         { label: "Products", href: "/administration/products" },
         { label: "Orders", href: "/administration/orders" },
+        { label: "Categories", href: "/administration/categories" },
     ];
 
     const relevantLinks = isAdmin ? adminLinks : customerLinks;

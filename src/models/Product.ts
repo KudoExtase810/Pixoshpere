@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Category from "./category";
 const ProductSchema = new mongoose.Schema(
     {
         title: {
@@ -19,7 +20,7 @@ const ProductSchema = new mongoose.Schema(
         salePrice: { type: Number, min: 0, max: 500000 },
         category: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: "Category",
+            ref: Category,
             required: true,
         },
         quantity: { type: Number, min: 0, max: 128, required: true },

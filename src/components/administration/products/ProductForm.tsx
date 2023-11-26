@@ -28,8 +28,8 @@ import { uploadToCloudinary } from "@/lib/cloudinary";
 
 import axios, { isAxiosError } from "axios";
 
-import TextEditor from "./TextEditor";
-import LoadingSpinner from "../LoadingSpinner";
+import TextEditor from "../TextEditor";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const formSchema = z.object({
     title: z
@@ -73,6 +73,7 @@ const formSchema = z.object({
 
 const ProductForm = () => {
     const [images, setImages] = useState<FileList | null>(null);
+    const [allCategories, setAllCategories] = useState<Category[] | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -89,7 +90,16 @@ const ProductForm = () => {
         },
     });
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
+    const fetchCategories = async () => {
+        try {
+            const { data } = await axios.get("/api/categories");
+            setAllCategories(data.categories);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const createProduct = async (values: z.infer<typeof formSchema>) => {
         try {
             if (values.salePrice && values.price <= values.salePrice)
                 return notifyError(
@@ -117,11 +127,14 @@ const ProductForm = () => {
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
         }
-    }
+    };
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form
+                onSubmit={form.handleSubmit(createProduct)}
+                className="space-y-6"
+            >
                 <FormField
                     control={form.control}
                     name="title"
@@ -196,6 +209,9 @@ const ProductForm = () => {
                             <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
+                                onOpenChange={() =>
+                                    allCategories === null && fetchCategories()
+                                }
                             >
                                 <FormControl>
                                     <SelectTrigger>
@@ -203,15 +219,11 @@ const ProductForm = () => {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">
-                                        m@example.com
-                                    </SelectItem>
-                                    <SelectItem value="m@google.com">
-                                        m@google.com
-                                    </SelectItem>
-                                    <SelectItem value="m@support.com">
-                                        m@support.com
-                                    </SelectItem>
+                                    {(allCategories || []).map((category) => (
+                                        <SelectItem value={category._id}>
+                                            {category.label}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
 

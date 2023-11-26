@@ -8,22 +8,24 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, MoreVertical } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
-const ProductRow = ({ invoice }: any) => {
+const ProductRow = ({ product }: { product: Product<Category> }) => {
     return (
         <TableRow>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-rights">{invoice.totalAmount}</TableCell>
-            <TableCell>{invoice.totalAmount}</TableCell>
+            <TableCell className="font-medium">{product.title}</TableCell>
+            <TableCell>{product.category.label}</TableCell>
+            <TableCell>{product.salePrice || product.price}</TableCell>
+            <TableCell className="text-rights">{product.sales}</TableCell>
+            <TableCell>{product.quantity}</TableCell>
             <TableCell>
                 <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        <MoreHorizontal size={20} className="ml-3" />
+                    <DropdownMenuTrigger asChild>
+                        <button>
+                            <MoreHorizontal size={20} className="" />
+                        </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="ml-3">
+                    <DropdownMenuContent className="">
                         <DropdownMenuLabel>
                             Choisissez une action
                         </DropdownMenuLabel>
