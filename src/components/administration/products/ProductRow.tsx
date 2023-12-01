@@ -9,8 +9,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import { useModal } from "@/contexts/ModalContext";
+import { useDrawer } from "@/contexts/DrawerContext";
+import { useActionData } from "@/contexts/ActionContext";
 
 const ProductRow = ({ product }: { product: Product<Category> }) => {
+    const { toggle: toggleModal } = useModal();
+    const { toggle: toggleDrawer } = useDrawer();
+    const { setActionData } = useActionData();
     return (
         <TableRow>
             <TableCell className="font-medium">{product.title}</TableCell>
@@ -26,12 +32,24 @@ const ProductRow = ({ product }: { product: Product<Category> }) => {
                         </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="">
-                        <DropdownMenuLabel>
-                            Choisissez une action
-                        </DropdownMenuLabel>
+                        <DropdownMenuLabel>Choose an action</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Modifier</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onSelect={() => {
+                                setActionData(product);
+                                toggleDrawer("product");
+                            }}
+                        >
+                            Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onSelect={() => {
+                                setActionData(product);
+                                toggleModal("delete");
+                            }}
+                        >
+                            Delete
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </TableCell>

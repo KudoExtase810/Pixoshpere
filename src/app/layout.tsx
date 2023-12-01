@@ -9,8 +9,9 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import ProductDrawer from "@/components/administration/products/ProductDrawer";
-import DrawerContextProvider from "@/contexts/DrawerContext";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
+import ModalContextProvider from "@/contexts/ModalContext";
+import ActionContextProvider from "@/contexts/ActionContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,17 +30,17 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ThemeProvider attribute="class" defaultTheme="system">
                     <AuthProvider>
-                        <DrawerContextProvider>
-                            <Navbar />
-                            <main className="container mx-auto">
-                                <Toaster duration={7500} richColors />
-                                <Cart />
-                                <ProductDrawer />
-                                <CategoryDrawer />
-                                {children}
-                            </main>
-                            <Footer />
-                        </DrawerContextProvider>
+                        <ActionContextProvider>
+                            <ModalContextProvider>
+                                <Navbar />
+                                <main className="container mx-auto">
+                                    <Toaster duration={7500} richColors />
+                                    <Cart />
+                                    {children}
+                                </main>
+                                <Footer />
+                            </ModalContextProvider>
+                        </ActionContextProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </body>

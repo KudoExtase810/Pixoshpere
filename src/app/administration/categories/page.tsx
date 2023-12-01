@@ -10,6 +10,7 @@ import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CategoryRow from "@/components/administration/categories/CategoryRow";
 import axios from "axios";
+import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
 
 const Categories = async ({
     searchParams,
@@ -26,6 +27,7 @@ const Categories = async ({
 
     return (
         <>
+            <CategoryDrawer />
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Categories
             </h1>

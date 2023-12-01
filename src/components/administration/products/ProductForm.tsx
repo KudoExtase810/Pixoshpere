@@ -30,6 +30,7 @@ import axios, { isAxiosError } from "axios";
 
 import TextEditor from "../TextEditor";
 import LoadingSpinner from "../../LoadingSpinner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     title: z
@@ -71,7 +72,13 @@ const formSchema = z.object({
     hideWhenOutOfStock: z.boolean(),
 });
 
-const ProductForm = () => {
+interface props {
+    toggleDrawer: () => void;
+}
+
+const ProductForm = ({ toggleDrawer }: props) => {
+    const router = useRouter();
+
     const [images, setImages] = useState<FileList | null>(null);
     const [allCategories, setAllCategories] = useState<Category[] | null>(null);
 
@@ -122,8 +129,10 @@ const ProductForm = () => {
                 slug: slugify(values.title),
                 images: imageData,
             };
-            await axios.post("/api/products", newProduct);
-            notifySuccess("Produit ajouté avec succès.");
+            const { data } = await axios.post("/api/products", newProduct);
+            notifySuccess(data.message);
+            toggleDrawer();
+            router.refresh();
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
         }

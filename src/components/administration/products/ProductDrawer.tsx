@@ -16,12 +16,12 @@ const ProductDrawer = () => {
         <Sheet open={isOpen("product")} onOpenChange={() => toggle("product")}>
             <SheetContent className="max-[500px]:px-3 min-w-[310px] md:min-w-[640px] lg:min-w-[768px] overflow-y-auto">
                 <SheetHeader className="mb-4">
-                    <SheetTitle>Ajouter un produit</SheetTitle>
+                    <SheetTitle>Add a new product</SheetTitle>
                     <SheetDescription>
-                        Veuillez remplir le formulaire ci-dessous.
+                        Fill in your product's details.
                     </SheetDescription>
                 </SheetHeader>
-                <ProductForm />
+                <ProductForm toggleDrawer={() => toggle("product")} />
             </SheetContent>
         </Sheet>
     );

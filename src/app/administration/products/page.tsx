@@ -11,6 +11,7 @@ import ProductRow from "@/components/administration/products/ProductRow";
 import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import axios from "axios";
+import ProductDrawer from "@/components/administration/products/ProductDrawer";
 
 const Products = async ({
     searchParams,
@@ -27,6 +28,7 @@ const Products = async ({
 
     return (
         <>
+            <ProductDrawer />
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Products
             </h1>

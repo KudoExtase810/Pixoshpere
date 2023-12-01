@@ -24,7 +24,7 @@ const CategoryDrawer = () => {
                         delete your account and remove your data from our
                         servers.
                     </SheetDescription>
-                    <CategoryForm />
+                    <CategoryForm toggleDrawer={() => toggle("category")} />
                 </SheetHeader>
             </SheetContent>
         </Sheet>
