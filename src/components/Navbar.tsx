@@ -6,18 +6,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { useDrawer } from "@/contexts/DrawerContext";
+import { useCart } from "@/contexts/CartContext";
+import { useState } from "react";
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
 
-    const { toggle } = useDrawer();
+    const { open: openCart } = useCart();
 
     const pathname = usePathname();
     const isAdmin = pathname.includes("administration");
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     const customerLinks = [
-        { label: "All", href: "/" },
+        { label: "All", href: "/products" },
         { label: "Apparel", href: "/" },
         { label: "Accessories", href: "/" },
     ];
@@ -32,12 +35,12 @@ const Navbar = () => {
     const relevantLinks = isAdmin ? adminLinks : customerLinks;
 
     return (
-        <header className="sticky top-0 py-3.5 bg-neutral-200/50 backdrop-blur text-sm">
+        <header className="sticky top-0 py-3.5 bg-accent/70 backdrop-blur text-sm z-50">
             <div className="flex items-center justify-between container">
                 <nav className="flex items-center gap-8">
                     <Link
                         href="/"
-                        className="uppercase font-bold text-xl font-mono tracking-wider text-zinc-800"
+                        className="uppercase font-bold text-xl font-mono tracking-wider text-primary/95"
                     >
                         MS Tech
                     </Link>
@@ -59,17 +62,21 @@ const Navbar = () => {
                             <Input
                                 placeholder="Search for products..."
                                 type="text"
-                                className="bg-white w-80"
+                                className="bg-white w-80 border-neutral-300 dark:border-neutral-400"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <Search
-                                size={19}
+                            <Link
+                                href={`/products?q=${searchQuery}`}
                                 className="absolute top-2.5 right-2.5 text-zinc-700"
-                            />
+                            >
+                                <Search size={19} />
+                            </Link>
                         </form>
                     )}
                     <Button
                         variant={null}
-                        className="px-2 "
+                        className="px-2"
                         onClick={() =>
                             theme === "dark"
                                 ? setTheme("light")
@@ -91,10 +98,13 @@ const Navbar = () => {
                     ) : (
                         <Button
                             variant={null}
-                            className="px-2"
-                            onClick={() => toggle("cart")}
+                            className="px-2 relative"
+                            onClick={openCart}
                         >
                             <ShoppingBag />
+                            <span className="absolute right-1 bottom-0 bg-primary text-primary-foreground font-semibold w-[2ch] text-xs rounded-sm">
+                                2
+                            </span>
                         </Button>
                     )}
                 </div>

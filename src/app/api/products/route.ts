@@ -12,11 +12,16 @@ export async function GET(request: Request) {
         const limit = 10;
         const skip = (page - 1) * limit;
         const query = searchParams.get("q");
+        const category = searchParams.get("category");
         const sortBy = searchParams.get("sortBy");
 
         const queryObj: any = {};
         if (query) {
             queryObj.title = { $regex: query, $options: "i" };
+        }
+
+        if (category) {
+            queryObj.category = category;
         }
 
         const sortObj: any = {};
@@ -28,9 +33,8 @@ export async function GET(request: Request) {
             .limit(limit)
             .skip(skip)
             .sort(sortObj)
-            .populate("category");
-
-        console.log(products);
+            .populate("category")
+            .select("-description");
 
         const totalDocs = await Product.countDocuments(queryObj);
 

@@ -12,6 +12,7 @@ import ProductDrawer from "@/components/administration/products/ProductDrawer";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
 import ModalContextProvider from "@/contexts/ModalContext";
 import ActionContextProvider from "@/contexts/ActionContext";
+import CartContextProvider from "@/contexts/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,15 +32,17 @@ export default function RootLayout({
                 <ThemeProvider attribute="class" defaultTheme="system">
                     <AuthProvider>
                         <ActionContextProvider>
-                            <ModalContextProvider>
-                                <Navbar />
-                                <main className="container mx-auto">
-                                    <Toaster duration={7500} richColors />
-                                    <Cart />
-                                    {children}
-                                </main>
-                                <Footer />
-                            </ModalContextProvider>
+                            <CartContextProvider>
+                                <ModalContextProvider>
+                                    <Navbar />
+                                    <main className="container mx-auto">
+                                        <Toaster duration={7500} richColors />
+                                        <Cart />
+                                        {children}
+                                    </main>
+                                    <Footer />
+                                </ModalContextProvider>
+                            </CartContextProvider>
                         </ActionContextProvider>
                     </AuthProvider>
                 </ThemeProvider>

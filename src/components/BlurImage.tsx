@@ -10,15 +10,14 @@ const BlurImage = ({ src, alt }: { src: string; alt: string }) => {
             <Image
                 alt={alt}
                 src={src}
-                layout="fill"
-                objectFit="cover"
+                fill
                 className={cn(
-                    "duration-700 ease-in-out group-hover:opacity-75",
+                    "duration-700 ease-in-out group-hover:opacity-75 object-cover",
                     isLoading
                         ? "scale-110 blur-2xl grayscale"
                         : "scale-100 blur-0 grayscale-0"
                 )}
-                onLoadingComplete={() => setLoading(false)}
+                onLoad={() => setLoading(false)}
             />
         </div>
     );
