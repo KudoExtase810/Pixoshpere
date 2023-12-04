@@ -13,16 +13,13 @@ const Products = async ({
 }: {
     searchParams: { [key: string]: string | undefined };
 }) => {
-    const {
-        data: { products },
-    } = await axios.get(`${process.env.CLIENT_URL}/api/products?`);
     const query = searchParams.q || "";
     const category = searchParams.category || "";
     const sortBy = searchParams.sortBy || "";
     const page = searchParams.page || 1;
     const { data } = (await axios.get(
         `${process.env.CLIENT_URL}/api/products?q=${query}&category=${category}&sortBy=${sortBy}&page=${page}`
-    )) as { data: { products: Product<Category>[]; totalDocs: number } };
+    )) as { data: { products: Product[]; totalDocs: number } };
     return (
         <>
             <h1 className="page-title">All products</h1>
@@ -44,7 +41,10 @@ const Products = async ({
                     ...data.products,
                 ].map((product) => (
                     <li>
-                        <Link href={product.slug} className="group">
+                        <Link
+                            href={`/products/${product.slug}`}
+                            className="group"
+                        >
                             <BlurImage
                                 src={product.images[0].url}
                                 alt={product.title}

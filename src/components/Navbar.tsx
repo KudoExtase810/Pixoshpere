@@ -12,7 +12,7 @@ import { useState } from "react";
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
 
-    const { open: openCart } = useCart();
+    const { open: openCart, itemsCount } = useCart();
 
     const pathname = usePathname();
     const isAdmin = pathname.includes("administration");
@@ -35,7 +35,7 @@ const Navbar = () => {
     const relevantLinks = isAdmin ? adminLinks : customerLinks;
 
     return (
-        <header className="sticky top-0 py-3.5 bg-accent/70 backdrop-blur text-sm z-50">
+        <header className="sticky top-0 py-3.5 bg-neutral-200/60 dark:bg-black/60 backdrop-blur text-sm z-50">
             <div className="flex items-center justify-between container">
                 <nav className="flex items-center gap-8">
                     <Link
@@ -62,7 +62,7 @@ const Navbar = () => {
                             <Input
                                 placeholder="Search for products..."
                                 type="text"
-                                className="bg-white w-80 border-neutral-300 dark:border-neutral-400"
+                                className="bg-white w-80 border-neutral-300 dark:border-neutral-500"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -103,7 +103,7 @@ const Navbar = () => {
                         >
                             <ShoppingBag />
                             <span className="absolute right-1 bottom-0 bg-primary text-primary-foreground font-semibold w-[2ch] text-xs rounded-sm">
-                                2
+                                {itemsCount}
                             </span>
                         </Button>
                     )}

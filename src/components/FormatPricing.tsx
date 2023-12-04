@@ -10,11 +10,11 @@ const FormatPricing = ({
     const { currency } = Settings;
     const formatted = salePrice ? (
         <>
-            <span className="line-through text-accent text-sm">
+            <span className="line-through text-neutral-500 text-sm">
                 {currency}
                 {price}
             </span>{" "}
-            <span className="text-sm">
+            <span className="text-sm text-primary">
                 {currency}
                 {salePrice}
             </span>

@@ -13,7 +13,7 @@ import { Trash } from "lucide-react";
 import Link from "next/link";
 
 const Cart = () => {
-    const { toggle, isOpen } = useCart();
+    const { toggle, isOpen, cartItems, removeItem, total } = useCart();
 
     return (
         <Sheet open={isOpen} onOpenChange={toggle}>
@@ -28,12 +28,12 @@ const Cart = () => {
                 </SheetHeader>
                 <div className="mt-6">
                     <ul className="divide-y border-y">
-                        {[1, 2, 3].map((item) => (
-                            <li className="flex py-4 gap-4">
+                        {cartItems.map((item) => (
+                            <li key={item._id} className="flex py-4 gap-4">
                                 <div className="w-32">
                                     <BlurImage
-                                        alt="f"
-                                        src="https://res.cloudinary.com/duqkgxds7/image/upload/v1701435505/kvzetrdqjwkvi64cwwvs.jpg"
+                                        alt={item.title}
+                                        src={item.images[0].url}
                                     />
                                 </div>
                                 <div className="flex flex-col justify-between w-full py-1">
@@ -41,18 +41,26 @@ const Cart = () => {
                                         <div>
                                             <h2 className="font-bold">
                                                 <Link href={"/"}>
-                                                    Saleor Card
+                                                    {item.title}
                                                 </Link>
                                             </h2>
                                             <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
-                                                Gift cards
+                                                {item.category.label}
                                             </p>
                                         </div>
-                                        <p className="font-semibold">$50.00</p>
+                                        <p className="font-semibold">
+                                            $
+                                            {(
+                                                item.salePrice || item.price
+                                            ).toFixed(2)}
+                                        </p>
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <p className="font-semibold">Qty: 1</p>
+                                        <p className="font-semibold">
+                                            Qty: {item.quantityInCart}
+                                        </p>
                                         <Button
+                                            onClick={() => removeItem(item._id)}
                                             variant="ghost"
                                             className="text-red-500 hover:text-red-600"
                                         >
@@ -66,17 +74,17 @@ const Cart = () => {
                             </li>
                         ))}
                     </ul>
-                    <div className="mt-12 flex justify-between items-center bg-accent/40 rounded-md border p-5">
+                    <div className="mt-12 flex justify-between items-center bg-accent/60 dark:bg-accent/40 rounded-md border p-5">
                         <div>
                             <p className="font-semibold mb-1.5">Your total</p>
                             <p className="text-sm text-neutral-500 dark:text-neutral-400">
                                 The total may change in the next step.
                             </p>
                         </div>
-                        <span className="font-medium">$68.00</span>
+                        <span className="font-medium">${total.toFixed(2)}</span>
                     </div>
                     <Button
-                        className="mt-8 w-full py-6 font-semibold text-[15px]"
+                        className="mt-8 w-full py-6 font-semibold text-base"
                         asChild
                     >
                         <Link href="/checkout">Checkout</Link>

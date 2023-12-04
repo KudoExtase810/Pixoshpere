@@ -55,7 +55,7 @@ type Category = Base & {
     productCount?: number;
 };
 
-type Product<T = string | Category> = Base & {
+type Product = Base & {
     title: string;
     slug: string;
     price: number;
@@ -69,7 +69,7 @@ type Product<T = string | Category> = Base & {
     isHidden: boolean;
     hideWhenOutOfStock: boolean;
     salePrice?: number;
-    category: T;
+    category: Category;
     sales: number;
 };
 

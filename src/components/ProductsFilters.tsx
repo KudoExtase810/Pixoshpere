@@ -48,11 +48,8 @@ const ProductsFilters = () => {
                         onChange={(e) => setQuery(e.target.value)}
                         value={query}
                     />
-                    <button>
-                        <Search
-                            size={20}
-                            className="absolute right-2.5 top-2.5"
-                        />
+                    <button className="absolute right-2.5 top-2.5">
+                        <Search size={20} />
                     </button>
                 </div>
                 <Select onValueChange={(value) => setCategory(value)}>
