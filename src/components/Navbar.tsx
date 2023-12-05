@@ -1,13 +1,12 @@
 "use client";
-import { LogOut, Moon, Search, ShoppingBag, Sun } from "lucide-react";
+import { LogOut, Moon, ShoppingBag, Sun } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useCart } from "@/contexts/CartContext";
-import { useState } from "react";
+import TopSearch from "./TopSearch";
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
@@ -16,8 +15,6 @@ const Navbar = () => {
 
     const pathname = usePathname();
     const isAdmin = pathname.includes("administration");
-
-    const [searchQuery, setSearchQuery] = useState("");
 
     const customerLinks = [
         { label: "All", href: "/products" },
@@ -57,23 +54,7 @@ const Navbar = () => {
                     </ul>
                 </nav>
                 <div className="flex items-center gap-6">
-                    {!isAdmin && (
-                        <form className="relative">
-                            <Input
-                                placeholder="Search for products..."
-                                type="text"
-                                className="bg-white w-80 border-neutral-300 dark:border-neutral-500"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <Link
-                                href={`/products?q=${searchQuery}`}
-                                className="absolute top-2.5 right-2.5 text-zinc-700"
-                            >
-                                <Search size={19} />
-                            </Link>
-                        </form>
-                    )}
+                    {!isAdmin && <TopSearch />}
                     <Button
                         variant={null}
                         className="px-2"

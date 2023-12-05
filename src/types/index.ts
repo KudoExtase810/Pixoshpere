@@ -30,6 +30,7 @@
 //     hideWhenOutOfStock: boolean;
 //     salePrice?: number;
 //     category: string | Category;
+//     sales: string;
 // };
 
 // type Order = {

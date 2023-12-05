@@ -3,6 +3,7 @@ import axios from "axios";
 import settings from "@/settings/index.json";
 import { Button } from "@/components/ui/button";
 import { Check, CheckCircle, X } from "lucide-react";
+import AddToCart from "@/components/AddToCart";
 
 const Product = async ({ params }: { params: { slug: string } }) => {
     const { data: product } = (await axios.get(
@@ -35,8 +36,9 @@ const Product = async ({ params }: { params: { slug: string } }) => {
                     )}
                 </div>
                 <div
+                    className="max-w-[100vw] break-words"
                     dangerouslySetInnerHTML={{
-                        __html: String(product.description.replace(`"`, "")),
+                        __html: product.description,
                     }}
                 ></div>
                 <div className="flex items-center gap-1.5 mt-4 font-medium text-neutral-600 dark:text-neutral-500">
@@ -50,12 +52,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
                         </>
                     )}
                 </div>
-                <Button
-                    className="py-6 px-8 text-base mt-8"
-                    disabled={product.quantity === 0}
-                >
-                    Add to Cart
-                </Button>
+                <AddToCart product={product} className="mt-8" />
             </div>
         </div>
     );

@@ -3,6 +3,7 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { notifyError, notifySuccess } from "@/lib/utils";
+import useLocalStorageState from "use-local-storage-state";
 
 type CartContext = {
     isOpen: boolean;
@@ -39,7 +40,10 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(close, [pathname]);
 
     // Cart logic
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+    const [cartItems, setCartItems] = useLocalStorageState("myshop-cart", {
+        defaultValue: [] as CartItem[],
+    });
 
     const inCart = (itemID: string) => {
         return cartItems.findIndex((item) => item._id === itemID) !== -1;
@@ -52,7 +56,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
             );
             return;
         }
-        setCartItems([...cartItems, { ...item, quantityInCart: 0 }]);
+        setCartItems([...cartItems, { ...item, quantityInCart: 1 }]);
         notifySuccess("Item added to cart.");
     };
 

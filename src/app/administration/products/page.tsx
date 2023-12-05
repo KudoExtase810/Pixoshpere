@@ -24,7 +24,7 @@ const Products = async ({
 
     const { data } = (await axios.get(
         `${process.env.CLIENT_URL}/api/products?q=${q}&sortBy=${sortBy}&page=${page}`
-    )) as { data: { products: Product<Category>[]; totalDocs: number } };
+    )) as { data: { products: Product[]; totalDocs: number } };
 
     return (
         <>
