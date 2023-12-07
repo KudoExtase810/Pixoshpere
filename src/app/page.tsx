@@ -1,6 +1,6 @@
 import BlurImage from "@/components/BlurImage";
 import FormatPricing from "@/components/FormatPricing";
-import SingleProduct from "@/components/SingleProduct";
+import SingleProduct from "@/components/customer/SingleProduct";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import Link from "next/link";

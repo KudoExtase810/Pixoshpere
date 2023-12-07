@@ -7,7 +7,7 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
-import BlurImage from "./BlurImage";
+import BlurImage from "../BlurImage";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import Link from "next/link";

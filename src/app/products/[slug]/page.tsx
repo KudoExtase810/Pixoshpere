@@ -3,7 +3,7 @@ import axios from "axios";
 import settings from "@/settings/index.json";
 import { Button } from "@/components/ui/button";
 import { Check, CheckCircle, X } from "lucide-react";
-import AddToCart from "@/components/AddToCart";
+import AddToCart from "@/components/customer/AddToCart";
 
 const Product = async ({ params }: { params: { slug: string } }) => {
     const { data: product } = (await axios.get(

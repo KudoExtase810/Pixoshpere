@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import BlurImage from "./BlurImage";
+import BlurImage from "../BlurImage";
 import settings from "@/settings/index.json";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 // todo: maybe using shadcn's popover here?
 

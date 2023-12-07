@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useCart } from "@/contexts/CartContext";
-import TopSearch from "./TopSearch";
+import TopSearch from "./customer/TopSearch";
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
@@ -53,8 +53,11 @@ const Navbar = () => {
                         ))}
                     </ul>
                 </nav>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-5">
                     {!isAdmin && <TopSearch />}
+                    <Button asChild>
+                        <Link href="/login">Sign In</Link>
+                    </Button>
                     <Button
                         variant={null}
                         className="px-2"

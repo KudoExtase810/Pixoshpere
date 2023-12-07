@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import BlurImage from "@/components/BlurImage";
-import FormatPricing from "./FormatPricing";
+import FormatPricing from "../FormatPricing";
 import { useCart } from "@/contexts/CartContext";
 
 const SingleProduct = ({ product }: { product: Product }) => {
