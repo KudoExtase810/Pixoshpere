@@ -12,35 +12,37 @@ import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { notifyError, notifySuccess } from "@/lib/utils";
+import axios, { isAxiosError } from "axios";
 
 const RegisterForm = () => {
-    const registerSchema = z.object({
+    const signUpSchema = z.object({
         firstname: z.string().min(1).max(36),
         lastname: z.string().min(1).max(36),
         email: z.string().min(1).email().max(128),
+        phone: z.string().min(1).max(10),
         password: z.string().min(1).min(8).max(48),
     });
 
-    type RegisterSchema = z.infer<typeof registerSchema>;
+    type SignUpSchema = z.infer<typeof signUpSchema>;
 
     const router = useRouter();
 
-    const { register, handleSubmit, formState } = useForm<RegisterSchema>({
-        resolver: zodResolver(registerSchema),
+    const { register, handleSubmit, formState } = useForm<SignUpSchema>({
+        resolver: zodResolver(signUpSchema),
     });
 
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
-    const handleSignUp = async (data: RegisterSchema) => {
+    const handleSignUp = async (values: SignUpSchema) => {
         try {
+            await axios.post("/api/auth/sign-up", values);
             notifySuccess(
-                "Please click the confirmation link sent to your email."
+                "Successfully signed up. Check your email to finish the process."
             );
         } catch (error) {
-            // isAuthError(error) && notifyError(error.message);
-            console.log(error);
+            isAxiosError(error) && notifyError(error.response?.data.message);
         }
     };
     return (
@@ -67,6 +69,7 @@ const RegisterForm = () => {
                         {formState.errors.firstname?.message}
                     </span>
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <Label
                         htmlFor="lastname"
@@ -84,6 +87,7 @@ const RegisterForm = () => {
                         {formState.errors.lastname?.message}
                     </span>
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="email" className="leading-normal text-base">
                         Email
@@ -98,6 +102,22 @@ const RegisterForm = () => {
                         {formState.errors.email?.message}
                     </span>
                 </div>
+
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="phone" className="leading-normal text-base">
+                        Phone number
+                    </Label>
+                    <Input
+                        {...register("phone")}
+                        id="phone"
+                        type="tel"
+                        placeholder="0662124899"
+                    />
+                    <span className="text-red-600 text-sm ml-0.5">
+                        {formState.errors.phone?.message}
+                    </span>
+                </div>
+
                 <div className="flex flex-col gap-2">
                     <Label
                         htmlFor="password"

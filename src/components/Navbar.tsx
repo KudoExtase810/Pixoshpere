@@ -31,6 +31,10 @@ const Navbar = () => {
 
     const relevantLinks = isAdmin ? adminLinks : customerLinks;
 
+    // Hide the navbar in these paths
+    const hiddenNavbarPaths = ["/login", "/sign-up"];
+    if (hiddenNavbarPaths.includes(pathname)) return null;
+
     return (
         <header className="sticky top-0 py-3.5 bg-neutral-200/60 dark:bg-black/60 backdrop-blur text-sm z-50">
             <div className="flex items-center justify-between container">

@@ -9,10 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import LoadingSpinner from "../LoadingSpinner";
-import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { notifyError } from "@/lib/utils";
+import { notifyError, notifySuccess } from "@/lib/utils";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
     const loginSchema = z.object({
@@ -33,13 +33,16 @@ const LoginForm = () => {
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
     const handleLogin = async (values: LoginSchema) => {
-        // const supabase = createClient();
-        // const { error } = await supabase.auth.signInWithPassword({
-        //     email: values.email,
-        //     password: values.password,
-        // });
-        // if (error) return notifyError(error.message);
-        toast.success("Successfully logged in.");
+        const res = await signIn("credentials", {
+            ...values,
+            redirect: false,
+        });
+
+        if (res?.error) return notifyError(res.error);
+
+        notifySuccess("Successfully logged in.");
+        // We refresh instead of redirecting because
+        // the server will auto redirect once user is logged in
         router.refresh();
     };
 

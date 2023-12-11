@@ -3,55 +3,60 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
 import BlurImage from "../BlurImage";
 import settings from "@/settings/index.json";
 import LoadingSpinner from "../LoadingSpinner";
-
-// todo: maybe using shadcn's popover here?
+import { useDebouncedCallback } from "use-debounce"; // Import the debouncing hook
 
 const TopSearch = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [foundProducts, setFoundProducts] = useState<Product[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const delayedFetch = setTimeout(() => {
-            if (searchQuery.trim() !== "") {
-                setIsLoading(true);
-                fetchProducts();
-            } else {
-                setFoundProducts([]); // Clear the results when the search query is empty
+    // Use the debounced callback to debounce the search query
+    const debouncedFetchProducts = useDebouncedCallback(
+        async (query: string) => {
+            try {
+                if (query.trim() !== "") {
+                    setIsLoading(true);
+                    const { data } = await axios.get(
+                        `/api/products?q=${query}`
+                    );
+                    setFoundProducts(data.products);
+                } else {
+                    setFoundProducts([]); // Clear the results when the search query is empty
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error(
+                    "Error fetching results in the top-search bar:",
+                    error
+                );
+            } finally {
                 setIsLoading(false);
             }
-        }, 500); // Adjust the delay as needed
+        },
+        500
+    );
 
-        return () => clearTimeout(delayedFetch); // Cleanup the timeout on component unmount or when the search query changes
-    }, [searchQuery]);
-
-    const fetchProducts = async () => {
-        try {
-            const { data } = await axios.get(`/api/products?q=${searchQuery}`);
-            setFoundProducts(data.products);
-        } catch (error) {
-            console.error(
-                "Error fetching results in the top-search bar:",
-                error
-            );
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    // Use the debounced callback on searchQuery change
+    useEffect(() => {
+        debouncedFetchProducts(searchQuery);
+    }, [searchQuery, debouncedFetchProducts]);
 
     return (
-        <div className="relative" onSubmit={(e) => e.preventDefault()}>
-            <Input
-                placeholder="Search for products..."
-                type="text"
-                className="bg-white w-80 border-neutral-300 dark:border-neutral-500 text-zinc-950"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
+        <div className="relative">
+            <form onSubmit={(e) => e.preventDefault()}>
+                {" "}
+                {/* Wrap the input in a form to handle submission */}
+                <Input
+                    placeholder="Search for products..."
+                    type="text"
+                    className="bg-white w-80 border-neutral-300 dark:border-neutral-500 text-zinc-950"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </form>
 
             <Search
                 size={19}

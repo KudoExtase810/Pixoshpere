@@ -5,11 +5,17 @@ import BlurImage from "@/components/BlurImage";
 import FormatPricing from "../FormatPricing";
 import { useCart } from "@/contexts/CartContext";
 
-const SingleProduct = ({ product }: { product: Product }) => {
+const SingleProduct = ({
+    product,
+    className,
+}: {
+    product: Product;
+    className?: React.HTMLAttributes<HTMLDivElement>["className"];
+}) => {
     const { addItem } = useCart();
 
     return (
-        <li>
+        <li className={className}>
             <Link
                 href={product.slug}
                 className="group"

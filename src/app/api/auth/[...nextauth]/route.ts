@@ -2,7 +2,8 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { AuthOptions } from "next-auth";
 import connectDB from "@/lib/connectdb";
-import Admin from "@/models/admin";
+import User from "@/models/user";
+import bcrypt from "bcrypt";
 
 const authOptions = {
     providers: [
@@ -13,11 +14,18 @@ const authOptions = {
                 const { email, password } = credentials;
                 try {
                     await connectDB();
-                    const admin = await Admin.findOne({ email, password });
+                    const user = await User.findOne({ email });
 
-                    if (!admin) throw new Error("Invalid credentials.");
+                    if (!user) throw new Error("Invalid credentials.");
 
-                    return admin;
+                    const isMatch = await bcrypt.compare(
+                        password,
+                        user.password
+                    );
+
+                    if (!isMatch) throw new Error("Invalid credentials.");
+
+                    return user;
                 } catch (error: any) {
                     throw new Error(error.message);
                 }
