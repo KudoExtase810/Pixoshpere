@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 const SignUp = async () => {
     const session = await getServerSession();
-    if (session) redirect("/login");
+    if (session) redirect("/");
 
     return <SignUpForm />;
 };

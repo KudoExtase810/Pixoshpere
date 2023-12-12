@@ -16,8 +16,8 @@ import axios, { isAxiosError } from "axios";
 
 const RegisterForm = () => {
     const signUpSchema = z.object({
-        firstname: z.string().min(1).max(36),
-        lastname: z.string().min(1).max(36),
+        firstName: z.string().min(1).max(36),
+        lastName: z.string().min(1).max(36),
         email: z.string().min(1).email().max(128),
         phone: z.string().min(1).max(10),
         password: z.string().min(1).min(8).max(48),
@@ -60,13 +60,13 @@ const RegisterForm = () => {
                         First name
                     </Label>
                     <Input
-                        {...register("firstname")}
+                        {...register("firstName")}
                         id="firstname"
                         type="text"
                         placeholder="Mohammed Ali"
                     />
                     <span className="text-red-600 text-sm ml-0.5">
-                        {formState.errors.firstname?.message}
+                        {formState.errors.firstName?.message}
                     </span>
                 </div>
 
@@ -78,13 +78,13 @@ const RegisterForm = () => {
                         Last name
                     </Label>
                     <Input
-                        {...register("lastname")}
+                        {...register("lastName")}
                         id="lastname"
                         type="text"
                         placeholder="Mohammed Ali"
                     />
                     <span className="text-red-600 text-sm ml-0.5">
-                        {formState.errors.lastname?.message}
+                        {formState.errors.lastName?.message}
                     </span>
                 </div>
 

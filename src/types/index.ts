@@ -1,46 +1,3 @@
-// type User = {
-//     _id: string;
-//     createdAt: NativeDate,
-//     updatedAt: NativeDate
-//     email: string;
-// };
-
-// type Category = {
-//     _id: string;
-//     createdAt: NativeDate,
-//     updatedAt: NativeDate
-//     label: string;
-// };
-
-// type Product = {
-//     _id: string;
-//     createdAt: NativeDate;
-//     updatedAt: NativeDate;
-//     title: string;
-//     slug: string;
-//     price: number;
-//     quantity: number;
-//     priority: number;
-//     images: {
-//         publicId: string;
-//         url: string;
-//     }[];
-//     description: string;
-//     isHidden: boolean;
-//     hideWhenOutOfStock: boolean;
-//     salePrice?: number;
-//     category: string | Category;
-//     sales: string;
-// };
-
-// type Order = {
-//     _id: string;
-//     createdAt: NativeDate,
-//     updatedAt: NativeDate
-//     products: string[] | Product[];
-//     user: string[] | User[];
-// };
-
 type Base = {
     _id: string;
     createdAt: NativeDate;
@@ -48,7 +5,13 @@ type Base = {
 };
 
 type User = Base & {
+    firstName: string;
+    lastName: string;
     email: string;
+    phone: string;
+    isVerified: string;
+    isAdmin: string;
+    orders: Order[];
 };
 
 type Category = Base & {
@@ -74,7 +37,7 @@ type Product = Base & {
     sales: number;
 };
 
-type Order<T1 = string, T2 = string> = Base & {
-    products: T1[] | Product[];
-    user: T2[] | User[];
+type Order = Base & {
+    products: Product[];
+    status: "pending" | "processing" | "shipped" | "delivered";
 };
