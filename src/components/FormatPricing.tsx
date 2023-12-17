@@ -20,7 +20,7 @@ const FormatPricing = ({
             </span>
         </>
     ) : (
-        <span className="text-sm">
+        <span className="text-sm text-primary">
             {currency}
             {price}
         </span>

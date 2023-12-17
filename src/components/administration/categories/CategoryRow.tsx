@@ -2,15 +2,8 @@
 import dayjs from "dayjs";
 
 import { TableCell, TableRow } from "@/components/ui/table";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const CategoryRow = ({ category }: { category: Category }) => {
     return (
@@ -20,22 +13,19 @@ const CategoryRow = ({ category }: { category: Category }) => {
             <TableCell>
                 {dayjs(category.createdAt).format("DD MMMM YYYY")}
             </TableCell>
-            <TableCell>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <button>
-                            <MoreHorizontal size={20} />
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>
-                            Choisissez une action
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Modifier</DropdownMenuItem>
-                        <DropdownMenuItem>Supprimer</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <TableCell className="flex items-center gap-0.5 ">
+                <Button
+                    variant="ghost"
+                    className="p-1 h-min text-blue-500 hover:text-blue-600"
+                >
+                    <Pencil size={20} />
+                </Button>
+                <Button
+                    variant="ghost"
+                    className="p-1 h-min text-red-500 hover:text-red-600"
+                >
+                    <Trash size={20} />
+                </Button>
             </TableCell>
         </TableRow>
     );

@@ -9,9 +9,8 @@ type User = Base & {
     lastName: string;
     email: string;
     phone: string;
-    isVerified: string;
-    isAdmin: string;
-    orders: Order[];
+    isVerified: boolean;
+    isAdmin: boolean;
 };
 
 type Category = Base & {
@@ -39,5 +38,7 @@ type Product = Base & {
 
 type Order = Base & {
     products: Product[];
-    status: "pending" | "processing" | "shipped" | "delivered";
+    status: "pending" | "processing" | "shipped" | "delivered" | "canceled";
+    paymentMethod: string;
+    customer: User;
 };

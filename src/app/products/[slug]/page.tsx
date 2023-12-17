@@ -7,11 +7,17 @@ import AddToCart from "@/components/customer/AddToCart";
 import SimilarProducts from "@/components/customer/SimilarProducts";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import connectDB from "@/lib/connectdb";
+import Product from "@/models/product";
+import { redirect } from "next/navigation";
 
-const Product = async ({ params }: { params: { slug: string } }) => {
-    const { data: product } = (await axios.get(
-        `${process.env.CLIENT_URL}/api/products/${params.slug}`
-    )) as { data: Product };
+const ProductPage = async ({ params }: { params: { slug: string } }) => {
+    await connectDB();
+    const product = await Product.findOne({ slug: params.slug }).populate(
+        "category"
+    );
+
+    if (!product) redirect("/products");
 
     return (
         <>
@@ -61,7 +67,10 @@ const Product = async ({ params }: { params: { slug: string } }) => {
                             </>
                         )}
                     </div>
-                    <AddToCart product={product} className="mt-8" />
+                    <AddToCart
+                        product={JSON.parse(JSON.stringify(product))}
+                        className="mt-8"
+                    />
                 </div>
             </div>
             <Separator />
@@ -75,4 +84,4 @@ const Product = async ({ params }: { params: { slug: string } }) => {
     );
 };
 
-export default Product;
+export default ProductPage;

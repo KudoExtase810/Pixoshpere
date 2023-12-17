@@ -13,7 +13,7 @@ import { Plus, Search } from "lucide-react";
 import { useDrawer } from "@/contexts/DrawerContext";
 
 interface props {
-    type: "product" | "category" | "order" | "customer";
+    type: "product" | "category" | "order" | "user";
 }
 
 const Filters = ({ type }: props) => {
@@ -38,15 +38,15 @@ const Filters = ({ type }: props) => {
             { label: "X", value: "X" },
             { label: "X", value: "X" },
         ],
-        customer: [
+        user: [
             { label: "X", value: "X" },
             { label: "X", value: "X" },
             { label: "X", value: "X" },
         ],
     };
 
-    const correctTypes = ["product", "category", "order", "customer"];
-    if (!correctTypes.some((correctType) => correctType === type))
+    const correctTypes = ["product", "category", "order", "customer", "user"];
+    if (!correctTypes.includes(type))
         throw new Error(
             "Wrong type or no type prop was passed to the Filters component."
         );

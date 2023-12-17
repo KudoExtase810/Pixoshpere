@@ -19,3 +19,11 @@ export const slugify = (str: string) => {
 
 export const notifySuccess = (message: string) => toast.success(message);
 export const notifyError = (message: string) => toast.error(message);
+
+export const calculateTotal = (products: Product[]) => {
+    let total = 0;
+    products.forEach((product) => {
+        total += product.salePrice || product.price;
+    });
+    return total;
+};

@@ -14,8 +14,6 @@ import ModalContextProvider from "@/contexts/ModalContext";
 import ActionContextProvider from "@/contexts/ActionContext";
 import CartContextProvider from "@/contexts/CartContext";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { Wrench } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,23 +33,15 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                {isAdmin && (
-                    <Link
-                        className="rounded-full p-2.5 bg-orange-600 hover:bg-orange-700 fixed top-24 right-8 transition-colors"
-                        href="/administration"
-                    >
-                        <Wrench size={30} />
-                        <span className="sr-only">
-                            Navigate to the administartion panel
-                        </span>
-                    </Link>
-                )}
                 <ThemeProvider attribute="class" defaultTheme="system">
                     <AuthProvider>
                         <ActionContextProvider>
                             <CartContextProvider>
                                 <ModalContextProvider>
-                                    <Navbar isLoggedIn={session !== null} />
+                                    <Navbar
+                                        isLoggedIn={session !== null}
+                                        isAdmin={isAdmin}
+                                    />
                                     <main className="container mx-auto">
                                         <Toaster duration={7500} richColors />
                                         <Cart />

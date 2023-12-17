@@ -11,19 +11,63 @@ import PaginationControls from "@/components/administration/PaginationControls";
 import CategoryRow from "@/components/administration/categories/CategoryRow";
 import axios from "axios";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
+import connectDB from "@/lib/connectdb";
+import Category from "@/models/category";
 
 const Categories = async ({
     searchParams,
 }: {
     searchParams: { [key: string]: string | undefined };
 }) => {
-    const q = searchParams.q || "";
-    const sortBy = searchParams.sortBy || "";
-    const page = searchParams.page || 1;
+    const query = searchParams.q;
+    const sortBy = searchParams.sortBy || "createdAt";
+    const page = parseInt(searchParams.page || "1");
+    const limit = 10;
+    const skip = (page - 1) * limit;
 
-    const { data } = (await axios.get(
-        `${process.env.CLIENT_URL}/api/categories?q=${q}&sortBy=${sortBy}&page=${page}`
-    )) as { data: { categories: Category[]; totalDocs: number } };
+    await connectDB();
+
+    const queryObj: any = {};
+    if (query) {
+        queryObj.label = { $regex: query, $options: "i" };
+    }
+
+    const sortObj: any = {};
+    if (sortBy) {
+        sortObj[sortBy] = 1;
+    }
+
+    // we're using aggregate because it allows us to count-
+    // the products in each category, without an additional query and logic
+    const categories = await Category.aggregate<Category>([
+        {
+            $match: queryObj,
+        },
+        {
+            $lookup: {
+                from: "products",
+                localField: "_id",
+                foreignField: "category",
+                as: "products",
+            },
+        },
+        {
+            $addFields: {
+                productCount: { $size: "$products" },
+            },
+        },
+        {
+            $skip: skip,
+        },
+        {
+            $limit: limit,
+        },
+        {
+            $sort: sortObj,
+        },
+    ]);
+
+    const totalDocs = await Category.countDocuments(queryObj);
 
     return (
         <>
@@ -43,7 +87,7 @@ const Categories = async ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.categories.map((category) => (
+                        {categories.map((category) => (
                             <CategoryRow
                                 key={category._id}
                                 category={category}
@@ -53,8 +97,8 @@ const Categories = async ({
                 </Table>
             </div>
             <PaginationControls
-                showingDocs={data.categories.length}
-                totalDocs={data.totalDocs}
+                showingDocs={categories.length}
+                totalDocs={totalDocs}
             />
         </>
     );

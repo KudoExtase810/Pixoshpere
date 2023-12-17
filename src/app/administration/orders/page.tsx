@@ -6,56 +6,42 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import ProductRow from "@/components/administration/products/ProductRow";
-
 import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
+import OrderRow from "@/components/administration/orders/OrderRow";
+import Order from "@/models/order";
+import connectDB from "@/lib/connectdb";
 
-const Orders = () => {
-    const invoices = [
-        {
-            invoice: "INV001",
-            paymentStatus: "Paid",
-            totalAmount: "$250.00",
-            paymentMethod: "Credit Card",
-        },
-        {
-            invoice: "INV002",
-            paymentStatus: "Pending",
-            totalAmount: "$150.00",
-            paymentMethod: "PayPal",
-        },
-        {
-            invoice: "INV003",
-            paymentStatus: "Unpaid",
-            totalAmount: "$350.00",
-            paymentMethod: "Bank Transfer",
-        },
-        {
-            invoice: "INV004",
-            paymentStatus: "Paid",
-            totalAmount: "$450.00",
-            paymentMethod: "Credit Card",
-        },
-        {
-            invoice: "INV005",
-            paymentStatus: "Paid",
-            totalAmount: "$550.00",
-            paymentMethod: "PayPal",
-        },
-        {
-            invoice: "INV006",
-            paymentStatus: "Pending",
-            totalAmount: "$200.00",
-            paymentMethod: "Bank Transfer",
-        },
-        {
-            invoice: "INV007",
-            paymentStatus: "Unpaid",
-            totalAmount: "$300.00",
-            paymentMethod: "Credit Card",
-        },
-    ];
+const Orders = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined };
+}) => {
+    const query = searchParams.q;
+    const sortBy = searchParams.sortBy || "createdAt";
+    const page = parseInt(searchParams.page || "1");
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    await connectDB();
+
+    const queryObj: any = {};
+    if (query) {
+        queryObj.label = { $regex: query, $options: "i" };
+    }
+
+    const sortObj: any = {};
+    if (sortBy) {
+        sortObj[sortBy] = 1;
+    }
+
+    const orders = await Order.find<Order>(queryObj)
+        .limit(limit)
+        .skip(skip)
+        .sort(sortObj);
+
+    const totalDocs = await Order.countDocuments(queryObj);
+
     return (
         <>
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
@@ -66,22 +52,25 @@ const Orders = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Produit</TableHead>
-                            <TableHead>Categorie</TableHead>
-                            <TableHead>Prix</TableHead>
-                            <TableHead>Ventes</TableHead>
-                            <TableHead>Quantité</TableHead>
+                            <TableHead>Customer</TableHead>
+                            <TableHead>Ordered On</TableHead>
+                            <TableHead>Payment method</TableHead>
+                            <TableHead>Amount</TableHead>
+                            <TableHead>Status</TableHead>
                             <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {invoices.map((invoice) => (
-                            <ProductRow invoice={invoice} />
+                        {orders.map((order) => (
+                            <OrderRow order={order} />
                         ))}
                     </TableBody>
                 </Table>
             </div>
-            <PaginationControls />
+            <PaginationControls
+                showingDocs={orders.length}
+                totalDocs={totalDocs}
+            />
         </>
     );
 };

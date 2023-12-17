@@ -46,7 +46,7 @@ const authOptions = {
             return token;
         },
         async session({ session, token, user }) {
-            return { ...session, user: { ...session.user, _id: token.id } };
+            return { ...session, user: token.user };
         },
     },
     pages: { signIn: "/login" },

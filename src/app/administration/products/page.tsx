@@ -10,21 +10,46 @@ import ProductRow from "@/components/administration/products/ProductRow";
 
 import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
-import axios from "axios";
 import ProductDrawer from "@/components/administration/products/ProductDrawer";
+import connectDB from "@/lib/connectdb";
+import Product from "@/models/product";
 
 const Products = async ({
     searchParams,
 }: {
     searchParams: { [key: string]: string | undefined };
 }) => {
-    const q = searchParams.q || "";
-    const sortBy = searchParams.sortBy || "";
-    const page = searchParams.page || 1;
+    const query = searchParams.q;
+    const category = searchParams.category;
+    const sortBy = searchParams.sortBy;
+    const page = parseInt(searchParams.page || "1");
+    const limit = 10;
+    const skip = (page - 1) * limit;
 
-    const { data } = (await axios.get(
-        `${process.env.CLIENT_URL}/api/products?q=${q}&sortBy=${sortBy}&page=${page}`
-    )) as { data: { products: Product[]; totalDocs: number } };
+    await connectDB();
+
+    const queryObj: any = {};
+    if (query) {
+        queryObj.title = { $regex: query, $options: "i" };
+    }
+
+    if (category) {
+        queryObj.category = category;
+    }
+
+    const sortObj: any = {};
+    if (sortBy) {
+        sortObj[sortBy] = 1;
+    }
+
+    const products = await Product.find<Product>(queryObj)
+        .limit(limit)
+        .skip(skip)
+        .sort(sortObj)
+        .populate("category")
+        .select("-description");
+
+    const totalDocs = await Product.countDocuments(queryObj);
 
     return (
         <>
@@ -42,19 +67,22 @@ const Products = async ({
                             <TableHead>Price</TableHead>
                             <TableHead>Sales</TableHead>
                             <TableHead>Quantity</TableHead>
-                            <TableHead>Action</TableHead>
+                            <TableHead className="">Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.products.map((product) => (
-                            <ProductRow key={product._id} product={product} />
+                        {products.map((product) => (
+                            <ProductRow
+                                key={product._id}
+                                product={JSON.parse(JSON.stringify(product))}
+                            />
                         ))}
                     </TableBody>
                 </Table>
             </div>
             <PaginationControls
-                totalDocs={data.totalDocs}
-                showingDocs={data.products.length}
+                totalDocs={totalDocs}
+                showingDocs={products.length}
             />
         </>
     );
