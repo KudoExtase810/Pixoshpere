@@ -13,6 +13,7 @@ import PaginationControls from "@/components/administration/PaginationControls";
 import ProductDrawer from "@/components/administration/products/ProductDrawer";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
+import Category from "@/models/category";
 
 const Products = async ({
     searchParams,
@@ -51,9 +52,11 @@ const Products = async ({
 
     const totalDocs = await Product.countDocuments(queryObj);
 
+    const allCategories = await Category.find<Category>({}).select("label");
+
     return (
         <>
-            <ProductDrawer />
+            <ProductDrawer allCategories={allCategories} />
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Products
             </h1>
@@ -67,7 +70,7 @@ const Products = async ({
                             <TableHead>Price</TableHead>
                             <TableHead>Sales</TableHead>
                             <TableHead>Quantity</TableHead>
-                            <TableHead className="">Action</TableHead>
+                            <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>

@@ -9,7 +9,11 @@ import {
 import ProductForm from "@/components/administration/products/ProductForm";
 import { useDrawer } from "@/contexts/DrawerContext";
 
-const ProductDrawer = () => {
+interface props {
+    allCategories: Category[];
+}
+
+const ProductDrawer = ({ allCategories }: props) => {
     const { toggle, isOpen } = useDrawer();
 
     return (
@@ -21,7 +25,10 @@ const ProductDrawer = () => {
                         Fill in your product's details.
                     </SheetDescription>
                 </SheetHeader>
-                <ProductForm toggleDrawer={() => toggle("product")} />
+                <ProductForm
+                    allCategories={allCategories}
+                    toggleDrawer={() => toggle("product")}
+                />
             </SheetContent>
         </Sheet>
     );

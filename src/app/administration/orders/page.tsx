@@ -62,7 +62,10 @@ const Orders = async ({
                     </TableHeader>
                     <TableBody>
                         {orders.map((order) => (
-                            <OrderRow order={order} />
+                            <OrderRow
+                                key={order._id}
+                                order={JSON.parse(JSON.stringify(order))}
+                            />
                         ))}
                     </TableBody>
                 </Table>

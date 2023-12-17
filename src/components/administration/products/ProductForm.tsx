@@ -74,13 +74,13 @@ const formSchema = z.object({
 
 interface props {
     toggleDrawer: () => void;
+    allCategories: Category[];
 }
 
-const ProductForm = ({ toggleDrawer }: props) => {
+const ProductForm = ({ toggleDrawer, allCategories }: props) => {
     const router = useRouter();
 
     const [images, setImages] = useState<FileList | null>(null);
-    const [allCategories, setAllCategories] = useState<Category[] | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -96,15 +96,6 @@ const ProductForm = ({ toggleDrawer }: props) => {
             hideWhenOutOfStock: false,
         },
     });
-
-    const fetchCategories = async () => {
-        try {
-            const { data } = await axios.get("/api/categories");
-            setAllCategories(data.categories);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const createProduct = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -218,9 +209,6 @@ const ProductForm = ({ toggleDrawer }: props) => {
                             <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
-                                onOpenChange={() =>
-                                    allCategories === null && fetchCategories()
-                                }
                             >
                                 <FormControl>
                                     <SelectTrigger>
