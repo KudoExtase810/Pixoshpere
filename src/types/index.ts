@@ -41,4 +41,5 @@ type Order = Base & {
     status: "pending" | "processing" | "shipped" | "delivered" | "canceled";
     paymentMethod: string;
     customer: User;
+    total: number;
 };

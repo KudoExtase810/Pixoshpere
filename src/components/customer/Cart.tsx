@@ -11,6 +11,7 @@ import BlurImage from "../BlurImage";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import Link from "next/link";
+import { formatPrice } from "@/lib/utils";
 
 const Cart = () => {
     const { toggle, isOpen, cartItems, removeItem, total, isEmpty } = useCart();
@@ -50,10 +51,9 @@ const Cart = () => {
                                                 </p>
                                             </div>
                                             <p className="font-semibold">
-                                                $
-                                                {(
+                                                {formatPrice(
                                                     item.salePrice || item.price
-                                                ).toFixed(2)}
+                                                )}
                                             </p>
                                         </div>
                                         <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ const Cart = () => {
                                 </p>
                             </div>
                             <span className="font-medium">
-                                ${total.toFixed(2)}
+                                {formatPrice(total)}
                             </span>
                         </div>
                         <Button

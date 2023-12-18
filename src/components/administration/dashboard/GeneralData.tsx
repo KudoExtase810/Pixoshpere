@@ -2,33 +2,45 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CalendarDays, Clock9, DollarSign, Users } from "lucide-react";
 import settings from "@/settings/index.json";
+import { formatPrice } from "@/lib/utils";
 
-const GeneralData = () => {
+interface props {
+    stats: {
+        totalCustomers: number;
+        totalRevenue: number;
+        currentMonthRevenue: number;
+        todaysRevenue: number;
+    };
+}
+
+const GeneralData = ({
+    stats: { totalCustomers, todaysRevenue, currentMonthRevenue, totalRevenue },
+}: props) => {
     const cardData = [
         {
             title: "Today's Revenue",
             icon: <Clock9 size={20} className="text-muted-foreground" />,
-            value: "$45,231.89",
-            percentage: "+20.1% from last month",
+            value: formatPrice(todaysRevenue),
+            description: "+20.1% from last month",
         },
 
         {
             title: "This Month's Revenue",
             icon: <CalendarDays size={20} className="text-muted-foreground" />,
-            value: "+12,234",
-            percentage: "+19% from last month",
+            value: formatPrice(currentMonthRevenue),
+            description: "+19% from last month",
         },
         {
             title: "All-Time Revenue",
             icon: <DollarSign size={20} className="text-muted-foreground" />,
-            value: "+573",
-            percentage: "+201 since last hour",
+            value: formatPrice(totalRevenue),
+            description: "+201 since last hour",
         },
         {
             title: "Total Customers",
             icon: <Users size={20} className="text-muted-foreground" />,
-            value: "+2350",
-            percentage: "+180.1% from last month",
+            value: totalCustomers,
+            description: "+180.1% from last month",
         },
     ];
 
@@ -45,7 +57,7 @@ const GeneralData = () => {
                     <CardContent>
                         <div className="text-2xl font-bold">{card.value}</div>
                         <p className="text-xs text-muted-foreground">
-                            {card.percentage}
+                            {card.description}
                         </p>
                     </CardContent>
                 </Card>

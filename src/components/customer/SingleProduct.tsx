@@ -5,6 +5,9 @@ import BlurImage from "@/components/BlurImage";
 import FormatPricing from "../FormatPricing";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+import Icons from "../AdditionalIcons";
 
 const SingleProduct = ({
     product,
@@ -13,15 +16,12 @@ const SingleProduct = ({
     product: Product;
     className?: React.HTMLAttributes<HTMLDivElement>["className"];
 }) => {
-    const { addItem } = useCart();
+    const { addItem, inCart, removeItem } = useCart();
+    const alreadyInCart = inCart(product._id);
 
     return (
-        <li className={cn("relative", className)}>
-            <Link
-                href={product.slug}
-                className="group"
-                onClick={() => addItem(product)}
-            >
+        <li className={cn("relative group", className)}>
+            <Link href={product.slug} className="">
                 <BlurImage src={product.images[0].url} alt={product.title} />
                 <div className="flex items-center justify-between px-2 mt-2">
                     <h3 className="text-sm font-medium">{product.title}</h3>
@@ -32,10 +32,23 @@ const SingleProduct = ({
                         />
                     </p>
                 </div>
-                <button className="absolute w-full bg-orange-600 py-3 rounded-b-md bottom-9 translate-y-12 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300">
-                    Add to Cart
-                </button>
             </Link>
+            {/* <Button
+                className="absolute block ml-3 z-10 w-11/12 text-center shadow-xl bottom-12 transition-all duration-700 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+                onClick={() =>
+                    alreadyInCart ? removeItem(product._id) : addItem(product)
+                }
+            >
+                {alreadyInCart ? "Remove from Cart" : "Add to Cart"}
+            </Button> */}
+            <Button
+                className="absolute z-10 rounded-full shadow-xl p-2 h-14 w-14 bottom-12 right-4 transition-all duration-700 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+                onClick={() =>
+                    alreadyInCart ? removeItem(product._id) : addItem(product)
+                }
+            >
+                {alreadyInCart ? <Icons.CartMinus /> : <Icons.CartPlus />}
+            </Button>
         </li>
     );
 };

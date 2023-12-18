@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { ClipboardEdit, PackageSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calculateTotal } from "@/lib/utils";
+import { calculateTotal, formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 const OrderRow = ({ order }: { order: Order }) => {
@@ -15,7 +15,7 @@ const OrderRow = ({ order }: { order: Order }) => {
                 {dayjs(order.createdAt).format("DD MMMM YYYY")}
             </TableCell>
             <TableCell>{order.paymentMethod}</TableCell>
-            <TableCell>{calculateTotal(order.products)}$</TableCell>
+            <TableCell>{formatPrice(order.total)}</TableCell>
             <TableCell>
                 <Badge
                     className="capitalize"

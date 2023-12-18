@@ -78,7 +78,7 @@ const Navbar = ({
                         href="/"
                         className="uppercase font-bold text-xl font-mono tracking-wider text-primary/95"
                     >
-                        MS Tech
+                        XY Store
                     </Link>
 
                     <NavigationMenu>

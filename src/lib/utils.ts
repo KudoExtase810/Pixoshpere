@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
+import settings from "@/settings/index.json";
 
 export const cn = (...inputs: ClassValue[]) => {
     return twMerge(clsx(inputs));
@@ -20,10 +21,6 @@ export const slugify = (str: string) => {
 export const notifySuccess = (message: string) => toast.success(message);
 export const notifyError = (message: string) => toast.error(message);
 
-export const calculateTotal = (products: Product[]) => {
-    let total = 0;
-    products.forEach((product) => {
-        total += product.salePrice || product.price;
-    });
-    return total;
+export const formatPrice = (price: number) => {
+    return `${price.toFixed(2)}${settings.currency}`;
 };

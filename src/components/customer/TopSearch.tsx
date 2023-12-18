@@ -7,6 +7,7 @@ import BlurImage from "../BlurImage";
 import settings from "@/settings/index.json";
 import LoadingSpinner from "../LoadingSpinner";
 import { useDebouncedCallback } from "use-debounce"; // Import the debouncing hook
+import { formatPrice } from "@/lib/utils";
 
 const TopSearch = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -93,9 +94,10 @@ const TopSearch = () => {
                                                     {prod.title}
                                                 </p>
                                                 <p>
-                                                    {settings.currency}
-                                                    {prod.salePrice ||
-                                                        prod.price}
+                                                    {formatPrice(
+                                                        prod.salePrice ||
+                                                            prod.price
+                                                    )}
                                                 </p>
                                             </div>
                                             <p className="text-neutral-500">
