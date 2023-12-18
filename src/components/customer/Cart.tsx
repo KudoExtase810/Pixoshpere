@@ -12,9 +12,26 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
+import jwt from "jsonwebtoken";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
     const { toggle, isOpen, cartItems, removeItem, total, isEmpty } = useCart();
+    const router = useRouter();
+
+    const handleCheckout = async () => {
+        const cartItemsIds = cartItems.map((item) => item._id);
+        const response = await fetch("/api/checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cartItems: cartItemsIds }),
+        });
+        const data = await response.json();
+        const { token } = data;
+        router.push(`/checkout/${token}`);
+    };
 
     return (
         <Sheet open={isOpen} onOpenChange={toggle}>
@@ -91,10 +108,10 @@ const Cart = () => {
                             </span>
                         </div>
                         <Button
+                            onClick={handleCheckout}
                             className="mt-8 w-full py-6 font-semibold text-base"
-                            asChild
                         >
-                            <Link href="/checkout">Checkout</Link>
+                            Checkout
                         </Button>
                     </div>
                 ) : (

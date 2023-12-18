@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { ClipboardEdit, PackageSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calculateTotal, formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 const OrderRow = ({ order }: { order: Order }) => {
@@ -24,7 +24,7 @@ const OrderRow = ({ order }: { order: Order }) => {
                     {order.status}
                 </Badge>
             </TableCell>
-            <TableCell className="flex items-center gap-0.5 ">
+            <TableCell className="flex items-center gap-0.5">
                 <Button
                     variant="ghost"
                     className="p-1 h-min text-green-500 hover:text-green-600"
