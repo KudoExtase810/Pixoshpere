@@ -22,5 +22,6 @@ export const notifySuccess = (message: string) => toast.success(message);
 export const notifyError = (message: string) => toast.error(message);
 
 export const formatPrice = (price: number) => {
+    const currency = "DA"; //todo: maybe remove the settings and make currency changes from here
     return `${price.toFixed(2)}${settings.currency}`;
 };

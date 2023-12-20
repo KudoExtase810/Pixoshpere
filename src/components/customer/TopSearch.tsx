@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlurImage from "../BlurImage";
-import settings from "@/settings/index.json";
 import LoadingSpinner from "../LoadingSpinner";
 import { useDebouncedCallback } from "use-debounce"; // Import the debouncing hook
 import { formatPrice } from "@/lib/utils";

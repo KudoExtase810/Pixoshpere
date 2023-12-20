@@ -51,13 +51,19 @@ const Footer = () => {
                     ))}
                 </div>
 
-                <div className="flex flex-col justify-between border-t border-neutral-200 py-10 sm:flex-row">
+                <div className="flex flex-col justify-between border-t border-neutral-300 dark:border-neutral-200 py-10 sm:flex-row">
                     <p className="text-sm text-neutral-500">
                         Copyright &copy; {currentYear} Your Store, Inc.
                     </p>
                     <p className="text-sm text-neutral-500">
                         Crafted by{" "}
-                        <a href="https://alaaben.vercel.app">Alaa Ben</a>.
+                        <a
+                            href="https://alaaben.vercel.app"
+                            className="underline"
+                        >
+                            Alaa Ben
+                        </a>
+                        .
                     </p>
                 </div>
             </div>

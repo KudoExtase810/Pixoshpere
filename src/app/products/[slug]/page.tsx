@@ -1,6 +1,5 @@
 import BlurImage from "@/components/BlurImage";
 import axios from "axios";
-import settings from "@/settings/index.json";
 import { Button } from "@/components/ui/button";
 import { Check, CheckCircle, Star, X } from "lucide-react";
 import AddToCart from "@/components/customer/AddToCart";
@@ -20,7 +19,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
     if (!product) redirect("/products");
 
     return (
-        <>
+        <div className="container">
             <div className="grid max-xl:gap-7 sm:grid-cols-2 py-8">
                 <div className="w-full max-w-[604px]">
                     <BlurImage
@@ -78,7 +77,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                     category: product.category._id,
                 }}
             />
-        </>
+        </div>
     );
 };
 

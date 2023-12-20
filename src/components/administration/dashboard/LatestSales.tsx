@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { User } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import settings from "@/settings/index.json";
 import { formatPrice } from "@/lib/utils";
 
 interface props {

@@ -14,7 +14,7 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
     return (
         <DrawerContextProvider>
             <DeleteModal />
-            {children}
+            <div className="container">{children}</div>
         </DrawerContextProvider>
     );
 };

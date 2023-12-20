@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CalendarDays, Clock9, DollarSign, Users } from "lucide-react";
-import settings from "@/settings/index.json";
 import { formatPrice } from "@/lib/utils";
 
 interface props {

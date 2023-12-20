@@ -33,7 +33,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ThemeProvider attribute="class" defaultTheme="system">
+                <ThemeProvider attribute="class" defaultTheme="dark">
                     <AuthProvider>
                         <ActionContextProvider>
                             <CartContextProvider>
@@ -42,7 +42,7 @@ export default async function RootLayout({
                                         isLoggedIn={session !== null}
                                         isAdmin={isAdmin}
                                     />
-                                    <main className="container mx-auto">
+                                    <main className="mx-auto">
                                         <Toaster duration={7500} richColors />
                                         <Cart />
                                         {children}

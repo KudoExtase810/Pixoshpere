@@ -45,7 +45,7 @@ const Products = async ({
     const totalDocs = await Product.countDocuments(queryObj);
 
     return (
-        <>
+        <div className="container">
             <h1 className="page-title">All products</h1>
             <ProductsFilters />
             <Animate
@@ -88,7 +88,7 @@ const Products = async ({
                     </li>
                 ))}
             </Animate>
-        </>
+        </div>
     );
 };
 
