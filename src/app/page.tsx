@@ -15,6 +15,7 @@ const Home = async () => {
                 <Services />
                 <OurPartners />
                 <ProductsCarousel
+                    title="Featured Products"
                     products={JSON.parse(JSON.stringify(products))}
                 />
             </div>

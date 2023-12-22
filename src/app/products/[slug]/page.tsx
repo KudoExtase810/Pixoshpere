@@ -1,14 +1,12 @@
 import BlurImage from "@/components/BlurImage";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { Check, CheckCircle, Star, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import AddToCart from "@/components/customer/AddToCart";
-import SimilarProducts from "@/components/customer/SimilarProducts";
 import { Separator } from "@/components/ui/separator";
 import { cn, formatPrice } from "@/lib/utils";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import { redirect } from "next/navigation";
+import ProductsCarousel from "@/components/customer/ProductsCarousel";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
     await connectDB();
@@ -17,6 +15,12 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
     }).populate("category");
 
     if (!product) redirect("/products");
+
+    // Find 6 random products with the same category but not the same slug
+    const similarProducts = await Product.aggregate([
+        { $match: { category: product.category, slug: { $ne: product.slug } } },
+        { $sample: { size: 6 } },
+    ]);
 
     return (
         <div className="container">
@@ -70,13 +74,15 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                     />
                 </div>
             </div>
-            <Separator />
-            <SimilarProducts
-                currentProduct={{
-                    slug: product.slug,
-                    category: product.category._id,
-                }}
-            />
+            {similarProducts.length && (
+                <>
+                    <Separator />
+                    <ProductsCarousel
+                        title="Similar products"
+                        products={similarProducts}
+                    />
+                </>
+            )}
         </div>
     );
 };

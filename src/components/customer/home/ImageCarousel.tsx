@@ -8,34 +8,35 @@ export const ImageCarousel = () => {
     const [emblaRef] = useEmblaCarousel({ loop: true }, [
         Autoplay({ delay: 5000 }),
     ]);
+
     return null;
+
     return (
         <div className="embla" ref={emblaRef}>
-            <div className="embla__container">
-                <div className="embla__slid w-full h-[480px]">
-                    <Image
-                        src="/images/forest1.png"
-                        className="object-cover"
-                        fill
-                        alt=""
-                    />
-                </div>
-                <div className="embla__slid w-full h-[480px]">
-                    <Image
-                        src="/images/forest2.jpg"
-                        className="object-cover"
-                        fill
-                        alt=""
-                    />
-                </div>
-                <div className="embla__slid w-full h-[480px]">
-                    <Image
-                        src="/images/forest3.jpg"
-                        className="object-cover"
-                        fill
-                        alt=""
-                    />
-                </div>
+            <div className="flex overflow-hidden">
+                <Image
+                    src="/images/forest1.png"
+                    width={1920}
+                    height={1080}
+                    className="object-cover w-full h-auto max-w-full block"
+                    alt=""
+                />
+
+                <Image
+                    src="/images/forest2.jpg"
+                    width={1920}
+                    height={1080}
+                    className="object-cover w-full h-auto max-w-full block"
+                    alt=""
+                />
+
+                <Image
+                    src="/images/forest3.jpg"
+                    width={1920}
+                    height={1080}
+                    className="object-cover w-full h-auto max-w-full block"
+                    alt=""
+                />
             </div>
         </div>
     );

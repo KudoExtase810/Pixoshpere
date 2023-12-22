@@ -1,12 +1,12 @@
 import React from "react";
 
 const Icons = {
-    CartPlus: ({}) => (
+    CartPlus: ({ size = 24 }: { size?: number }) => (
         <svg
             stroke="currentColor"
             fill="none"
             stroke-width="2"
-            viewBox="0 0 24 24"
+            viewBox={`0 0 ${size} ${size}`}
             stroke-linecap="round"
             stroke-linejoin="round"
             height="200px"
@@ -21,12 +21,12 @@ const Icons = {
             <path d="M19 16v6"></path>
         </svg>
     ),
-    CartMinus: ({}) => (
+    CartMinus: ({ size = 24 }: { size?: number }) => (
         <svg
             stroke="currentColor"
             fill="none"
             stroke-width="2"
-            viewBox="0 0 24 24"
+            viewBox={`0 0 ${size} ${size}`}
             stroke-linecap="round"
             stroke-linejoin="round"
             height="200px"

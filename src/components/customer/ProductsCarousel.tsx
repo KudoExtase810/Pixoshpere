@@ -3,27 +3,29 @@
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import SingleProduct from "./SingleProduct";
 import { useCallback, useEffect, useState } from "react";
-import {
-    ArrowBigLeft,
-    ArrowBigRight,
-    ChevronLeft,
-    ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react";
 import { Button } from "../ui/button";
+import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 
 interface props {
     title: string;
+    hideControls?: boolean;
     products: Product[];
 }
 
-const ProductsCarousel = ({ title, products }: props) => {
+const ProductsCarousel = ({
+    title,
+    hideControls,
+
+    products,
+}: props) => {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         skipSnaps: true,
         slidesToScroll: 1.5,
     });
     const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
     const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
-    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const scrollPrev = useCallback(
         () => emblaApi && emblaApi.scrollPrev(),
@@ -48,34 +50,45 @@ const ProductsCarousel = ({ title, products }: props) => {
         emblaApi.on("select", onSelect);
     }, [emblaApi, onSelect]);
 
+    const shouldHideControls =
+        hideControls || (prevBtnDisabled && nextBtnDisabled);
+
     return (
         <section className="py-8">
-            <h3 className="styled mb-4">{title}</h3>
+            <div className="flex justify-between items-center mb-4">
+                <h3 className="styled">{title}</h3>
+                <div className="relative">
+                    <Link
+                        href="/products"
+                        className="flex gap-2 items-center peer"
+                    >
+                        All products <MoveRight size={18} />
+                    </Link>
+                    <div className="absolute h-[1px] w-[0.01px] peer-hover:w-full bg-primary mt-1 transition-all duration-500"></div>
+                </div>
+            </div>
             <div className="overflow-hidden">
                 <div ref={emblaRef}>
                     <ul className="flex gap-8">
-                        {[
-                            ...products,
-                            ...products,
-                            ...products,
-                            ...products,
-                        ].map((product, idx) => (
+                        {products.map((product) => (
                             <SingleProduct
                                 product={product}
                                 className="min-w-[180px] md:min-w-[250px]"
-                                key={product._id + idx}
+                                key={product._id}
                             />
                         ))}
                     </ul>
                 </div>
-                <div className="mt-4 flex items-center justify-between">
-                    <Button onClick={scrollPrev} disabled={prevBtnDisabled}>
-                        <ChevronLeft size={30} />
-                    </Button>
-                    <Button onClick={scrollNext} disabled={nextBtnDisabled}>
-                        <ChevronRight size={30} />
-                    </Button>
-                </div>
+                {!shouldHideControls && (
+                    <div className="mt-4 flex items-center justify-between">
+                        <Button onClick={scrollPrev} disabled={prevBtnDisabled}>
+                            <ChevronLeft size={28} />
+                        </Button>
+                        <Button onClick={scrollNext} disabled={nextBtnDisabled}>
+                            <ChevronRight size={28} />
+                        </Button>
+                    </div>
+                )}
             </div>
         </section>
     );

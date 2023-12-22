@@ -42,4 +42,5 @@ type Order = Base & {
     paymentMethod: string;
     customer: User;
     total: number;
+    appliedCoupon: string;
 };

@@ -21,6 +21,7 @@ const OrderSchema = new mongoose.Schema(
         },
         paymentMethod: { type: String, required: true },
         total: { type: Number, required: true },
+        appliedCoupon: String,
     },
     { timestamps: true }
 );

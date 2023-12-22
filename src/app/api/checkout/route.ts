@@ -8,24 +8,28 @@ export async function POST(request: Request) {
         if (!SECRET_KEY) throw new Error("No Checkout JWT SECRET provided.");
 
         const body = await request.json();
-        const cartItems = body.cartItems as string[];
+        const checkedoutItems = body.checkedoutItems as {
+            _id: string;
+            quantity: number;
+        }[];
 
-        if (!Array.isArray(cartItems))
+        if (!Array.isArray(checkedoutItems))
             return NextResponse.json(
-                { message: "cartItems must be an array." },
+                { message: "checkedoutItems must be an array." },
                 { status: 400 }
             );
 
-        for (let i = 0; i < cartItems.length; i++) {
-            if (!mongoose.Types.ObjectId.isValid(cartItems[i]))
+        for (let i = 0; i < checkedoutItems.length; i++) {
+            const id = checkedoutItems[i]._id;
+            if (!mongoose.Types.ObjectId.isValid(id))
                 return NextResponse.json(
-                    { message: `${cartItems[i]} is not a valid ObjectID.` },
+                    { message: `${id} is not a valid ObjectID.` },
                     { status: 400 }
                 );
         }
 
         const token = jwt.sign(
-            { data: JSON.stringify(cartItems) },
+            { data: JSON.stringify(checkedoutItems) },
             SECRET_KEY,
             { expiresIn: "7d" }
         );
