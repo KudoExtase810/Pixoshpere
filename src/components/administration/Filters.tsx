@@ -13,13 +13,14 @@ import { Plus, Search } from "lucide-react";
 import { useDrawer } from "@/contexts/DrawerContext";
 
 interface props {
-    type: "product" | "category" | "order" | "user";
+    type: "product" | "category" | "order" | "user" | "coupon";
 }
 
 const Filters = ({ type }: props) => {
     const { toggle } = useDrawer();
 
-    const isControllable = type === "category" || type === "product";
+    const isControllable =
+        type === "category" || type === "product" || type === "coupon";
 
     const sortingMethods = {
         product: [
@@ -43,9 +44,21 @@ const Filters = ({ type }: props) => {
             { label: "X", value: "X" },
             { label: "X", value: "X" },
         ],
+        coupon: [
+            { label: "X", value: "X" },
+            { label: "X", value: "X" },
+            { label: "X", value: "X" },
+        ],
     };
 
-    const correctTypes = ["product", "category", "order", "customer", "user"];
+    const correctTypes = [
+        "product",
+        "category",
+        "order",
+        "customer",
+        "user",
+        "coupon",
+    ];
     if (!correctTypes.includes(type))
         throw new Error(
             "Wrong type or no type prop was passed to the Filters component."

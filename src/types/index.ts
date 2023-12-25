@@ -43,4 +43,25 @@ type Order = Base & {
     customer: User;
     total: number;
     appliedCoupon: string;
+    details: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        streetAddress: string;
+        city: string;
+        zipCode: string;
+        phone: string;
+    };
+};
+
+type Coupon = Base & {
+    code: string;
+    expiresAt: Date;
+    discountType: "fixed" | "percentage";
+    discountValue: number;
+    isPublished: boolean;
+    minAmount: number;
+    timesApplied: number;
+    allowedProducts?: string[];
+    allowedCategories: string[];
 };

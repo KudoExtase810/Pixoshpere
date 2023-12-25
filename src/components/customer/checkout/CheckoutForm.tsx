@@ -19,7 +19,7 @@ import axios, { isAxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
     const checkoutSchema = z.object({
         email: z.string().min(1).email(),
         firstName: z.string().min(1).max(36),
@@ -34,6 +34,12 @@ const CheckoutForm = () => {
 
     const form = useForm<CheckoutSchema>({
         resolver: zodResolver(checkoutSchema),
+        defaultValues: {
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            email: userDetails.email,
+            phoneNumber: userDetails.phone,
+        },
     });
 
     const handleCheckout = async (values: CheckoutSchema) => {

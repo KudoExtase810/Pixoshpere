@@ -1,5 +1,5 @@
-import Category from "@/models/category";
 import connectDB from "@/lib/connectdb";
+import Order from "@/models/order";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -8,10 +8,10 @@ export async function POST(request: Request) {
 
         const body = await request.json();
 
-        await Category.create(body);
+        await Order.create(body);
 
         return NextResponse.json(
-            { message: "New category created successfully." },
+            { message: "New order created successfully." },
             { status: 201 }
         );
     } catch (error: any) {

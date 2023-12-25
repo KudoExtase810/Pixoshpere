@@ -7,6 +7,7 @@ type DrawerState = {
     cart: boolean;
     product: boolean;
     category: boolean;
+    coupon: boolean;
 };
 
 type Drawer = keyof DrawerState;
@@ -27,6 +28,7 @@ const DrawerContextProvider = ({ children }: { children: React.ReactNode }) => {
         cart: false,
         product: false,
         category: false,
+        coupon: false,
     });
 
     function toggle(type: Drawer) {
@@ -45,6 +47,7 @@ const DrawerContextProvider = ({ children }: { children: React.ReactNode }) => {
             cart: false,
             product: false,
             category: false,
+            coupon: false,
         });
     }, [pathname]);
 

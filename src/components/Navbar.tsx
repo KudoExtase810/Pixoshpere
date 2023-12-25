@@ -34,8 +34,8 @@ const Navbar = ({
 
     const customerLinks = [
         { label: "All", href: "/products" },
-        { label: "Apparel", href: "/" },
-        { label: "Accessories", href: "/" },
+        { label: "Apparel", href: "/s" },
+        { label: "Contact Us", href: "/contact-us" },
     ];
 
     if (isAdmin) {
@@ -47,8 +47,14 @@ const Navbar = ({
 
     const adminLinks = [
         { label: "Dashboard", href: "/administration" },
-        { label: "Products", href: "/administration/products" },
-        { label: "Categories", href: "/administration/categories" },
+        {
+            label: "Catalog",
+            subLinks: [
+                { label: "Products", href: "/administration/products" },
+                { label: "Categories", href: "/administration/categories" },
+                { label: "Coupons", href: "/administration/coupons" },
+            ],
+        },
         {
             label: "Users",
             subLinks: [
@@ -114,7 +120,7 @@ const Navbar = ({
                                                 {link.label}
                                             </NavigationMenuTrigger>
                                             <NavigationMenuContent>
-                                                <ul className="grid gap-3 p-3 w-[392px]">
+                                                <ul className="grid gap-3 p-3 w-[340px]">
                                                     {link.subLinks.map(
                                                         (subLink) => (
                                                             <ListItem

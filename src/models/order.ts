@@ -22,6 +22,15 @@ const OrderSchema = new mongoose.Schema(
         paymentMethod: { type: String, required: true },
         total: { type: Number, required: true },
         appliedCoupon: String,
+        details: {
+            email: String,
+            firstName: String,
+            lastName: String,
+            streetAddress: String,
+            city: String,
+            zipCode: String,
+            phone: String,
+        },
     },
     { timestamps: true }
 );
