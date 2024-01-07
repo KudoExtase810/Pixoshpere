@@ -1,6 +1,6 @@
 import Services from "@/components/customer/home/Services";
 import ImageCarousel from "@/components/customer/home/ImageCarousel";
-import OurPartners from "@/components/customer/home/OurPartners";
+import Partners from "@/components/customer/home/Partners";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
 import Product from "@/models/product";
 import connectDB from "@/lib/connectdb";
@@ -13,7 +13,7 @@ const Home = async () => {
             <ImageCarousel />
             <div className="container">
                 <Services />
-                <OurPartners />
+                <Partners />
                 <ProductsCarousel
                     title="Featured Products"
                     products={JSON.parse(JSON.stringify(products))}

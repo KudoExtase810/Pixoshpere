@@ -2,7 +2,7 @@
 
 import { useState, createContext, useContext, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { notifyError, notifySuccess } from "@/lib/utils";
+import { notifySuccess } from "@/lib/utils";
 import useLocalStorageState from "use-local-storage-state";
 
 type CartContext = {
@@ -11,6 +11,7 @@ type CartContext = {
     close: () => void;
     toggle: () => void;
     cartItems: CartItem[];
+    getItemQuantity: (itemID: string) => number;
     addItem: (item: Product) => void;
     removeItem: (itemID: string) => void;
     emptyCart: () => void;
@@ -21,7 +22,7 @@ type CartContext = {
     total: number;
 };
 
-type CartItem = Product & { quantityInCart: number };
+export type CartItem = Product & { quantityInCart: number };
 
 const CartContext = createContext<CartContext>({} as CartContext);
 
@@ -49,13 +50,20 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
         return cartItems.findIndex((item) => item._id === itemID) !== -1;
     };
 
+    const getItemQuantity = (itemID: string) => {
+        // To be used when you can't access the quantityInCart prop (e.g. in /products/[slug] page)
+        return (
+            cartItems.find((item) => item._id === itemID)?.quantityInCart || 0
+        );
+    };
+
     const addItem = (item: Product) => {
-        if (inCart(item._id)) {
-            notifyError(
-                "This product is already in cart. You may add more from there."
-            );
-            return;
-        }
+        // if (inCart(item._id)) {
+        //     notifyError(
+        //         "This product is already in cart. You may add more from there."
+        //     );
+        //     return;
+        // }
         setCartItems([...cartItems, { ...item, quantityInCart: 1 }]);
         notifySuccess("Item added to cart.");
     };
@@ -101,6 +109,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
                 open,
                 isOpen: showCart,
                 cartItems,
+                getItemQuantity,
                 addItem,
                 removeItem,
                 emptyCart,

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
-import { cn } from "@/lib/utils";
+import { cn, notifyError } from "@/lib/utils";
 
 interface props {
     product: Product;
@@ -10,17 +10,25 @@ interface props {
 }
 
 const AddToCart = ({ product, className }: props) => {
-    const { inCart, addItem } = useCart();
+    const { inCart, addItem, getItemQuantity, updateItemQuantity } = useCart();
+    const quantityInCart = getItemQuantity(product._id);
 
-    const shouldDisable = product.quantity === 0 || inCart(product._id);
+    const handleAdd = () => {
+        if (quantityInCart === product.quantity) {
+            notifyError("Not enough items in stock.");
+            return;
+        }
+        if (inCart(product._id)) {
+            updateItemQuantity(product._id, 1);
+        } else addItem(product);
+    };
 
     return (
         <Button
-            onClick={() => addItem(product)}
+            onClick={handleAdd}
             className={cn("py-6 px-8 text-base", className)}
-            disabled={shouldDisable}
         >
-            {inCart(product._id) ? "Already in Cart" : "Add to Cart"}
+            {`Add to Cart (${quantityInCart})`}
         </Button>
     );
 };

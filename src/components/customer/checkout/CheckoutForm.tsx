@@ -44,7 +44,7 @@ const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
 
     const handleCheckout = async (values: CheckoutSchema) => {
         try {
-            const res = await axios.post("/api/checkout", values);
+            const res = await axios.post("/api/order", values);
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
         }

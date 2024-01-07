@@ -74,7 +74,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                     />
                 </div>
             </div>
-            {similarProducts.length && (
+            {similarProducts.length ? (
                 <>
                     <Separator />
                     <ProductsCarousel
@@ -82,7 +82,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                         products={similarProducts}
                     />
                 </>
-            )}
+            ) : null}
         </div>
     );
 };

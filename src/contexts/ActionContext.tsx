@@ -2,7 +2,7 @@
 
 import { useState, createContext, useContext } from "react";
 
-type ActionData = any;
+type ActionData = User | Product | Category | Order | Coupon | null;
 
 type ActionContext = {
     actionData: ActionData;
@@ -13,8 +13,8 @@ const ActionContext = createContext<ActionContext>({} as ActionContext);
 
 export const useActionData = () => useContext(ActionContext);
 
-// This will store any type of data when a modal is open,
-// and should be set to null whenever that same modal is closed
+// This will store any type of data when a modal/drawer is open,
+// and should be set to null whenever that same modal/drawer is closed
 const ActionContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [actionData, setActionData] = useState<ActionData>(null);
 

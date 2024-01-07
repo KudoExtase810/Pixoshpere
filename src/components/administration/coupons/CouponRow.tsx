@@ -16,7 +16,9 @@ const CouponRow = ({ coupon }: { coupon: Coupon }) => {
 
     const isExpired = new Date() > new Date(coupon.expiresAt);
 
-    const togglePublicity = async () => {};
+    const togglePublicity = async () => {
+        // TODO:
+    };
 
     return (
         <TableRow>

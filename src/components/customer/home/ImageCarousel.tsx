@@ -15,7 +15,7 @@ export const ImageCarousel = () => {
         <div className="embla" ref={emblaRef}>
             <div className="flex overflow-hidden">
                 <Image
-                    src="/images/forest1.png"
+                    src="/images/banner1.jpg"
                     width={1920}
                     height={1080}
                     className="object-cover w-full h-auto max-w-full block"
@@ -23,7 +23,7 @@ export const ImageCarousel = () => {
                 />
 
                 <Image
-                    src="/images/forest2.jpg"
+                    src="/images/banner2.jpg"
                     width={1920}
                     height={1080}
                     className="object-cover w-full h-auto max-w-full block"
@@ -31,7 +31,7 @@ export const ImageCarousel = () => {
                 />
 
                 <Image
-                    src="/images/forest3.jpg"
+                    src="/images/banner3.jpg"
                     width={1920}
                     height={1080}
                     className="object-cover w-full h-auto max-w-full block"

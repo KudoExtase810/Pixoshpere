@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 
-const OurPartners = () => {
+const Partners = () => {
     // You can get more of these logos from https://www.vectorlogo.zone/logos
     const partners = [
         { name: "Netlify", src: "/svgs/netlify.svg" },
@@ -32,4 +32,4 @@ const OurPartners = () => {
     );
 };
 
-export default OurPartners;
+export default Partners;

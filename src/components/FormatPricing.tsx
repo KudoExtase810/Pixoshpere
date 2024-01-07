@@ -1,4 +1,4 @@
-import Settings from "@/settings/index.json";
+import settings from "@/settings.json";
 
 const FormatPricing = ({
     price,
@@ -7,7 +7,7 @@ const FormatPricing = ({
     price: number;
     salePrice?: number;
 }) => {
-    const { currency } = Settings;
+    const { currency } = settings;
     const formatted = salePrice ? (
         <>
             <span className="line-through text-neutral-500 text-sm">
