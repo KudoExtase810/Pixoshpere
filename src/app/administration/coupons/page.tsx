@@ -31,14 +31,16 @@ const Coupons = async () => {
                             <TableHead>Discount</TableHead>
                             <TableHead>Expiration Date</TableHead>
                             <TableHead>Times Used</TableHead>
-                            <TableHead>Published</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {coupons.map((coupon) => (
-                            <CouponRow key={coupon._id} coupon={coupon} />
+                            <CouponRow
+                                key={coupon._id}
+                                coupon={JSON.parse(JSON.stringify(coupon))}
+                            />
                         ))}
                     </TableBody>
                 </Table>

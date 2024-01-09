@@ -19,6 +19,7 @@ import axios, { isAxiosError } from "axios";
 
 import LoadingSpinner from "../../LoadingSpinner";
 import { useRouter } from "next/navigation";
+import { useActionData } from "@/contexts/ActionContext";
 
 const formSchema = z.object({
     label: z
@@ -33,13 +34,17 @@ interface props {
 
 const CategoryForm = ({ toggleDrawer }: props) => {
     const router = useRouter();
+    const { actionData } = useActionData();
+    const selectedCategory = actionData as Category | null;
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            label: "",
+            label: selectedCategory?.label || "",
         },
     });
+
+    const isEditMode = selectedCategory !== null;
 
     const createCategory = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -52,10 +57,27 @@ const CategoryForm = ({ toggleDrawer }: props) => {
         }
     };
 
+    const updateCategory = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const categoryId = selectedCategory?._id;
+            const { data } = await axios.put(
+                `/api/categories/${categoryId}`,
+                values
+            );
+            notifySuccess(data.message);
+            toggleDrawer();
+            router.refresh();
+        } catch (error) {
+            isAxiosError(error) && notifyError(error.response?.data.message);
+        }
+    };
+
     return (
         <Form {...form}>
             <form
-                onSubmit={form.handleSubmit(createCategory)}
+                onSubmit={form.handleSubmit(
+                    isEditMode ? updateCategory : createCategory
+                )}
                 className="space-y-6"
             >
                 <FormField
@@ -81,6 +103,8 @@ const CategoryForm = ({ toggleDrawer }: props) => {
                 >
                     {form.formState.isSubmitting ? (
                         <LoadingSpinner />
+                    ) : isEditMode ? (
+                        "Update category"
                     ) : (
                         "Publish category"
                     )}

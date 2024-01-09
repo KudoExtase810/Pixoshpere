@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import ProductForm from "@/components/administration/products/ProductForm";
 import { useDrawer } from "@/contexts/DrawerContext";
+import { useActionData } from "@/contexts/ActionContext";
 
 interface props {
     allCategories: Category[];
@@ -15,9 +16,16 @@ interface props {
 
 const ProductDrawer = ({ allCategories }: props) => {
     const { toggle, isOpen } = useDrawer();
+    const { setActionData } = useActionData();
 
     return (
-        <Sheet open={isOpen("product")} onOpenChange={() => toggle("product")}>
+        <Sheet
+            open={isOpen("product")}
+            onOpenChange={(isOpen) => {
+                toggle("product");
+                !isOpen && setActionData(null);
+            }}
+        >
             <SheetContent className="max-[500px]:px-3 min-w-[310px] md:min-w-[640px] lg:min-w-[768px] overflow-y-auto">
                 <SheetHeader className="mb-4">
                     <SheetTitle>Add a new product</SheetTitle>

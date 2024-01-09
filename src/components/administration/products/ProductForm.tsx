@@ -31,6 +31,7 @@ import axios, { isAxiosError } from "axios";
 import TextEditor from "../TextEditor";
 import LoadingSpinner from "../../LoadingSpinner";
 import { useRouter } from "next/navigation";
+import { useActionData } from "@/contexts/ActionContext";
 
 const formSchema = z.object({
     title: z
@@ -82,22 +83,59 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
 
     const [images, setImages] = useState<FileList | null>(null);
 
+    const { actionData } = useActionData();
+    const selectedProduct = actionData as Product | null;
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
-            price: undefined,
-            salePrice: undefined,
-            category: "",
-            quantity: 1,
-            priority: 0,
-            description: "",
-            isHidden: false,
-            hideWhenOutOfStock: false,
+            title: selectedProduct?.title || "",
+            price: selectedProduct?.price,
+            salePrice: selectedProduct?.salePrice,
+            category: selectedProduct?.category._id || "",
+            quantity: selectedProduct?.quantity ?? 1,
+            priority: selectedProduct?.priority ?? 0,
+            description: selectedProduct?.description ?? "",
+            isHidden: selectedProduct?.isHidden ?? false,
+            hideWhenOutOfStock: selectedProduct?.hideWhenOutOfStock ?? false,
         },
     });
 
+    const isEditMode = selectedProduct !== null;
+
     const createProduct = async (values: z.infer<typeof formSchema>) => {
+        try {
+            if (values.salePrice && values.price <= values.salePrice)
+                return notifyError(
+                    "Le prix en promotion ne peut pas être supérieur ou égal au prix normal."
+                );
+
+            if (!images?.length)
+                return notifyError("Veuillez ajouter au moins 1 image.");
+            // If we get to this part it means that all data is valid
+            // we can now upload the images to cloudinary
+
+            const imageData = [];
+            for (let i = 0; i < images.length; i++) {
+                const data = await uploadToCloudinary(images[i]);
+                imageData.push(data);
+            }
+
+            const newProduct = {
+                ...values,
+                slug: slugify(values.title),
+                images: imageData,
+            };
+            const { data } = await axios.post("/api/products", newProduct);
+            notifySuccess(data.message);
+            toggleDrawer();
+            router.refresh();
+        } catch (error) {
+            isAxiosError(error) && notifyError(error.response?.data.message);
+        }
+    };
+
+    const updateProduct = async (values: z.infer<typeof formSchema>) => {
         try {
             if (values.salePrice && values.price <= values.salePrice)
                 return notifyError(

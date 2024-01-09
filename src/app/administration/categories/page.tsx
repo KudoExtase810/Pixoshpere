@@ -9,10 +9,9 @@ import {
 import Filters from "@/components/administration/Filters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CategoryRow from "@/components/administration/categories/CategoryRow";
-import axios from "axios";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
-import connectDB from "@/lib/connectdb";
 import Category from "@/models/category";
+import connectDB from "@/lib/connectdb";
 
 const Categories = async ({
     searchParams,
@@ -22,6 +21,7 @@ const Categories = async ({
     const query = searchParams.q;
     const sortBy = searchParams.sortBy || "createdAt";
     const page = parseInt(searchParams.page || "1");
+
     const limit = 10;
     const skip = (page - 1) * limit;
 
@@ -90,7 +90,7 @@ const Categories = async ({
                         {categories.map((category) => (
                             <CategoryRow
                                 key={category._id}
-                                category={category}
+                                category={JSON.parse(JSON.stringify(category))}
                             />
                         ))}
                     </TableBody>

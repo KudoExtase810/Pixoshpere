@@ -59,7 +59,7 @@ type Coupon = Base & {
     expiresAt: Date;
     discountType: "fixed" | "percentage";
     discountValue: number;
-    isPublished: boolean;
+    isDisabled: boolean;
     minAmount: number;
     timesApplied: number;
     allowedProducts?: string[];

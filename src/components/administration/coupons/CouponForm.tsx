@@ -36,6 +36,9 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import dayjs from "dayjs";
+import { useActionData } from "@/contexts/ActionContext";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
     code: z
@@ -43,9 +46,10 @@ const formSchema = z.object({
         .min(2, "The label can't contain less than 2 characters.")
         .max(32, "The label can't contain more than 32 characters."),
     discountType: z.string(),
-    discountValue: z.number(),
+    discountValue: z.coerce.number(),
     expiresAt: z.date(),
-    minAmount: z.number(),
+    minAmount: z.coerce.number(),
+    isDisabled: z.boolean(),
 });
 
 interface props {
@@ -54,17 +58,26 @@ interface props {
 
 const CouponForm = ({ toggleDrawer }: props) => {
     const router = useRouter();
+    const { actionData } = useActionData();
+    const selectedCoupon = actionData as Coupon | null;
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            code: "",
+            code: selectedCoupon?.code ?? "",
+            discountType: selectedCoupon?.discountType,
+            discountValue: selectedCoupon?.discountValue,
+            expiresAt: selectedCoupon
+                ? new Date(selectedCoupon.expiresAt)
+                : undefined,
+            minAmount: selectedCoupon?.minAmount,
+            isDisabled: selectedCoupon?.isDisabled ?? false,
         },
     });
 
     const createCoupon = async (values: z.infer<typeof formSchema>) => {
         try {
-            const { data } = await axios.post("/api/categories", values);
+            const { data } = await axios.post("/api/coupons", values);
             notifySuccess(data.message);
             toggleDrawer();
             router.refresh();
@@ -73,10 +86,29 @@ const CouponForm = ({ toggleDrawer }: props) => {
         }
     };
 
+    const updateCoupon = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const couponId = selectedCoupon?._id;
+            const { data } = await axios.put(
+                `/api/coupons/${couponId}`,
+                values
+            );
+            notifySuccess(data.message);
+            toggleDrawer();
+            router.refresh();
+        } catch (error) {
+            isAxiosError(error) && notifyError(error.response?.data.message);
+        }
+    };
+
+    const isEditMode = selectedCoupon !== null;
+
     return (
         <Form {...form}>
             <form
-                onSubmit={form.handleSubmit(createCoupon)}
+                onSubmit={form.handleSubmit(
+                    isEditMode ? updateCoupon : createCoupon
+                )}
                 className="space-y-6"
             >
                 <FormField
@@ -116,10 +148,13 @@ const CouponForm = ({ toggleDrawer }: props) => {
                                 <SelectContent>
                                     {["fixed", "percentage"].map((type) => (
                                         <SelectItem
+                                            key={type}
                                             value={type}
                                             className="capitalize"
                                         >
-                                            {type}
+                                            <span className="capitalize">
+                                                {type}
+                                            </span>
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -218,6 +253,24 @@ const CouponForm = ({ toggleDrawer }: props) => {
                     )}
                 />
 
+                <FormField
+                    control={form.control}
+                    name="isDisabled"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel>Disable this coupon.</FormLabel>
+                            </div>
+                        </FormItem>
+                    )}
+                />
+
                 <Button
                     className="w-40"
                     disabled={form.formState.isSubmitting}
@@ -225,6 +278,8 @@ const CouponForm = ({ toggleDrawer }: props) => {
                 >
                     {form.formState.isSubmitting ? (
                         <LoadingSpinner />
+                    ) : isEditMode ? (
+                        "Update coupon"
                     ) : (
                         "Publish coupon"
                     )}

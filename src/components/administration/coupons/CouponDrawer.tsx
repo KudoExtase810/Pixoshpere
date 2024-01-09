@@ -8,11 +8,19 @@ import {
 } from "@/components/ui/sheet";
 import { useDrawer } from "@/contexts/DrawerContext";
 import CouponForm from "./CouponForm";
+import { useActionData } from "@/contexts/ActionContext";
 
 const CouponDrawer = () => {
     const { toggle, isOpen } = useDrawer();
+    const { setActionData } = useActionData();
     return (
-        <Sheet open={isOpen("coupon")} onOpenChange={() => toggle("coupon")}>
+        <Sheet
+            open={isOpen("coupon")}
+            onOpenChange={(isOpen) => {
+                toggle("coupon");
+                !isOpen && setActionData(null);
+            }}
+        >
             <SheetContent>
                 <SheetHeader>
                     <SheetTitle>Are you sure absolutely sure?</SheetTitle>

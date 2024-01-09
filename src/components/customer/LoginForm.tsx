@@ -43,7 +43,7 @@ const LoginForm = () => {
         notifySuccess("Successfully logged in.");
         // We refresh instead of redirecting because
         // the server will auto redirect once user is logged in
-        router.back();
+        router.refresh();
     };
 
     return (

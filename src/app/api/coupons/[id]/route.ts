@@ -1,5 +1,5 @@
 import connectDB from "@/lib/connectdb";
-import Category from "@/models/category";
+import Coupon from "@/models/coupon";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -8,16 +8,16 @@ export async function GET(
 ) {
     try {
         await connectDB();
-        const category = await Category.findById(params.id);
+        const coupon = await Coupon.findById(params.id);
 
-        if (!category) {
+        if (!coupon) {
             return NextResponse.json(
-                { message: "Category not found." },
+                { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(category, { status: 200 });
+        return NextResponse.json(coupon, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
@@ -29,23 +29,31 @@ export async function PUT(
 ) {
     try {
         await connectDB();
-        const category = await Category.findById(params.id);
+        const coupon = await Coupon.findById(params.id);
 
-        const newCategoryData: Category = await request.json();
+        const newCouponData: Coupon = await request.json();
 
-        if (!category) {
+        if (!coupon) {
             return NextResponse.json(
-                { message: "Category not found." },
+                { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
-        if (newCategoryData.label) category.label = newCategoryData.label;
+        if (newCouponData.code) coupon.code = newCouponData.code;
+        if (newCouponData.discountType)
+            coupon.discountType = newCouponData.discountType;
+        if (newCouponData.discountValue)
+            coupon.discountValue = newCouponData.discountValue;
+        if (newCouponData.minAmount) coupon.minAmount = newCouponData.minAmount;
+        if (newCouponData.expiresAt) coupon.expiresAt = newCouponData.expiresAt;
+        if (newCouponData.isDisabled)
+            coupon.isDisabled = newCouponData.isDisabled;
 
-        await category.save();
+        await coupon.save();
 
         return NextResponse.json(
-            { message: "Category updated with success." },
+            { message: "Coupon updated with success." },
             { status: 200 }
         );
     } catch (error: any) {
@@ -59,17 +67,17 @@ export async function DELETE(
 ) {
     try {
         await connectDB();
-        const category = await Category.findByIdAndDelete(params.id);
+        const coupon = await Coupon.findByIdAndDelete(params.id);
 
-        if (!category) {
+        if (!coupon) {
             return NextResponse.json(
-                { message: "Category not found." },
+                { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
         return NextResponse.json(
-            { message: "Category deleted successfully" },
+            { message: "Coupon deleted successfully" },
             { status: 200 }
         );
     } catch (error: any) {

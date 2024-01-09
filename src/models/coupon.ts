@@ -10,7 +10,7 @@ const CouponSchema = new mongoose.Schema(
             required: true,
         },
         discountValue: { type: Number, min: 0, required: true },
-        isPublished: { type: Boolean, default: true },
+        isDisabled: { type: Boolean, default: true },
         minAmount: { type: Number, required: true, min: 0 },
         timesApplied: { type: Number, min: 0, default: 0 },
         allowedProducts: {

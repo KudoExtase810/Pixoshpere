@@ -8,13 +8,19 @@ import {
 } from "@/components/ui/sheet";
 import { useDrawer } from "@/contexts/DrawerContext";
 import CategoryForm from "./CategoryForm";
+import { useActionData } from "@/contexts/ActionContext";
 
 const CategoryDrawer = () => {
     const { toggle, isOpen } = useDrawer();
+    const { setActionData } = useActionData();
+
     return (
         <Sheet
             open={isOpen("category")}
-            onOpenChange={() => toggle("category")}
+            onOpenChange={(isOpen) => {
+                toggle("category");
+                !isOpen && setActionData(null);
+            }}
         >
             <SheetContent>
                 <SheetHeader>

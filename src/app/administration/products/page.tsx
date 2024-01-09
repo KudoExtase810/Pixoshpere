@@ -47,8 +47,8 @@ const Products = async ({
         .limit(limit)
         .skip(skip)
         .sort(sortObj)
-        .populate("category")
-        .select("-description");
+        .populate("category");
+    // .select("-description");
 
     const totalDocs = await Product.countDocuments(queryObj);
 
