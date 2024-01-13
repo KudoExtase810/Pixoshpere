@@ -8,7 +8,7 @@ import {
 
 import ProductRow from "@/components/administration/products/ProductRow";
 
-import Filters from "@/components/administration/Filters";
+import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import ProductDrawer from "@/components/administration/products/ProductDrawer";
 import connectDB from "@/lib/connectdb";
@@ -48,9 +48,8 @@ const Products = async ({
         .skip(skip)
         .sort(sortObj)
         .populate("category");
-    // .select("-description");
 
-    const totalDocs = await Product.countDocuments(queryObj);
+    const totalProducts = await Product.countDocuments(queryObj);
 
     const allCategories = await Category.find<Category>({}).select("label");
 
@@ -60,7 +59,7 @@ const Products = async ({
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Products
             </h1>
-            <Filters type="product" />
+            <AdminFilters type="product" />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>
@@ -84,7 +83,7 @@ const Products = async ({
                 </Table>
             </div>
             <PaginationControls
-                totalDocs={totalDocs}
+                totalDocs={totalProducts}
                 showingDocs={products.length}
             />
         </>

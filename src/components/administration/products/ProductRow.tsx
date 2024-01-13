@@ -6,6 +6,7 @@ import { useDrawer } from "@/contexts/DrawerContext";
 import { useActionData } from "@/contexts/ActionContext";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
 
 const ProductRow = ({ product }: { product: Product }) => {
     const { toggle: toggleModal } = useModal();
@@ -24,7 +25,11 @@ const ProductRow = ({ product }: { product: Product }) => {
 
     return (
         <TableRow>
-            <TableCell className="font-medium">{product.title}</TableCell>
+            <TableCell className="font-medium">
+                <Link href={`/products/${product.slug}`} target="_blank">
+                    {product.title}
+                </Link>
+            </TableCell>
             <TableCell>{product.category.label}</TableCell>
             <TableCell>
                 {formatPrice(product.salePrice || product.price)}

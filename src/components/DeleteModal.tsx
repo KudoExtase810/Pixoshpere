@@ -24,9 +24,12 @@ const DeleteModal = () => {
 
     const { actionData, setActionData } = useActionData();
 
+    // We can pass the type as a prop but we'll have to remove the delete modal
+    // from the admin layout and put in every page we need it in instead
     const type = pathname.replace("/administration/", "") as
         | "products"
-        | "categories";
+        | "categories"
+        | "coupons";
 
     // const headings = {
     //     user: `Delete ${(actionData as User)?.username}?`,
@@ -36,15 +39,17 @@ const DeleteModal = () => {
     // };
 
     const getDeleteURL = () => {
-        let api_url: string;
+        let api_url;
 
         switch (type) {
+            case "products":
+                api_url = `/api/products/${actionData?._id}`;
+                break;
             case "categories":
                 api_url = `/api/categories/${actionData?._id}`;
                 break;
-
-            case "products":
-                api_url = `/api/products/${actionData?.slug}`;
+            case "coupons":
+                api_url = `/api/coupons/${actionData?._id}`;
                 break;
 
             default:
@@ -68,19 +73,20 @@ const DeleteModal = () => {
     return (
         <AlertDialog
             open={isOpen("delete")}
-            onOpenChange={() => toggle("delete")}
+            onOpenChange={(isOpen) => {
+                toggle("delete");
+                !isOpen && setActionData(null);
+            }}
         >
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        Are you sure you want to delete{" "}
-                        <span className="text-destructive">
-                            "{actionData?.title || actionData?.label}"
-                        </span>{" "}
-                        from {type}?
+                        Are you sure you want to continue?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        This entry will be permanently deleted.
+                        The selected entry will be{" "}
+                        <span className="text-red-500">permanently</span>{" "}
+                        deleted.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

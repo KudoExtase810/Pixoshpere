@@ -6,7 +6,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import Filters from "@/components/administration/Filters";
+import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import OrderRow from "@/components/administration/orders/OrderRow";
 import Order from "@/models/order";
@@ -47,7 +47,7 @@ const Orders = async ({
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Orders
             </h1>
-            <Filters type="order" />
+            <AdminFilters type="order" />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>

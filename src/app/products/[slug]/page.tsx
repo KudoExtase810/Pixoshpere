@@ -18,14 +18,19 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
 
     // Find 6 random products with the same category but not the same slug
     const similarProducts = await Product.aggregate([
-        { $match: { category: product.category, slug: { $ne: product.slug } } },
+        {
+            $match: {
+                category: product.category._id,
+                slug: { $ne: product.slug },
+            },
+        },
         { $sample: { size: 6 } },
     ]);
 
     return (
         <div className="container">
             <div className="grid max-xl:gap-7 sm:grid-cols-2 py-8">
-                <div className="w-full max-w-[604px]">
+                <div>
                     <BlurImage
                         src={product.images[0].url}
                         alt={product.title}

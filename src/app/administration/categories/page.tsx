@@ -6,7 +6,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import Filters from "@/components/administration/Filters";
+import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CategoryRow from "@/components/administration/categories/CategoryRow";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
@@ -75,7 +75,7 @@ const Categories = async ({
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Categories
             </h1>
-            <Filters type="category" />
+            <AdminFilters type="category" />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>

@@ -1,4 +1,4 @@
-import Filters from "@/components/administration/Filters";
+import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CouponDrawer from "@/components/administration/coupons/CouponDrawer";
 import CouponRow from "@/components/administration/coupons/CouponRow";
@@ -22,7 +22,7 @@ const Coupons = async () => {
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Coupons
             </h1>
-            <Filters type="coupon" />
+            <AdminFilters type="coupon" />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>

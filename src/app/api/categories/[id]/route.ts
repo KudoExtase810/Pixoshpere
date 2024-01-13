@@ -28,10 +28,14 @@ export async function PUT(
     { params }: { params: { id: string } }
 ) {
     try {
-        await connectDB();
-        const category = await Category.findById(params.id);
-
         const newCategoryData: Category = await request.json();
+
+        await connectDB();
+        const category = await Category.findByIdAndUpdate(
+            params.id,
+            newCategoryData,
+            { runValidators: true }
+        );
 
         if (!category) {
             return NextResponse.json(
@@ -39,10 +43,6 @@ export async function PUT(
                 { status: 404 }
             );
         }
-
-        if (newCategoryData.label) category.label = newCategoryData.label;
-
-        await category.save();
 
         return NextResponse.json(
             { message: "Category updated with success." },

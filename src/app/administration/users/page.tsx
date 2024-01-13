@@ -6,7 +6,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import Filters from "@/components/administration/Filters";
+import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import User from "@/models/user";
 import UserRow from "@/components/administration/users/UserRow";
@@ -51,7 +51,7 @@ const Users = async ({
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 {role === "admin" ? "Admins" : "Customers"}
             </h1>
-            <Filters type="user" />
+            <AdminFilters type="user" />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>

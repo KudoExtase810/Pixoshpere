@@ -28,10 +28,14 @@ export async function PUT(
     { params }: { params: { id: string } }
 ) {
     try {
-        await connectDB();
-        const coupon = await Coupon.findById(params.id);
-
         const newCouponData: Coupon = await request.json();
+
+        await connectDB();
+        const coupon = await Coupon.findByIdAndUpdate(
+            params.id,
+            newCouponData,
+            { runValidators: true }
+        );
 
         if (!coupon) {
             return NextResponse.json(
@@ -39,18 +43,6 @@ export async function PUT(
                 { status: 404 }
             );
         }
-
-        if (newCouponData.code) coupon.code = newCouponData.code;
-        if (newCouponData.discountType)
-            coupon.discountType = newCouponData.discountType;
-        if (newCouponData.discountValue)
-            coupon.discountValue = newCouponData.discountValue;
-        if (newCouponData.minAmount) coupon.minAmount = newCouponData.minAmount;
-        if (newCouponData.expiresAt) coupon.expiresAt = newCouponData.expiresAt;
-        if (newCouponData.isDisabled)
-            coupon.isDisabled = newCouponData.isDisabled;
-
-        await coupon.save();
 
         return NextResponse.json(
             { message: "Coupon updated with success." },

@@ -1,12 +1,16 @@
 "use client";
 
-import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import SingleProduct from "./SingleProduct";
-import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { MoveRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface props {
     title: string;
@@ -14,45 +18,7 @@ interface props {
     products: Product[];
 }
 
-const ProductsCarousel = ({
-    title,
-    hideControls,
-
-    products,
-}: props) => {
-    const [emblaRef, emblaApi] = useEmblaCarousel({
-        skipSnaps: true,
-        slidesToScroll: 1.5,
-    });
-    const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
-    const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
-
-    const scrollPrev = useCallback(
-        () => emblaApi && emblaApi.scrollPrev(),
-        [emblaApi]
-    );
-    const scrollNext = useCallback(
-        () => emblaApi && emblaApi.scrollNext(),
-        [emblaApi]
-    );
-
-    const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
-        setPrevBtnDisabled(!emblaApi.canScrollPrev());
-        setNextBtnDisabled(!emblaApi.canScrollNext());
-    }, []);
-
-    useEffect(() => {
-        if (!emblaApi) return;
-
-        onSelect(emblaApi);
-
-        emblaApi.on("reInit", onSelect);
-        emblaApi.on("select", onSelect);
-    }, [emblaApi, onSelect]);
-
-    const shouldHideControls =
-        hideControls || (prevBtnDisabled && nextBtnDisabled);
-
+const ProductsCarousel = ({ title, hideControls, products }: props) => {
     return (
         <section className="py-8">
             <div className="flex justify-between items-center mb-4">
@@ -67,29 +33,33 @@ const ProductsCarousel = ({
                     <div className="absolute h-[1px] w-[0.01px] peer-hover:w-full bg-primary mt-1 transition-all duration-500"></div>
                 </div>
             </div>
-            <div className="overflow-hidden">
-                <div ref={emblaRef}>
-                    <ul className="flex gap-8">
-                        {products.map((product) => (
+
+            <Carousel
+                opts={
+                    {
+                        // align: "center",
+                    }
+                }
+                className="w-full"
+            >
+                <CarouselContent>
+                    {products.map((product) => (
+                        <CarouselItem className="basis-1/3 sm:basis-1/4 lg:basis-1/5">
                             <SingleProduct
                                 product={product}
-                                className="min-w-[180px] md:min-w-[250px]"
+                                className=""
                                 key={product._id}
                             />
-                        ))}
-                    </ul>
-                </div>
-                {!shouldHideControls && (
-                    <div className="mt-4 flex items-center justify-between">
-                        <Button onClick={scrollPrev} disabled={prevBtnDisabled}>
-                            <ChevronLeft size={28} />
-                        </Button>
-                        <Button onClick={scrollNext} disabled={nextBtnDisabled}>
-                            <ChevronRight size={28} />
-                        </Button>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                {!hideControls && (
+                    <div className="relative w-11/12 mx-auto mt-5">
+                        <CarouselPrevious />
+                        <CarouselNext />
                     </div>
                 )}
-            </div>
+            </Carousel>
         </section>
     );
 };

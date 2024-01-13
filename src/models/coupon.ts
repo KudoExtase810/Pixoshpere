@@ -13,14 +13,6 @@ const CouponSchema = new mongoose.Schema(
         isDisabled: { type: Boolean, default: true },
         minAmount: { type: Number, required: true, min: 0 },
         timesApplied: { type: Number, min: 0, default: 0 },
-        allowedProducts: {
-            type: [mongoose.SchemaTypes.ObjectId],
-            ref: "Product",
-        },
-        allowedCategories: {
-            type: [mongoose.SchemaTypes.ObjectId],
-            ref: "Category",
-        },
     },
     { timestamps: true }
 );

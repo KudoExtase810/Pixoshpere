@@ -20,7 +20,7 @@ const SingleProduct = ({
     const alreadyInCart = inCart(product._id);
 
     return (
-        <li className={cn("relative group", className)}>
+        <div className={cn("relative group", className)}>
             <Link href={product.slug} className="">
                 <BlurImage src={product.images[0].url} alt={product.title} />
                 <div className="flex items-center justify-between px-2 mt-2">
@@ -52,7 +52,7 @@ const SingleProduct = ({
             >
                 {alreadyInCart ? <Icons.CartMinus /> : <Icons.CartPlus />}
             </Button>
-        </li>
+        </div>
     );
 };
 

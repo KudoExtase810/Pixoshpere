@@ -2,13 +2,13 @@ import GeneralData from "@/components/administration/dashboard/GeneralData";
 import Overview from "@/components/administration/dashboard/Overview";
 import LatestSales from "@/components/administration/dashboard/LatestSales";
 import Order from "@/models/order";
-import Product from "@/models/product";
 import User from "@/models/user";
 import dayjs from "dayjs";
-import mongoose from "mongoose";
 import React from "react";
+import connectDB from "@/lib/connectdb";
 
 const Dashboard = async () => {
+    await connectDB();
     const totalCustomers = await User.countDocuments({ isAdmin: false });
 
     const latestOrders = await Order.find<Order>()

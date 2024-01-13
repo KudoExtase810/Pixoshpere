@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { notifyError, notifySuccess, slugify } from "@/lib/utils";
-import { uploadToCloudinary } from "@/lib/cloudinary";
+import { uploadImage } from "@/lib/image-uploader";
 
 import axios, { isAxiosError } from "axios";
 
@@ -32,45 +32,45 @@ import TextEditor from "../TextEditor";
 import LoadingSpinner from "../../LoadingSpinner";
 import { useRouter } from "next/navigation";
 import { useActionData } from "@/contexts/ActionContext";
+import SortableImages from "./SortableImages";
 
 const formSchema = z.object({
     title: z
         .string()
-        .min(6, "Le titre doit comporter au moins 6 caractères")
-        .max(64, "Le titre ne peut pas dépasser 64 caractères"),
+        .min(6, "The title must be at least 6 characters long")
+        .max(64, "The title cannot exceed 64 characters"),
     price: z.coerce
         .number({
-            invalid_type_error: "Ce champ doit être un nombre",
+            invalid_type_error: "This field must be a number",
         })
-        .min(0, "Le prix doit être supérieur ou égal à zéro")
-        .max(500000, "Le prix ne peut pas dépasser 500000"),
+        .min(0, "The price must be greater than or equal to zero")
+        .max(500000, "The price cannot exceed 500,000"),
     salePrice: z.coerce
-        .number({ invalid_type_error: "Ce champ doit être un nombre" })
-        .min(0, "Le prix en promotion doit être supérieur ou égal à zéro")
-        .max(500000, "Le prix en promotion ne peut pas dépasser 500000")
+        .number({ invalid_type_error: "This field must be a number" })
+        .min(0, "The sale price must be greater than or equal to zero")
+        .max(500000, "The sale price cannot exceed 500,000")
         .optional(),
     category: z
         .string()
-        .min(2, "Ce champ est obligatoire")
-        .max(36, "Le titre ne peut pas dépasser 36 caractères"),
+        .min(2, "This field is required")
+        .max(36, "The category cannot exceed 36 characters"),
     quantity: z.coerce
         .number({
-            invalid_type_error: "Ce champ doit être un nombre",
+            invalid_type_error: "This field must be a number",
         })
-        .min(0, "La quantité doit être supérieure ou égale à zéro")
-        .max(500, "La quantité ne peut pas dépasser 500"),
+        .min(0, "The quantity must be greater than or equal to zero")
+        .max(500, "The quantity cannot exceed 500"),
     priority: z.coerce
         .number({
-            invalid_type_error: "Ce champ doit être un nombre",
+            invalid_type_error: "This field must be a number",
         })
-        .min(0, "La priorité doit être supérieure ou égale à zéro")
-        .max(2500, "La priorité ne peut pas dépasser 2500"),
+        .min(0, "The priority must be greater than or equal to zero")
+        .max(2500, "The priority cannot exceed 2500"),
     description: z
         .string()
-        .min(36, "La description doit comporter au moins 36 caractères")
-        .max(2048, "La description ne peut pas dépasser 2048 caractères"),
+        .min(36, "The description must be at least 36 characters long")
+        .max(2048, "The description cannot exceed 2048 characters"),
     isHidden: z.boolean(),
-    hideWhenOutOfStock: z.boolean(),
 });
 
 interface props {
@@ -81,50 +81,62 @@ interface props {
 const ProductForm = ({ toggleDrawer, allCategories }: props) => {
     const router = useRouter();
 
-    const [images, setImages] = useState<FileList | null>(null);
+    const [loadingImgCount, setLoadingImgCount] = useState<number>(0);
+    const [loadedImages, setLoadedImages] = useState<Product["images"]>([]);
 
-    const { actionData } = useActionData();
-    const selectedProduct = actionData as Product | null;
+    const { actionData: selectedProduct } = useActionData() as {
+        actionData: Product;
+    };
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: selectedProduct?.title || "",
+            title: selectedProduct?.title ?? "",
             price: selectedProduct?.price,
             salePrice: selectedProduct?.salePrice,
-            category: selectedProduct?.category._id || "",
+            category: selectedProduct?.category._id ?? "",
             quantity: selectedProduct?.quantity ?? 1,
             priority: selectedProduct?.priority ?? 0,
             description: selectedProduct?.description ?? "",
             isHidden: selectedProduct?.isHidden ?? false,
-            hideWhenOutOfStock: selectedProduct?.hideWhenOutOfStock ?? false,
         },
     });
 
     const isEditMode = selectedProduct !== null;
 
+    const handleImgUpload = async (images: FileList) => {
+        setLoadingImgCount(images.length);
+        const imageData = [];
+        for (let i = 0; i < images.length; i++) {
+            const data = await uploadImage(images[i]);
+            imageData.push(data);
+        }
+        setLoadedImages([...loadedImages, ...imageData]);
+        setLoadingImgCount(0);
+    };
+
+    useEffect(() => {
+        if (selectedProduct) {
+            setLoadedImages(selectedProduct.images);
+        }
+    }, [selectedProduct]);
+
     const createProduct = async (values: z.infer<typeof formSchema>) => {
         try {
             if (values.salePrice && values.price <= values.salePrice)
                 return notifyError(
-                    "Le prix en promotion ne peut pas être supérieur ou égal au prix normal."
+                    "The sale price must be less than the regular price."
                 );
 
-            if (!images?.length)
-                return notifyError("Veuillez ajouter au moins 1 image.");
-            // If we get to this part it means that all data is valid
-            // we can now upload the images to cloudinary
-
-            const imageData = [];
-            for (let i = 0; i < images.length; i++) {
-                const data = await uploadToCloudinary(images[i]);
-                imageData.push(data);
-            }
+            if (!loadedImages.length)
+                return notifyError(
+                    "You must add at least 1 image to your product."
+                );
 
             const newProduct = {
                 ...values,
                 slug: slugify(values.title),
-                images: imageData,
+                images: loadedImages,
             };
             const { data } = await axios.post("/api/products", newProduct);
             notifySuccess(data.message);
@@ -139,26 +151,23 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
         try {
             if (values.salePrice && values.price <= values.salePrice)
                 return notifyError(
-                    "Le prix en promotion ne peut pas être supérieur ou égal au prix normal."
+                    "The sale price must be less than the regular price."
                 );
 
-            if (!images?.length)
-                return notifyError("Veuillez ajouter au moins 1 image.");
-            // If we get to this part it means that all data is valid
-            // we can now upload the images to cloudinary
-
-            const imageData = [];
-            for (let i = 0; i < images.length; i++) {
-                const data = await uploadToCloudinary(images[i]);
-                imageData.push(data);
-            }
+            if (!loadedImages.length)
+                return notifyError(
+                    "You must add at least 1 image to your product."
+                );
 
             const newProduct = {
                 ...values,
                 slug: slugify(values.title),
-                images: imageData,
+                images: loadedImages,
             };
-            const { data } = await axios.post("/api/products", newProduct);
+            const { data } = await axios.put(
+                `/api/products/${selectedProduct?._id}`,
+                newProduct
+            );
             notifySuccess(data.message);
             toggleDrawer();
             router.refresh();
@@ -170,7 +179,9 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
     return (
         <Form {...form}>
             <form
-                onSubmit={form.handleSubmit(createProduct)}
+                onSubmit={form.handleSubmit(
+                    isEditMode ? updateProduct : createProduct
+                )}
                 className="space-y-6"
             >
                 <FormField
@@ -179,7 +190,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Titre <span className="text-red-600">*</span>
+                                Title <span className="text-red-600">*</span>
                             </FormLabel>
                             <FormControl>
                                 <Input
@@ -198,7 +209,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Prix <span className="text-red-600">*</span>
+                                Price <span className="text-red-600">*</span>
                             </FormLabel>
                             <FormControl>
                                 <Input
@@ -221,7 +232,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     name="salePrice"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Prix Soldé</FormLabel>
+                            <FormLabel>Sale price</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -243,7 +254,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     name="category"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Catégorie</FormLabel>
+                            <FormLabel>Category</FormLabel>
                             <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
@@ -273,7 +284,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Quantité <span className="text-red-600">*</span>
+                                Quantity <span className="text-red-600">*</span>
                             </FormLabel>
                             <FormControl>
                                 <Input
@@ -294,7 +305,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Priorité <span className="text-red-600">*</span>
+                                Priority <span className="text-red-600">*</span>
                             </FormLabel>
                             <FormControl>
                                 <Input
@@ -314,18 +325,25 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                 <FormField
                     name="images"
                     render={() => (
-                        <FormItem>
+                        <FormItem className="relative">
                             <FormLabel>
-                                Images <span className="text-red-600">*</span>
+                                Image(s) <span className="text-red-600">*</span>
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     type="file"
                                     accept="image/*"
                                     multiple
-                                    onChange={(e) => setImages(e.target.files)}
+                                    onChange={(e) =>
+                                        handleImgUpload(e.target.files!)
+                                    }
                                 />
                             </FormControl>
+                            <SortableImages
+                                loadingImgCount={loadingImgCount}
+                                images={loadedImages}
+                                setImages={setLoadedImages}
+                            />
                         </FormItem>
                     )}
                 />
@@ -362,28 +380,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 />
                             </FormControl>
                             <div className="space-y-1 leading-none">
-                                <FormLabel>Cacher ce produit.</FormLabel>
-                            </div>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="hideWhenOutOfStock"
-                    render={({ field }) => (
-                        <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                            <FormControl>
-                                <Checkbox
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                                <FormLabel>
-                                    Cacher ce produit lorsqu'il est en rupture
-                                    de stock.
-                                </FormLabel>
+                                <FormLabel>Hide this product.</FormLabel>
                             </div>
                         </FormItem>
                     )}
@@ -397,7 +394,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                     {form.formState.isSubmitting ? (
                         <LoadingSpinner />
                     ) : (
-                        "Publier le produit"
+                        "Publish product"
                     )}
                 </Button>
             </form>

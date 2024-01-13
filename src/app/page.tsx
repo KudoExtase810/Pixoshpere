@@ -8,6 +8,7 @@ import connectDB from "@/lib/connectdb";
 const Home = async () => {
     await connectDB();
     const products = await Product.find();
+
     return (
         <>
             <ImageCarousel />

@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios";
 
-export const uploadToCloudinary = async (file: File) => {
+export const uploadImage = async (file: File) => {
     const formData = new FormData();
 
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
@@ -15,4 +15,8 @@ export const uploadToCloudinary = async (file: File) => {
         publicId: data?.public_id as string,
         url: data?.secure_url as string,
     };
+};
+
+export const deleteImage = async () => {
+    console.log("image deleted");
 };
