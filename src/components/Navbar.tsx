@@ -65,7 +65,13 @@ const Navbar = ({
                 { label: "Admins", href: "/administration/users?role=admin" },
             ],
         },
-        { label: "Orders", href: "/administration/orders" },
+        {
+            label: "Engagement",
+            subLinks: [
+                { label: "Orders", href: "/administration/orders" },
+                { label: "Messages", href: "/administration/messages" },
+            ],
+        },
     ];
 
     const relevantLinks = (
@@ -87,7 +93,7 @@ const Navbar = ({
                         XY Store
                     </Link>
 
-                    <NavigationMenu>
+                    <NavigationMenu className="max-lg:hidden">
                         <NavigationMenuList className="flex gap-4 text-zinc-500">
                             {relevantLinks.map((link) => {
                                 if (!link.subLinks) {

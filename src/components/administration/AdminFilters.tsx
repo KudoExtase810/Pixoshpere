@@ -140,7 +140,7 @@ const AdminFilters = ({ type }: props) => {
                 {isCreatable && (
                     <Button
                         variant="secondary"
-                        className="hover:text-orange-500"
+                        className="hover:text-cyan-500"
                         onClick={() => toggle(type)}
                     >
                         <Plus size={28} />

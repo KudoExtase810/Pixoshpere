@@ -29,28 +29,28 @@ const SortableImages = ({
         <>
             <SortableList
                 allowDrag={images.length > 1 && loadingImgCount === 0}
-                as="ol"
                 onSortEnd={onSortEnd}
                 className="flex flex-wrap gap-3"
             >
                 {images.map((image, idx) => (
-                    <li key={image.url} className="relative">
-                        <button
-                            className="absolute text-red-500 hover:text-red-600 top-2 right-2"
-                            onClick={() => removeImage(image.url)}
-                        >
-                            <X size={16} strokeWidth={2.5} />
-                            <span className="sr-only">Remove image</span>
-                        </button>
-                        <SortableItem>
+                    <SortableItem key={image.url}>
+                        <div className="relative z-50">
+                            <button
+                                className="absolute text-red-600 hover:text-red-700 top-2 right-2 peer z-[51]"
+                                onClick={() => removeImage(image.url)}
+                            >
+                                <X size={16} strokeWidth={2.5} />
+                                <span className="sr-only">Remove image</span>
+                            </button>
+                            <div className="absolute inset-0 w-full h-full bg-red-600 opacity-0 peer-hover:opacity-40 transition-all duration-300 rounded-sm" />
                             {/* We use regular img tag intead of Next's to avoid any unexpected bugs with the sorting package (if any exist) */}
                             <img
                                 className="h-[105px] w-[105px] max-md:h-24 max-md:w-24 rounded-sm select-none pointer-events-none"
                                 alt={`Img ${idx}`}
                                 src={image.url}
                             />
-                        </SortableItem>
-                    </li>
+                        </div>
+                    </SortableItem>
                 ))}
                 {/* If there are any imgs uploading, we add them as loading skeletons */}
                 {[...new Array(loadingImgCount)].map((_img, idx) => (

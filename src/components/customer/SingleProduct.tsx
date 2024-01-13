@@ -6,7 +6,6 @@ import FormatPricing from "../FormatPricing";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
 import Icons from "../AdditionalIcons";
 
 const SingleProduct = ({
@@ -21,7 +20,7 @@ const SingleProduct = ({
 
     return (
         <div className={cn("relative group", className)}>
-            <Link href={product.slug} className="">
+            <Link href={`/products/${product.slug}`}>
                 <BlurImage src={product.images[0].url} alt={product.title} />
                 <div className="flex items-center justify-between px-2 mt-2">
                     <h3 className="text-sm font-medium">{product.title}</h3>

@@ -79,7 +79,7 @@ const Overview = () => {
                         />
                         <Bar
                             dataKey="total"
-                            fill="#adfa1d"
+                            fill="rgb(6, 182, 212)"
                             radius={[4, 4, 0, 0]}
                         />
                     </BarChart>
