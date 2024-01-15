@@ -26,7 +26,10 @@ const AddToCart = ({ product, className }: props) => {
     return (
         <Button
             onClick={handleAdd}
-            className={cn("py-6 px-8 text-base", className)}
+            className={cn(
+                "py-6 px-8 text-base bg-cyan-500 hover:bg-cyan-600 text-white",
+                className
+            )}
         >
             {`Add to Cart (${quantityInCart})`}
         </Button>

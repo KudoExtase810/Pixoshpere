@@ -24,3 +24,19 @@ export const notifyError = (message: string) => toast.error(message);
 export const formatPrice = (price: number) => {
     return `${price.toFixed(2)}${settings.currency}`;
 };
+
+export const calcPercentageReduction = (
+    originalPrice: number,
+    salePrice: number,
+    format = true
+) => {
+    const reduction = originalPrice - salePrice;
+
+    const percentageReduction = Math.max((reduction / originalPrice) * 100);
+
+    const isInt = Number.isInteger(percentageReduction);
+
+    return format
+        ? `-${percentageReduction.toFixed(isInt ? 0 : 1)}%`
+        : percentageReduction;
+};

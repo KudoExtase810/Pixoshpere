@@ -47,7 +47,6 @@ const ProductsCarousel = ({ title, hideControls, products }: props) => {
                         <CarouselItem className="basis-1/3 sm:basis-1/4 lg:basis-1/5">
                             <SingleProduct
                                 product={product}
-                                className=""
                                 key={product._id}
                             />
                         </CarouselItem>

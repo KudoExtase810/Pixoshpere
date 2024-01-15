@@ -2,7 +2,7 @@
 
 import { useState, createContext, useContext } from "react";
 
-type ActionData = User | Product | Category | Order | Coupon | null;
+type ActionData = User | Product | Message | Category | Order | Coupon | null;
 
 type ActionContext = {
     actionData: ActionData;

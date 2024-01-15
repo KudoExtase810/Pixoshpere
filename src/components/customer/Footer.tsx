@@ -11,14 +11,14 @@ const Footer = () => {
 
     const links = [
         {
-            collectionName: "Category 1",
+            collection: "Category 1",
             links: [
                 { name: "Item 1", href: "/item1" },
                 { name: "Item 2", href: "/item2" },
             ],
         },
         {
-            collectionName: "Category 2",
+            collection: "Category 2",
             links: [
                 { name: "Item 3", href: "/item3" },
                 { name: "Item 4", href: "/item4" },
@@ -35,7 +35,7 @@ const Footer = () => {
                     {links.map((collection, idx) => (
                         <div key={idx}>
                             <h3 className="text-sm font-semibold">
-                                {collection.collectionName}
+                                {collection.collection}
                             </h3>
                             <ul className="mt-4 space-y-4 [&>li]:text-neutral-500 w-fit">
                                 {collection.links.map((link, idx) => (

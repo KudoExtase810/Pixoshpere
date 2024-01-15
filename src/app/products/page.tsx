@@ -2,6 +2,7 @@ import Animate from "@/components/Animate";
 import BlurImage from "@/components/BlurImage";
 import FormatPricing from "@/components/FormatPricing";
 import ProductsFilters from "@/components/customer/ProductsFilters";
+import SingleProduct from "@/components/customer/SingleProduct";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import Link from "next/link";
@@ -53,27 +54,10 @@ const Products = async ({
                 className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
             >
                 {products.map((product) => (
-                    <li>
-                        <Link
-                            href={`/products/${product.slug}`}
-                            className="group"
-                        >
-                            <BlurImage
-                                src={product.images[0].url}
-                                alt={product.title}
-                            />
-                            <div className="flex items-center justify-between px-2 mt-2">
-                                <h3 className=" text-sm text-gray-700 dark:text-gray-500">
-                                    {product.title}
-                                </h3>
-                                <p className="text-lg font-medium text-gray-900 dark:text-gray-700">
-                                    <FormatPricing
-                                        price={product.price}
-                                        salePrice={product.salePrice}
-                                    />
-                                </p>
-                            </div>
-                        </Link>
+                    <li key={product._id}>
+                        <SingleProduct
+                            product={JSON.parse(JSON.stringify(product))}
+                        />
                     </li>
                 ))}
             </Animate>

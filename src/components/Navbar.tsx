@@ -35,7 +35,7 @@ const Navbar = ({
     const customerLinks = [
         { label: "All", href: "/products" },
         { label: "Apparel", href: "/s" },
-        { label: "Contact Us", href: "/contact-us" },
+        { label: "Support", href: "/support" },
     ];
 
     if (isAdmin) {

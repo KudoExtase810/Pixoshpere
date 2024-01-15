@@ -65,3 +65,12 @@ type Coupon = Base & {
     allowedProducts?: string[];
     allowedCategories: string[];
 };
+
+type Message = Base & {
+    sender: {
+        email: string;
+        fullName: string;
+    };
+    subject: string;
+    message: string;
+};

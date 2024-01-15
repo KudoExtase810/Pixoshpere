@@ -1,4 +1,3 @@
-import BlurImage from "@/components/BlurImage";
 import { Check, X } from "lucide-react";
 import AddToCart from "@/components/customer/AddToCart";
 import { Separator } from "@/components/ui/separator";
@@ -7,6 +6,7 @@ import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import { redirect } from "next/navigation";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
+import ProductImages from "@/components/ProductImages";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
     await connectDB();
@@ -29,13 +29,11 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
 
     return (
         <div className="container">
-            <div className="grid max-xl:gap-7 sm:grid-cols-2 py-8">
-                <div>
-                    <BlurImage
-                        src={product.images[0].url}
-                        alt={product.title}
-                    />
-                </div>
+            <div className="flex gap-16 py-8">
+                <ProductImages
+                    images={JSON.parse(JSON.stringify(product.images))}
+                    alt={product.title}
+                />
                 <div>
                     <h1 className="mb-4 text-4xl font-bold tracking-tight">
                         {product.title}

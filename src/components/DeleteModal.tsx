@@ -29,7 +29,8 @@ const DeleteModal = () => {
     const type = pathname.replace("/administration/", "") as
         | "products"
         | "categories"
-        | "coupons";
+        | "coupons"
+        | "messages";
 
     // const headings = {
     //     user: `Delete ${(actionData as User)?.username}?`,
@@ -50,6 +51,10 @@ const DeleteModal = () => {
                 break;
             case "coupons":
                 api_url = `/api/coupons/${actionData?._id}`;
+                break;
+
+            case "messages":
+                api_url = `/api/messages/${actionData?._id}`;
                 break;
 
             default:
