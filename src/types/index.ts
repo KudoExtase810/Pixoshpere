@@ -73,5 +73,5 @@ type Message = Base & {
         lastName: string;
     };
     subject: string;
-    message: string;
+    content: string;
 };

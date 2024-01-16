@@ -1,44 +1,45 @@
 "use client";
-
-import useEmblaCarousel from "embla-carousel-react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import { useRef } from "react";
 
 export const ImageCarousel = () => {
-    const [emblaRef] = useEmblaCarousel({ loop: true }, [
-        Autoplay({ delay: 5000 }),
-    ]);
+    const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
+    const images = [
+        { src: "/images/banner1.jpg", alt: "idk" },
+        { src: "/images/banner2.jpg", alt: "idk" },
+        { src: "/images/banner3.jpg", alt: "idk" },
+    ];
     return null;
-
     return (
-        <div className="embla" ref={emblaRef}>
-            <div className="flex overflow-hidden">
-                <Image
-                    src="/images/banner1.jpg"
-                    width={1920}
-                    height={1080}
-                    className="object-cover w-full h-auto max-w-full block"
-                    alt=""
-                />
-
-                <Image
-                    src="/images/banner2.jpg"
-                    width={1920}
-                    height={1080}
-                    className="object-cover w-full h-auto max-w-full block"
-                    alt=""
-                />
-
-                <Image
-                    src="/images/banner3.jpg"
-                    width={1920}
-                    height={1080}
-                    className="object-cover w-full h-auto max-w-full block"
-                    alt=""
-                />
-            </div>
-        </div>
+        <Carousel className="w-full" plugins={[plugin.current]}>
+            <CarouselContent>
+                {images.map((image) => (
+                    <CarouselItem>
+                        <Image
+                            key={image.src}
+                            src={image.src}
+                            width={1920}
+                            height={1080}
+                            quality={100}
+                            unoptimized
+                            className="object-cover"
+                            alt={image.alt}
+                        />
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            {/* <CarouselPrevious />
+            <CarouselNext /> */}
+        </Carousel>
     );
 };
 

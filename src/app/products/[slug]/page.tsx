@@ -7,6 +7,7 @@ import Product from "@/models/product";
 import { redirect } from "next/navigation";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
 import ProductImages from "@/components/ProductImages";
+import parseHTML from "html-react-parser";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
     await connectDB();
@@ -54,12 +55,10 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                             </span>
                         )}
                     </div>
-                    <div
-                        className="max-w-[100vw] break-words"
-                        dangerouslySetInnerHTML={{
-                            __html: product.description,
-                        }}
-                    ></div>
+                    {/* add on sale to prod */}
+                    <div className="max-w-sm break-words">
+                        {parseHTML(product.description)}
+                    </div>
                     <div className="flex items-center gap-1.5 mt-4 font-medium text-neutral-600 dark:text-neutral-500">
                         {product.quantity > 0 ? (
                             <>
@@ -81,7 +80,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                 <>
                     <Separator />
                     <ProductsCarousel
-                        title="Similar products"
+                        title="You may also like"
                         products={similarProducts}
                     />
                 </>

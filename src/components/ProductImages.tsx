@@ -3,14 +3,8 @@
 import Image from "next/image";
 import { ScrollArea } from "./ui/scroll-area";
 import { type CarouselApi } from "@/components/ui/carousel";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselPrevious,
-    CarouselNext,
-} from "./ui/carousel";
-import { useEffect, useState } from "react";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { useState } from "react";
 
 interface ProductImagesProps {
     images: Product["images"];

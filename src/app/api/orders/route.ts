@@ -11,7 +11,7 @@ export async function POST(request: Request) {
         await Order.create(body);
 
         return NextResponse.json(
-            { message: "New order created successfully." },
+            { message: "Your order has been submitted." },
             { status: 201 }
         );
     } catch (error: any) {

@@ -56,32 +56,40 @@ const Products = async ({
     return (
         <>
             <ProductDrawer allCategories={allCategories} />
-            <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+            <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Products
             </h1>
             <AdminFilters type="product" />
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Product</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Price</TableHead>
-                            <TableHead>Sales</TableHead>
-                            <TableHead>Quantity</TableHead>
-                            <TableHead>Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {products.map((product) => (
-                            <ProductRow
-                                key={product._id}
-                                product={JSON.parse(JSON.stringify(product))}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            {products.length > 0 ? (
+                <div className="border rounded-md">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Product</TableHead>
+                                <TableHead>Category</TableHead>
+                                <TableHead>Price</TableHead>
+                                <TableHead>Sales</TableHead>
+                                <TableHead>Quantity</TableHead>
+                                <TableHead>Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {products.map((product) => (
+                                <ProductRow
+                                    key={product._id}
+                                    product={JSON.parse(
+                                        JSON.stringify(product)
+                                    )}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            ) : (
+                <p className="flex items-center justify-center h-64">
+                    No results were found.
+                </p>
+            )}
             <PaginationControls
                 totalDocs={totalProducts}
                 showingDocs={products.length}

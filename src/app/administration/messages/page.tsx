@@ -11,6 +11,7 @@ import PaginationControls from "@/components/administration/PaginationControls";
 import MessageRow from "@/components/administration/messages/MessageRow";
 import Message from "@/models/message";
 import connectDB from "@/lib/connectdb";
+import MessageModal from "@/components/administration/messages/MessageModal";
 
 const Messages = async ({
     searchParams,
@@ -44,31 +45,40 @@ const Messages = async ({
 
     return (
         <>
-            <h1 className="bmessage-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+            <MessageModal />
+            <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Messages
             </h1>
             {/* <AdminFilters type="message" /> */}
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Full name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Sent on</TableHead>
-                            <TableHead>Subject</TableHead>
-                            <TableHead>Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {messages.map((message) => (
-                            <MessageRow
-                                key={message._id}
-                                message={JSON.parse(JSON.stringify(message))}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            {messages.length > 0 ? (
+                <div className="border rounded-md">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Full name</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Sent on</TableHead>
+                                <TableHead>Subject</TableHead>
+                                <TableHead>Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {messages.map((message) => (
+                                <MessageRow
+                                    key={message._id}
+                                    message={JSON.parse(
+                                        JSON.stringify(message)
+                                    )}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            ) : (
+                <p className="flex items-center justify-center h-64">
+                    No results were found.
+                </p>
+            )}
             <PaginationControls
                 showingDocs={messages.length}
                 totalDocs={totalDocs}

@@ -9,8 +9,8 @@ const Services = () => {
             imageSrc: "/images/fast-delivery.png",
         },
         {
-            title: "2 Days Return Policy",
-            description: "Easy returns within 2 days.",
+            title: "3 Days Return Policy",
+            description: "Easy returns within 3 days.",
             imageSrc: "/images/returns.png",
         },
         {
@@ -34,6 +34,7 @@ const Services = () => {
                         height={64}
                         width={64}
                         quality={100}
+                        unoptimized
                         alt={feature.title}
                     />
                     <div>

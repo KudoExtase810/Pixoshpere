@@ -73,30 +73,38 @@ const Categories = async ({
     return (
         <>
             <CategoryDrawer />
-            <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+            <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Categories
             </h1>
             <CategoryFilters />
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Products</TableHead>
-                            <TableHead>Added On</TableHead>
-                            <TableHead>Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {categories.map((category) => (
-                            <CategoryRow
-                                key={category._id}
-                                category={JSON.parse(JSON.stringify(category))}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            {categories.length > 0 ? (
+                <div className="border rounded-md">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Category</TableHead>
+                                <TableHead>Products</TableHead>
+                                <TableHead>Added On</TableHead>
+                                <TableHead>Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {categories.map((category) => (
+                                <CategoryRow
+                                    key={category._id}
+                                    category={JSON.parse(
+                                        JSON.stringify(category)
+                                    )}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            ) : (
+                <p className="flex items-center justify-center h-64">
+                    No results were found.
+                </p>
+            )}
             <PaginationControls
                 showingDocs={categories.length}
                 totalDocs={totalDocs}

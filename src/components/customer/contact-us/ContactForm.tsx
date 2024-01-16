@@ -29,14 +29,18 @@ const formSchema = z.object({
     content: z.string(),
 });
 
-const ContactForm = () => {
+interface ContactFormProps {
+    userDetails: User;
+}
+
+const ContactForm = ({ userDetails }: ContactFormProps) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             sender: {
-                firstName: "",
-                lastName: "",
-                email: "",
+                firstName: userDetails.firstName ?? "",
+                lastName: userDetails.lastName ?? "",
+                email: userDetails.email ?? "",
             },
             subject: "",
             content: "",
@@ -53,8 +57,8 @@ const ContactForm = () => {
     };
     return (
         <section>
-            <h2 className="styled">
-                Have more questions? Get in touch with us!
+            <h2 className="pb-3 text-4xl font-semibold">
+                More questions in mind?
             </h2>
             <Form {...form}>
                 <form

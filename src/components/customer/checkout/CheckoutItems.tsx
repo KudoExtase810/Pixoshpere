@@ -1,25 +1,25 @@
-"use client";
-
-import BlurImage from "@/components/BlurImage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { formatPrice, notifySuccess } from "@/lib/utils";
-import { Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const CheckoutItems = () => {
+interface CheckoutItemsProps {
+    orderData: {
+        subTotal: number;
+        shippingCost: number;
+        tax: number;
+        total: number;
+    };
+}
+
+const CheckoutItems = ({ orderData }: CheckoutItemsProps) => {
     const { cartItems } = useCart();
     const [couponCode, setCouponCode] = useState("");
-    const [subTotal, setSubTotal] = useState(0);
-    const [shippingCost, setShippingCost] = useState(0);
-    const [tax, setTax] = useState(0);
-
-    const total = subTotal + shippingCost + tax;
 
     const applyCoupon = () => {
         notifySuccess("Coupon applied!");
@@ -80,18 +80,18 @@ const CheckoutItems = () => {
             <Separator className="my-4" />
             <div className="flex justify-between mb-2">
                 <p>Subtotal</p>
-                <span>{formatPrice(subTotal)}</span>
+                <span>{formatPrice(orderData.subTotal)}</span>
             </div>
             <div className="flex justify-between">
                 <p>Shipping cost</p>
-                <span>{formatPrice(shippingCost)}</span>
+                <span>{formatPrice(orderData.shippingCost)}</span>
             </div>
             <Separator className="my-4" />
             <div className="flex justify-between">
                 <p>
-                    <b>Total price</b> includes {formatPrice(tax)} tax
+                    <b>Total price</b> includes {formatPrice(orderData.tax)} tax
                 </p>
-                <span>{formatPrice(total)}</span>
+                <span>{formatPrice(orderData.total)}</span>
             </div>
         </section>
     );

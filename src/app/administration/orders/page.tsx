@@ -44,32 +44,38 @@ const Orders = async ({
 
     return (
         <>
-            <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+            <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Orders
             </h1>
             <AdminFilters type="order" />
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Customer</TableHead>
-                            <TableHead>Ordered On</TableHead>
-                            <TableHead>Payment method</TableHead>
-                            <TableHead>Amount</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {orders.map((order) => (
-                            <OrderRow
-                                key={order._id}
-                                order={JSON.parse(JSON.stringify(order))}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            {orders.length > 0 ? (
+                <div className="border rounded-md">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Customer</TableHead>
+                                <TableHead>Ordered On</TableHead>
+                                <TableHead>Payment method</TableHead>
+                                <TableHead>Amount</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {orders.map((order) => (
+                                <OrderRow
+                                    key={order._id}
+                                    order={JSON.parse(JSON.stringify(order))}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            ) : (
+                <p className="flex items-center justify-center h-64">
+                    No results were found.
+                </p>
+            )}
             <PaginationControls
                 showingDocs={orders.length}
                 totalDocs={totalDocs}

@@ -53,10 +53,11 @@ const SortableImages = ({
                     </SortableItem>
                 ))}
                 {/* If there are any imgs uploading, we add them as loading skeletons */}
-                {[...new Array(loadingImgCount)].map((_img, idx) => (
-                    <li key={idx}>
-                        <Skeleton className="h-[105px] w-[105px] max-md:h-24 max-md:w-24 rounded-sm" />{" "}
-                    </li>
+                {[...new Array(loadingImgCount)].map((_, idx) => (
+                    <Skeleton
+                        key={idx}
+                        className="h-[105px] w-[105px] max-md:h-24 max-md:w-24 rounded-sm"
+                    />
                 ))}
             </SortableList>
             {images.length > 1 && (

@@ -26,8 +26,10 @@ const FAQ = () => {
     ];
 
     return (
-        <section className="w-full" id="faq">
-            <h2 className="styled">Frequently Asked Questions</h2>
+        <section className="w-full py-8" id="faq">
+            <h2 className="pb-3 text-4xl font-semibold">
+                Frequently Asked Questions
+            </h2>
             <Accordion type="single" collapsible>
                 {data.map((qa, idx) => (
                     <AccordionItem key={idx} value={qa.q}>

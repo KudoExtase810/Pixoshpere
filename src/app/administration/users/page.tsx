@@ -48,41 +48,47 @@ const Users = async ({
 
     return (
         <>
-            <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
+            <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 {role === "admin" ? "Admins" : "Customers"}
             </h1>
             <AdminFilters type="user" />
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        {role === "admin" ? (
-                            <TableRow>
-                                <TableHead>First name</TableHead>
-                                <TableHead>Last name</TableHead>
-                                <TableHead>Joined at</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Phone</TableHead>
-                            </TableRow>
-                        ) : (
-                            <TableRow>
-                                <TableHead>First name</TableHead>
-                                <TableHead>Last name</TableHead>
-                                <TableHead>Joined at</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Phone</TableHead>
-                            </TableRow>
-                        )}
-                    </TableHeader>
-                    <TableBody>
-                        {users.map((user) => (
-                            <UserRow
-                                key={user._id}
-                                user={JSON.parse(JSON.stringify(user))}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            {users.length > 0 ? (
+                <div className="border rounded-md">
+                    <Table>
+                        <TableHeader>
+                            {role === "admin" ? (
+                                <TableRow>
+                                    <TableHead>First name</TableHead>
+                                    <TableHead>Last name</TableHead>
+                                    <TableHead>Joined at</TableHead>
+                                    <TableHead>Email</TableHead>
+                                    <TableHead>Phone</TableHead>
+                                </TableRow>
+                            ) : (
+                                <TableRow>
+                                    <TableHead>First name</TableHead>
+                                    <TableHead>Last name</TableHead>
+                                    <TableHead>Joined at</TableHead>
+                                    <TableHead>Email</TableHead>
+                                    <TableHead>Phone</TableHead>
+                                </TableRow>
+                            )}
+                        </TableHeader>
+                        <TableBody>
+                            {users.map((user) => (
+                                <UserRow
+                                    key={user._id}
+                                    user={JSON.parse(JSON.stringify(user))}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            ) : (
+                <p className="flex items-center justify-center h-64">
+                    No results were found.
+                </p>
+            )}
             <PaginationControls
                 totalDocs={totalDocs}
                 showingDocs={users.length}

@@ -1,5 +1,3 @@
-"use client";
-
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 import { Button } from "@/components/ui/button";
@@ -19,7 +17,17 @@ import axios, { isAxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
+interface CheckoutFormProps {
+    userDetails: User;
+    orderData: {
+        subTotal: number;
+        shippingCost: number;
+        tax: number;
+        total: number;
+    };
+}
+
+const CheckoutForm = ({ userDetails, orderData }: CheckoutFormProps) => {
     const checkoutSchema = z.object({
         email: z.string().min(1).email(),
         firstName: z.string().min(1).max(36),
@@ -27,7 +35,7 @@ const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
         streetAddress: z.string().min(1).max(196),
         city: z.string().min(1).max(64),
         zipCode: z.string().min(1).max(32),
-        phoneNumber: z.string().min(1).max(10),
+        phone: z.string().min(1).max(10),
     });
 
     type CheckoutSchema = z.infer<typeof checkoutSchema>;
@@ -38,7 +46,7 @@ const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
             firstName: userDetails.firstName,
             lastName: userDetails.lastName,
             email: userDetails.email,
-            phoneNumber: userDetails.phone,
+            phone: userDetails.phone,
         },
     });
 
@@ -163,7 +171,7 @@ const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
                     />
                     <FormField
                         control={form.control}
-                        name="phoneNumber"
+                        name="phone"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>
