@@ -42,7 +42,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Cart logic
 
-    const [cartItems, setCartItems] = useLocalStorageState("myshop-cart", {
+    const [cartItems, setCartItems] = useLocalStorageState("xystore-cart", {
         defaultValue: [] as CartItem[],
     });
 

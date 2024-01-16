@@ -18,7 +18,7 @@ interface props {
     products: Product[];
 }
 
-const ProductsCarousel = ({ title, hideControls, products }: props) => {
+const ProductsCarousel = ({ title, hideControls = false, products }: props) => {
     return (
         <section className="py-8">
             <div className="flex justify-between items-center mb-4">
@@ -44,16 +44,16 @@ const ProductsCarousel = ({ title, hideControls, products }: props) => {
             >
                 <CarouselContent>
                     {products.map((product) => (
-                        <CarouselItem className="basis-1/3 sm:basis-1/4 lg:basis-1/5">
-                            <SingleProduct
-                                product={product}
-                                key={product._id}
-                            />
+                        <CarouselItem
+                            key={product._id}
+                            className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                        >
+                            <SingleProduct product={product} />
                         </CarouselItem>
                     ))}
                 </CarouselContent>
                 {!hideControls && (
-                    <div className="relative w-11/12 mx-auto mt-5">
+                    <div className="relative w-11/12 mx-auto mt-6">
                         <CarouselPrevious />
                         <CarouselNext />
                     </div>

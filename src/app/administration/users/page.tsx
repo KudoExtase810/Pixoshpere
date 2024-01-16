@@ -76,8 +76,8 @@ const Users = async ({
                     <TableBody>
                         {users.map((user) => (
                             <UserRow
-                                user={JSON.parse(JSON.stringify(user))}
                                 key={user._id}
+                                user={JSON.parse(JSON.stringify(user))}
                             />
                         ))}
                     </TableBody>

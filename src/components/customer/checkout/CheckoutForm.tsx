@@ -51,9 +51,6 @@ const CheckoutForm = ({ userDetails }: { userDetails: User }) => {
     };
     return (
         <section className="w-full lg:w-1/2 p-4 pl-0">
-            <h2 className="pb-2 text-3xl font-semibold tracking-tight">
-                Your details
-            </h2>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(handleCheckout)}

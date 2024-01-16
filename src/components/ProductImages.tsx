@@ -24,8 +24,34 @@ const ProductImages = ({ images, alt }: ProductImagesProps) => {
         api?.scrollTo(idx);
     };
 
+    // No need to render the whole carousel thing if we only have 1 image
+    if (images.length === 1)
+        return (
+            <div className="flex gap-5">
+                <div className="h-[500px]">
+                    <div className="mr-4">
+                        <Image
+                            alt={alt}
+                            src={images[0].url}
+                            width={100}
+                            height={100}
+                            quality={100}
+                            className="rounded-md"
+                        />
+                    </div>
+                </div>
+                <Image
+                    className="rounded-md"
+                    width={500}
+                    height={500}
+                    src={images[0].url}
+                    alt={alt}
+                />
+            </div>
+        );
+
     return (
-        <div className="flex gap-6 group">
+        <div className="flex gap-5">
             <ScrollArea className="h-[500px]">
                 <div className="flex flex-col gap-2 mr-4">
                     {images.map((image, idx) => (

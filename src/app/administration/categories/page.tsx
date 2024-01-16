@@ -12,6 +12,7 @@ import CategoryRow from "@/components/administration/categories/CategoryRow";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";
 import Category from "@/models/category";
 import connectDB from "@/lib/connectdb";
+import CategoryFilters from "@/components/administration/categories/CategoryFilters";
 
 const Categories = async ({
     searchParams,
@@ -75,7 +76,7 @@ const Categories = async ({
             <h1 className="border-b pb-2 pt-4 text-3xl font-semibold tracking-tight">
                 Categories
             </h1>
-            <AdminFilters type="category" />
+            <CategoryFilters />
             <div className="border rounded-md">
                 <Table>
                     <TableHeader>

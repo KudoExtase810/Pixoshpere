@@ -266,7 +266,10 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 </FormControl>
                                 <SelectContent>
                                     {(allCategories || []).map((category) => (
-                                        <SelectItem value={category._id}>
+                                        <SelectItem
+                                            key={category._id}
+                                            value={category._id}
+                                        >
                                             {category.label}
                                         </SelectItem>
                                     ))}

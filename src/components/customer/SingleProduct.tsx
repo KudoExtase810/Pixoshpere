@@ -23,7 +23,7 @@ const SingleProduct = ({
             <Link href={`/products/${product.slug}`}>
                 {product.salePrice && (
                     <Badge
-                        variant={"default"}
+                        variant={"sale"}
                         className="absolute top-3 right-3 z-[5]"
                     >
                         {calcPercentageReduction(
@@ -32,9 +32,15 @@ const SingleProduct = ({
                         )}
                     </Badge>
                 )}
-                <BlurImage src={product.images[0].url} alt={product.title} />
-                <div className="flex items-center justify-between px-2 mt-2">
-                    <h3 className="text-sm font-medium truncate">
+                <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    <BlurImage
+                        fill
+                        src={product.images[0].url}
+                        alt={product.title}
+                    />
+                </div>
+                <div className="flex flex-col mt-2">
+                    <h3 className="font-medium truncate max-w-full">
                         {product.title}
                     </h3>
                     <p className="text-lg">
@@ -47,7 +53,7 @@ const SingleProduct = ({
             </Link>
             <Button
                 variant="default"
-                className="absolute rounded-sm bg-cyan-500 hover:bg-cyan-600 text-white left-1/2 -translate-x-1/2 z-10 w-[96%] text-center bottom-11 transition-all duration-700 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+                className="absolute rounded-sm bg-cyan-500 hover:bg-cyan-600 text-white left-1/2 -translate-x-1/2 z-10 w-[96%] text-center bottom-[68px] transition-all duration-700 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
                 onClick={() =>
                     alreadyInCart ? removeItem(product._id) : addItem(product)
                 }

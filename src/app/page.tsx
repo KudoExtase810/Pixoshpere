@@ -7,7 +7,7 @@ import connectDB from "@/lib/connectdb";
 
 const Home = async () => {
     await connectDB();
-    const products = await Product.find();
+    const products = await Product.find().populate("category");
 
     return (
         <>

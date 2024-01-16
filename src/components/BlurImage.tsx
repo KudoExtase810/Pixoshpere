@@ -6,31 +6,43 @@ import { useState } from "react";
 interface BlurImageProps {
     src: string;
     alt: string;
+    width?: number;
+    height?: number;
+    fill?: boolean;
+    unoptimized?: boolean;
+    quality?: number;
     className?: React.HTMLAttributes<HTMLDivElement>["className"];
 }
 
-const BlurImage = ({ src, alt, className }: BlurImageProps) => {
+const BlurImage = ({
+    src,
+    alt,
+    fill,
+    width,
+    height,
+    className,
+    unoptimized,
+    quality,
+}: BlurImageProps) => {
     const [isLoading, setLoading] = useState(true);
     return (
-        <div
+        <Image
+            alt={alt}
+            src={src}
+            width={width}
+            height={height}
+            fill={fill}
+            unoptimized={unoptimized}
+            quality={quality}
             className={cn(
-                "aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 xl:aspect-w-7 xl:aspect-h-8",
-                className
+                "duration-700 ease-in-out group-hover:opacity-75 object-cover",
+                className,
+                isLoading
+                    ? "scale-110 blur-2xl grayscale"
+                    : "scale-100 blur-0 grayscale-0"
             )}
-        >
-            <Image
-                alt={alt}
-                src={src}
-                fill
-                className={cn(
-                    "duration-700 ease-in-out group-hover:opacity-75 object-cover",
-                    isLoading
-                        ? "scale-110 blur-2xl grayscale"
-                        : "scale-100 blur-0 grayscale-0"
-                )}
-                onLoad={() => setLoading(false)}
-            />
-        </div>
+            onLoad={() => setLoading(false)}
+        />
     );
 };
 

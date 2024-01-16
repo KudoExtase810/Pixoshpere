@@ -69,7 +69,8 @@ type Coupon = Base & {
 type Message = Base & {
     sender: {
         email: string;
-        fullName: string;
+        firstName: string;
+        lastName: string;
     };
     subject: string;
     message: string;

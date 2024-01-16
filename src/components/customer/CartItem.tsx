@@ -4,19 +4,27 @@ import { Button } from "@/components/ui/button";
 import { Trash, Plus, Minus } from "lucide-react";
 import Link from "next/link";
 import { formatPrice, notifyError } from "@/lib/utils";
+import Image from "next/image";
 
 interface CartItemProps {
     item: CartItem;
 }
 
 const CartItem = ({ item }: CartItemProps) => {
-    const { removeItem, updateItemQuantity } = useCart();
+    const { removeItem } = useCart();
 
     return (
-        <li key={item._id} className="flex py-4 gap-4">
-            <div className="w-32">
-                <BlurImage alt={item.title} src={item.images[0].url} />
-            </div>
+        <li className="flex py-4 gap-4">
+            <Image
+                className="rounded-md"
+                height={110}
+                width={110}
+                quality={100}
+                unoptimized
+                alt={item.title}
+                src={item.images[0].url}
+            />
+
             <div className="flex flex-col justify-between w-full py-1">
                 <div className="flex justify-between">
                     <div>

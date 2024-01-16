@@ -24,7 +24,7 @@ const MessageRow = ({ message }: { message: Message }) => {
     return (
         <TableRow>
             <TableCell className="font-medium">
-                {message.sender.fullName}
+                {`${message.sender.firstName} ${message.sender.lastName}`}
             </TableCell>
             <TableCell>{message.sender.email}</TableCell>
             <TableCell>

@@ -54,7 +54,7 @@ const ContactForm = () => {
     return (
         <section>
             <h2 className="styled">
-                Still haven't got your answer? Get in touch with us!
+                Have more questions? Get in touch with us!
             </h2>
             <Form {...form}>
                 <form

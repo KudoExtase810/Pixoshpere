@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { formatPrice, notifySuccess } from "@/lib/utils";
 import { Trash } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -25,19 +26,19 @@ const CheckoutItems = () => {
     };
 
     return (
-        <section className="w-full lg:w-1/2 p-4 pr-0">
-            <h2 className="pb-2 text-3xl font-semibold tracking-tight">
-                Your items
-            </h2>
-            <ul className="divide-y border-y mb-6">
+        <section className="w-full lg:w-1/2 lg:p-4 pr-0 pb-6">
+            <ul className="divide-y bordesr-y mb-4">
                 {cartItems.map((item) => (
                     <li key={item._id} className="flex py-4 gap-4">
-                        <div className="w-28">
-                            <BlurImage
-                                alt={item.title}
-                                src={item.images[0].url}
-                            />
-                        </div>
+                        <Image
+                            className="rounded-md"
+                            height={110}
+                            width={110}
+                            quality={100}
+                            unoptimized
+                            alt={item.title}
+                            src={item.images[0].url}
+                        />
                         <div className="flex flex-col justify-between w-full py-1">
                             <div className="flex justify-between">
                                 <div>

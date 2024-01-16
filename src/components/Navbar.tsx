@@ -33,9 +33,9 @@ const Navbar = ({
     const isAdminSide = pathname.includes("administration");
 
     const customerLinks = [
-        { label: "All", href: "/products" },
-        { label: "Apparel", href: "/s" },
-        { label: "Support", href: "/support" },
+        { label: "Home", href: "/" },
+        { label: "Shop", href: "/products" },
+        { label: "Contact Us", href: "/support" },
     ];
 
     if (isAdmin) {
