@@ -30,7 +30,7 @@ const ProductDrawer = ({ allCategories }: props) => {
                 <SheetHeader className="mb-4">
                     <SheetTitle>Add a new product</SheetTitle>
                     <SheetDescription>
-                        Fill in your product's details.
+                        Fill in your product&apos;s details.
                     </SheetDescription>
                 </SheetHeader>
                 <ProductForm

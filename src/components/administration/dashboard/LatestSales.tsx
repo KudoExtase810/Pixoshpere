@@ -48,7 +48,7 @@ const LatestSales = ({ latestOrders }: props) => {
                             ))
                         ) : (
                             <p className="text-center mt-[25%] text-muted-foreground">
-                                You haven't made any sales yet.
+                                You haven&apos;t made any sales yet.
                             </p>
                         )}
                     </div>

@@ -318,7 +318,8 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 />
                             </FormControl>
                             <FormDescription>
-                                L'ordre d'affichage du produit dans la liste.
+                                L&apos;ordre d&apos;affichage du produit dans la
+                                liste.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

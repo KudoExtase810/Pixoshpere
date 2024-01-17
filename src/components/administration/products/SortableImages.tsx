@@ -67,8 +67,8 @@ const SortableImages = ({
                     </li>
                     <li>
                         <p>
-                            The 1st image will appear as the product's preview
-                            image.
+                            The 1st image will appear as the product&apos;s
+                            preview image.
                         </p>
                     </li>
                 </ul>
