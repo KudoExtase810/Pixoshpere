@@ -8,12 +8,12 @@ import {
 
 import ProductRow from "@/components/administration/products/ProductRow";
 
-import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import ProductDrawer from "@/components/administration/products/ProductDrawer";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import Category from "@/models/category";
+import ProductFilters from "@/components/administration/products/ProductFilters";
 
 const Products = async ({
     searchParams,
@@ -59,7 +59,7 @@ const Products = async ({
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Products
             </h1>
-            <AdminFilters type="product" />
+            <ProductFilters />
             {products.length > 0 ? (
                 <div className="border rounded-md">
                     <Table>

@@ -5,12 +5,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
-import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import User from "@/models/user";
 import UserRow from "@/components/administration/users/UserRow";
 import connectDB from "@/lib/connectdb";
+import UserFilters from "@/components/administration/users/UserFilters";
 
 const Users = async ({
     searchParams,
@@ -51,7 +50,7 @@ const Users = async ({
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 {role === "admin" ? "Admins" : "Customers"}
             </h1>
-            <AdminFilters type="user" />
+            <UserFilters />
             {users.length > 0 ? (
                 <div className="border rounded-md">
                     <Table>

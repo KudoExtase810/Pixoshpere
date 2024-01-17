@@ -11,6 +11,7 @@ import MessageRow from "@/components/administration/messages/MessageRow";
 import Message from "@/models/message";
 import connectDB from "@/lib/connectdb";
 import MessageModal from "@/components/administration/messages/MessageModal";
+import MessageFilters from "@/components/administration/messages/MessageFilters";
 
 const Messages = async ({
     searchParams,
@@ -48,7 +49,7 @@ const Messages = async ({
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Messages
             </h1>
-            {/* <AdminFilters type="message" /> */}
+            <MessageFilters />
             {messages.length > 0 ? (
                 <div className="border rounded-md">
                     <Table>

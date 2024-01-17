@@ -6,7 +6,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CategoryRow from "@/components/administration/categories/CategoryRow";
 import CategoryDrawer from "@/components/administration/categories/CategoryDrawer";

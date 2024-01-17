@@ -16,8 +16,8 @@ import { getServerSession } from "next-auth";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Mediastore Tech",
-    description: "Vente de materiel informatique",
+    title: "PixoSphere",
+    description: "Buy pixel space entities",
 };
 
 export default async function RootLayout({

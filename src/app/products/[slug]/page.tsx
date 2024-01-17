@@ -1,7 +1,7 @@
 import { Check, X } from "lucide-react";
 import AddToCart from "@/components/customer/AddToCart";
 import { Separator } from "@/components/ui/separator";
-import { cn, formatPrice } from "@/lib/utils";
+import { calcPercentageReduction, cn, formatPrice } from "@/lib/utils";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import { redirect } from "next/navigation";
@@ -41,6 +41,13 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
         <div className="container">
             <div className="flex gap-16 py-8">
                 <ProductImages
+                    salePercentage={
+                        product.salePrice &&
+                        calcPercentageReduction(
+                            product.price,
+                            product.salePrice
+                        )
+                    }
                     images={JSON.parse(JSON.stringify(product.images))}
                     alt={product.title}
                 />

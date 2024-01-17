@@ -6,11 +6,11 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import OrderRow from "@/components/administration/orders/OrderRow";
 import Order from "@/models/order";
 import connectDB from "@/lib/connectdb";
+import OrderFilters from "@/components/administration/orders/OrderFilters";
 
 const Orders = async ({
     searchParams,
@@ -47,7 +47,7 @@ const Orders = async ({
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Orders
             </h1>
-            <AdminFilters type="order" />
+            <OrderFilters />
             {orders.length > 0 ? (
                 <div className="border rounded-md">
                     <Table>

@@ -50,7 +50,7 @@ const CategoryFilters = () => {
                     }
                 >
                     <SelectTrigger className="w-72">
-                        <SelectValue placeholder="Trier par" />
+                        <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>

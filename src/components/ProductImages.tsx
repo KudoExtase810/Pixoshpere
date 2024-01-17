@@ -5,13 +5,15 @@ import { ScrollArea } from "./ui/scroll-area";
 import { type CarouselApi } from "@/components/ui/carousel";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import { useState } from "react";
+import { Badge } from "./ui/badge";
 
 interface ProductImagesProps {
     images: Product["images"];
     alt: string;
+    salePercentage?: number | string;
 }
 
-const ProductImages = ({ images, alt }: ProductImagesProps) => {
+const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
     const [api, setApi] = useState<CarouselApi>();
 
     const jumpToImage = (idx: number) => {
@@ -34,14 +36,24 @@ const ProductImages = ({ images, alt }: ProductImagesProps) => {
                         />
                     </div>
                 </div>
-                <Image
-                    className="rounded-md"
-                    width={500}
-                    height={500}
-                    src={images[0].url}
-                    unoptimized
-                    alt={alt}
-                />
+                <div className="relative">
+                    {salePercentage && (
+                        <Badge
+                            className="absolute top-4 right-4"
+                            variant="sale"
+                        >
+                            {salePercentage}
+                        </Badge>
+                    )}
+                    <Image
+                        className="rounded-md"
+                        width={500}
+                        height={500}
+                        src={images[0].url}
+                        unoptimized
+                        alt={alt}
+                    />
+                </div>
             </div>
         );
 
@@ -73,13 +85,23 @@ const ProductImages = ({ images, alt }: ProductImagesProps) => {
                 <CarouselContent>
                     {images.map((image) => (
                         <CarouselItem key={image.url}>
-                            <Image
-                                className="rounded-md"
-                                width={500}
-                                height={500}
-                                src={image.url}
-                                alt={alt}
-                            />
+                            <div className="relative">
+                                {salePercentage && (
+                                    <Badge
+                                        className="absolute top-4 right-4"
+                                        variant="sale"
+                                    >
+                                        {salePercentage}
+                                    </Badge>
+                                )}
+                                <Image
+                                    className="rounded-md"
+                                    width={500}
+                                    height={500}
+                                    src={image.url}
+                                    alt={alt}
+                                />
+                            </div>
                         </CarouselItem>
                     ))}
                 </CarouselContent>
