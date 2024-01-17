@@ -335,7 +335,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                             <FormControl>
                                 <Input
                                     type="file"
-                                    accept="image/*"
+                                    accept="image/*, .gif"
                                     multiple
                                     onChange={(e) =>
                                         handleImgUpload(e.target.files!)

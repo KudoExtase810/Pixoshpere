@@ -34,6 +34,7 @@ const SingleProduct = ({
                 )}
                 <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                     <BlurImage
+                        unoptimized
                         fill
                         src={product.images[0].url}
                         alt={product.title}

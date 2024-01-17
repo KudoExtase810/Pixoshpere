@@ -1,5 +1,5 @@
 import Services from "@/components/customer/home/Services";
-import ImageCarousel from "@/components/customer/home/ImageCarousel";
+import HeroBanners from "@/components/customer/home/HeroBanners";
 import Partners from "@/components/customer/home/Partners";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
 import Product from "@/models/product";
@@ -11,14 +11,14 @@ const Home = async () => {
 
     return (
         <>
-            <ImageCarousel />
+            <HeroBanners />
             <div className="container">
                 <Services />
-                <Partners />
                 <ProductsCarousel
                     title="Featured Products"
                     products={JSON.parse(JSON.stringify(products))}
                 />
+                <Partners />
             </div>
         </>
     );

@@ -28,6 +28,15 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
         { $sample: { size: 6 } },
     ]);
 
+    // Find random products if there are none from the same category
+    let randomProducts = [];
+    if (similarProducts.length === 0) {
+        randomProducts = await Product.aggregate([
+            { $match: { slug: { $ne: product.slug } } },
+            { $sample: { size: 6 } },
+        ]);
+    }
+
     return (
         <div className="container">
             <div className="flex gap-16 py-8">
@@ -56,7 +65,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                         )}
                     </div>
                     {/* add on sale to prod */}
-                    <div className="max-w-sm break-words">
+                    <div className="max-w-sm break-words tiptap">
                         {parseHTML(product.description)}
                     </div>
                     <div className="flex items-center gap-1.5 mt-4 font-medium text-neutral-600 dark:text-neutral-500">
@@ -84,7 +93,15 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                         products={similarProducts}
                     />
                 </>
-            ) : null}
+            ) : (
+                <>
+                    <Separator />
+                    <ProductsCarousel
+                        title="More products"
+                        products={randomProducts}
+                    />
+                </>
+            )}
         </div>
     );
 };

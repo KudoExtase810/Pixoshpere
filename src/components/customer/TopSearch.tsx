@@ -36,7 +36,7 @@ const TopSearch = () => {
                 setIsLoading(false);
             }
         },
-        500
+        800
     );
 
     useEffect(() => {

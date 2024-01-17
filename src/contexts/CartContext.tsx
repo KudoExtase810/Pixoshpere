@@ -42,7 +42,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Cart logic
 
-    const [cartItems, setCartItems] = useLocalStorageState("xystore-cart", {
+    const [cartItems, setCartItems] = useLocalStorageState("PixoSphere-cart", {
         defaultValue: [] as CartItem[],
     });
 

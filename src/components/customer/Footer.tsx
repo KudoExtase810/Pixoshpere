@@ -87,7 +87,7 @@ const Footer = () => {
 
                 <div className="flex flex-col justify-between border-t border-neutral-300 dark:border-neutral-200 py-8 sm:flex-row gap-4">
                     <p className="text-sm text-neutral-500">
-                        Copyright &copy; {currentYear} XY Store, Inc.
+                        Copyright &copy; {currentYear} PixoSphere, Inc.
                     </p>
                     {/* <p className="text-sm text-neutral-500">
                         Crafted by{" "}

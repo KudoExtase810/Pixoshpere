@@ -20,7 +20,7 @@ const Partners = () => {
         <Marquee autoFill className="py-8">
             {partners.map((partner, idx) => (
                 <Image
-                    className="mx-2 w-40 sm:w-52 lg:w-64"
+                    className="mx-2 w-40 sm:w-56"
                     key={idx}
                     src={partner.src}
                     alt={partner.name}

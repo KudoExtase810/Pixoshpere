@@ -90,7 +90,7 @@ const Navbar = ({
                         href="/"
                         className="uppercase font-bold text-xl font-mono tracking-wider text-primary/95"
                     >
-                        XY Store
+                        Pixo-Sphere
                     </Link>
 
                     <NavigationMenu className="max-lg:hidden">

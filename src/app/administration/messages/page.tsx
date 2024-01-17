@@ -6,7 +6,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import AdminFilters from "@/components/administration/AdminFilters";
 import PaginationControls from "@/components/administration/PaginationControls";
 import MessageRow from "@/components/administration/messages/MessageRow";
 import Message from "@/models/message";

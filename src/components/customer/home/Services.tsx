@@ -31,17 +31,16 @@ const Services = () => {
                 <li className="flex gap-4 items-center" key={idx}>
                     <Image
                         src={feature.imageSrc}
-                        height={64}
-                        width={64}
-                        quality={100}
+                        height={58}
+                        width={58}
                         unoptimized
                         alt={feature.title}
                     />
                     <div>
-                        <p className="font-semibold text-xl mb-1">
+                        <p className="font-semibold text-lg mb-1">
                             {feature.title}
                         </p>
-                        <p className="text-neutral-600 dark:text-neutral-300">
+                        <p className="text-neutral-600 dark:text-neutral-300 text-base">
                             {feature.description}
                         </p>
                     </div>

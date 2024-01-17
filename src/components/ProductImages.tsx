@@ -39,6 +39,7 @@ const ProductImages = ({ images, alt }: ProductImagesProps) => {
                     width={500}
                     height={500}
                     src={images[0].url}
+                    unoptimized
                     alt={alt}
                 />
             </div>
