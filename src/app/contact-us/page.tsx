@@ -14,7 +14,7 @@ const Support = async () => {
     return (
         <div className="container">
             <FAQ />
-            <ContactForm userDetails={user} />
+            <ContactForm userDetails={user!} />
         </div>
     );
 };

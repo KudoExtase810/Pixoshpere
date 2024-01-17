@@ -113,7 +113,7 @@ const LoginForm = () => {
                 href="/sign-up"
                 className="hover:underline text-center block relative top-9"
             >
-                Don't have an account?
+                Don&apos;t have an account?
             </Link>
         </div>
     );
