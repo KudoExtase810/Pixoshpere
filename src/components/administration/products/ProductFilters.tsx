@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
     Select,
@@ -9,7 +10,8 @@ import {
     SelectGroup,
     SelectItem,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
+import { useDrawer } from "@/contexts/DrawerContext";
+import { Plus, Search } from "lucide-react";
 import React, { useState } from "react";
 
 type SortingMethods = { label: string; value: keyof Product }[];
@@ -17,6 +19,8 @@ type SortingMethods = { label: string; value: keyof Product }[];
 const ProductFilters = () => {
     const [query, setQuery] = useState("");
     const [sortBy, setSortBy] = useState<keyof Product>("createdAt");
+
+    const { toggle } = useDrawer();
 
     const sortingMethods: SortingMethods = [
         { label: "Date", value: "createdAt" },
@@ -60,6 +64,14 @@ const ProductFilters = () => {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+
+                <Button
+                    variant="secondary"
+                    className="hover:text-cyan-500"
+                    onClick={() => toggle("product")}
+                >
+                    <Plus size={28} />
+                </Button>
             </div>
         </div>
     );

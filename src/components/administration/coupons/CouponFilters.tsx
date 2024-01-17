@@ -66,7 +66,7 @@ const CouponFilters = () => {
                 <Button
                     variant="secondary"
                     className="hover:text-cyan-500"
-                    onClick={() => toggle("category")}
+                    onClick={() => toggle("coupon")}
                 >
                     <Plus size={28} />
                 </Button>
