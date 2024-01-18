@@ -7,14 +7,14 @@ import React from "react";
 const Support = async () => {
     const session = await getServerSession();
 
-    const userEmail = session?.user.email;
+    const userEmail = session?.user?.email;
     const user = await User.findOne<User>({ email: userEmail }).select(
         "email firstName lastName phone"
     );
     return (
         <div className="container">
             <FAQ />
-            <ContactForm userDetails={user!} />
+            <ContactForm userDetails={user} />
         </div>
     );
 };

@@ -30,7 +30,7 @@ const formSchema = z.object({
 });
 
 interface ContactFormProps {
-    userDetails: User;
+    userDetails: User | null;
 }
 
 const ContactForm = ({ userDetails }: ContactFormProps) => {
@@ -38,9 +38,9 @@ const ContactForm = ({ userDetails }: ContactFormProps) => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             sender: {
-                firstName: userDetails.firstName ?? "",
-                lastName: userDetails.lastName ?? "",
-                email: userDetails.email ?? "",
+                firstName: userDetails?.firstName ?? "",
+                lastName: userDetails?.lastName ?? "",
+                email: userDetails?.email ?? "",
             },
             subject: "",
             content: "",
@@ -48,6 +48,10 @@ const ContactForm = ({ userDetails }: ContactFormProps) => {
     });
     const sendMessage = async (values: z.infer<typeof formSchema>) => {
         try {
+            if (!userDetails)
+                return notifyError(
+                    "You need to login before submitting a message."
+                );
             const { data } = await axios.post("/api/messages", values);
             notifySuccess(data.message);
             form.reset();

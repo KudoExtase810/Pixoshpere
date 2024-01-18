@@ -45,7 +45,7 @@ export default async function RootLayout({
                                         isAdmin={isAdmin}
                                     />
                                     <main className="mx-auto">
-                                        <Toaster richColors />
+                                        <Toaster richColors duration={5000} />
                                         <Cart />
                                         {children}
                                     </main>

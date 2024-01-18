@@ -30,7 +30,7 @@ const ProductRow = ({ product }: { product: Product }) => {
                     {product.title}
                 </Link>
             </TableCell>
-            <TableCell>{product.category.label}</TableCell>
+            <TableCell>{product?.category?.label}</TableCell>
             <TableCell>
                 {formatPrice(product.salePrice || product.price)}
             </TableCell>

@@ -18,17 +18,18 @@ export const HeroBanners = () => {
                 <CarouselItem>
                     <div className="w-full h-[800px] flex items-center relative bg-[url(/images/banner2.png)] bg-cover">
                         <div className="container mx-auto">
-                            <h1 className="styled">
-                                The best pixel planets out there.
+                            <h1 className="styled text-white">
+                                Awesome 8-bit planets.
                             </h1>
                             <p className="styled text-lg mb-6">
-                                Find the best deals in the market today!
+                                Explore the cosmos with our pixel art planet
+                                collection.
                             </p>
                             <Button
-                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-12 text-base"
+                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
-                                <Link href="/products">Start Shopping</Link>
+                                <Link href="/products">Start Exploring</Link>
                             </Button>
                         </div>
                     </div>
@@ -37,13 +38,15 @@ export const HeroBanners = () => {
                     <div className="w-full h-[800px] flex items-center relative bg-[url(/images/banner1.png)] bg-cover">
                         <div className="container mx-auto">
                             <h1 className="styled text-fuchsia-500">
-                                Get yourself a pixel planet.
+                                Your Source for Stunning <br />
+                                Pixel Art Planets
                             </h1>
                             <p className="styled text-lg mb-6 text-fuchsia-500">
-                                Find the best deals in the market today!
+                                Embark on a celestial journey with our curated
+                                collection of pixel art planets.
                             </p>
                             <Button
-                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-12 text-base"
+                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
                                 <Link href="/products">View Planets</Link>

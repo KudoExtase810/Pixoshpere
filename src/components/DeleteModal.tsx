@@ -64,8 +64,20 @@ const DeleteModal = () => {
         return api_url;
     };
 
+    const checkData = () => {
+        let error = null;
+        const categoryToDelete = actionData as Category;
+        if (categoryToDelete.productCount) {
+            error = `This category has ${categoryToDelete.productCount} product(s). Assign each one to a category before being able to proceed.`;
+        }
+        return { error };
+    };
+
     const handleDelete = async () => {
         try {
+            const { error } = checkData();
+            if (error) return notifyError(error);
+
             const url = getDeleteURL();
             const { data } = await axios.delete(url);
             notifySuccess(data.message);

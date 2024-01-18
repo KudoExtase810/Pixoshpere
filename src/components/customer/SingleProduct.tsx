@@ -21,7 +21,7 @@ const SingleProduct = ({
     return (
         <div className={cn("relative group", className)}>
             <Link href={`/products/${product.slug}`}>
-                {product.salePrice && (
+                {product.salePrice ? (
                     <Badge
                         variant={"sale"}
                         className="absolute top-3 right-3 z-[5]"
@@ -31,7 +31,7 @@ const SingleProduct = ({
                             product.salePrice
                         )}
                     </Badge>
-                )}
+                ) : null}
                 <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                     <BlurImage
                         unoptimized

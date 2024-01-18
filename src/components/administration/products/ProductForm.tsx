@@ -94,7 +94,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
             title: selectedProduct?.title ?? "",
             price: selectedProduct?.price,
             salePrice: selectedProduct?.salePrice,
-            category: selectedProduct?.category._id ?? "",
+            category: selectedProduct?.category?._id ?? "",
             quantity: selectedProduct?.quantity ?? 1,
             priority: selectedProduct?.priority ?? 0,
             description: selectedProduct?.description ?? "",
