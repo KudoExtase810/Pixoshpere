@@ -86,7 +86,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
         let total = 0;
         cartItems.forEach((item) => {
             const currentItemPrice = item.salePrice || item.price;
-            total += currentItemPrice;
+            total += currentItemPrice * item.quantityInCart;
         });
         return total;
     };

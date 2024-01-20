@@ -98,7 +98,7 @@ const FoundProducts = ({ products }: { products: Product[] }) => {
                             />
                             <div className="w-full">
                                 <div className="flex items-center justify-between">
-                                    <p className="font-medium text-base">
+                                    <p className="font-medium text-base truncate max-w-[160px]">
                                         {prod.title}
                                     </p>
                                     <p>

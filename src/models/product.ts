@@ -17,7 +17,7 @@ const ProductSchema = new mongoose.Schema(
             unique: true,
         },
         price: { type: Number, min: 0, max: 500000, required: true },
-        salePrice: { type: Number, min: 0, max: 500000 },
+        salePrice: { type: Number, default: 0, min: 0, max: 500000 },
         category: {
             type: mongoose.SchemaTypes.ObjectId,
             ref: Category,
@@ -30,7 +30,7 @@ const ProductSchema = new mongoose.Schema(
             required: true,
         },
         description: { type: String, maxLength: 2048, required: true },
-        sales: { type: Number, default: 0, max: 10000 },
+        sales: { type: Number, default: 0, min: 0 },
         isFeatured: { type: Boolean, default: false },
         isHidden: { type: Boolean, default: false },
     },

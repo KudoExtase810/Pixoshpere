@@ -4,6 +4,7 @@ import FormatPricing from "@/components/FormatPricing";
 import ProductsFilters from "@/components/customer/ProductsFilters";
 import SingleProduct from "@/components/customer/SingleProduct";
 import connectDB from "@/lib/connectdb";
+import Category from "@/models/category";
 import Product from "@/models/product";
 import Link from "next/link";
 import React from "react";
@@ -45,13 +46,15 @@ const Products = async ({
 
     const totalDocs = await Product.countDocuments(queryObj);
 
+    const allCategories = await Category.find<Category>({}).select("label");
+
     return (
         <div className="container">
             <h1 className="page-title">All products</h1>
-            <ProductsFilters />
+            <ProductsFilters allCategories={allCategories} />
             <Animate
                 isList
-                className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+                className="mb-8 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
             >
                 {products.map((product) => (
                     <li key={product._id}>

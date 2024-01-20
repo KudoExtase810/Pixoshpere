@@ -93,3 +93,7 @@ h4.styled {
 p.styled {
     @apply leading-7 [&:not(:first-child)]:mt-6;
 }
+
+.container {
+    @apply max-sm:px-2.5;
+}

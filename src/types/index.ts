@@ -31,7 +31,7 @@ type Product = Base & {
     description: string;
     isHidden: boolean;
     hideWhenOutOfStock: boolean;
-    salePrice?: number;
+    salePrice: number;
     category: Category;
     sales: number;
 };
@@ -39,18 +39,14 @@ type Product = Base & {
 type Order = Base & {
     products: Product[];
     status: "pending" | "processing" | "shipped" | "delivered" | "canceled";
-    paymentMethod: string;
+
     customer: User;
     total: number;
     appliedCoupon: string;
     details: {
-        email: string;
-        firstName: string;
-        lastName: string;
         streetAddress: string;
         city: string;
         zipCode: string;
-        phone: string;
     };
 };
 

@@ -11,6 +11,9 @@ import OrderRow from "@/components/administration/orders/OrderRow";
 import Order from "@/models/order";
 import connectDB from "@/lib/connectdb";
 import OrderFilters from "@/components/administration/orders/OrderFilters";
+import OrderModal from "@/components/administration/orders/OrderStatusModal";
+import NoResults from "@/components/administration/NoResults";
+import OrderStatusModal from "@/components/administration/orders/OrderStatusModal";
 
 const Orders = async ({
     searchParams,
@@ -38,12 +41,18 @@ const Orders = async ({
     const orders = await Order.find<Order>(queryObj)
         .limit(limit)
         .skip(skip)
-        .sort(sortObj);
+        .sort(sortObj)
+        .populate({
+            path: "customer",
+            select: "firstName lastName phone email",
+        });
 
     const totalDocs = await Order.countDocuments(queryObj);
 
     return (
         <>
+            <OrderModal />
+            <OrderStatusModal />
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Orders
             </h1>
@@ -55,8 +64,7 @@ const Orders = async ({
                             <TableRow>
                                 <TableHead>Customer</TableHead>
                                 <TableHead>Ordered On</TableHead>
-                                <TableHead>Payment method</TableHead>
-                                <TableHead>Amount</TableHead>
+                                <TableHead>Total</TableHead>
                                 <TableHead>Status</TableHead>
                                 <TableHead>Action</TableHead>
                             </TableRow>
@@ -72,9 +80,7 @@ const Orders = async ({
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 showingDocs={orders.length}

@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
-import { formatPrice, notifySuccess } from "@/lib/utils";
+import { formatPrice, notifyError, notifySuccess } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface CheckoutItemsProps {
     orderData: {
@@ -15,14 +15,19 @@ interface CheckoutItemsProps {
         tax: number;
         total: number;
     };
+    coupon: string | undefined;
+    setCoupon: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const CheckoutItems = ({ orderData }: CheckoutItemsProps) => {
+const CheckoutItems = ({
+    orderData,
+    coupon,
+    setCoupon,
+}: CheckoutItemsProps) => {
     const { cartItems } = useCart();
-    const [couponCode, setCouponCode] = useState("");
 
     const applyCoupon = () => {
-        notifySuccess("Coupon applied!");
+        notifyError("This feature is disabled for now.");
     };
 
     return (
@@ -35,7 +40,6 @@ const CheckoutItems = ({ orderData }: CheckoutItemsProps) => {
                             height={110}
                             width={110}
                             quality={100}
-                            unoptimized
                             alt={item.title}
                             src={item.images[0].url}
                         />
@@ -70,8 +74,8 @@ const CheckoutItems = ({ orderData }: CheckoutItemsProps) => {
                 <Label htmlFor="coupon">Add a discount code</Label>
                 <div className="flex gap-1.5 items-center">
                     <Input
-                        value={couponCode}
-                        onChange={(e) => setCouponCode(e.target.value)}
+                        value={coupon}
+                        onChange={(e) => setCoupon(e.target.value)}
                         id="coupon"
                     />
                     <Button onClick={applyCoupon}>Apply</Button>

@@ -1,3 +1,4 @@
+import NoResults from "@/components/administration/NoResults";
 import PaginationControls from "@/components/administration/PaginationControls";
 import CouponDrawer from "@/components/administration/coupons/CouponDrawer";
 import CouponFilters from "@/components/administration/coupons/CouponFilters";
@@ -47,9 +48,7 @@ const Coupons = async () => {
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 showingDocs={coupons.length}

@@ -11,17 +11,20 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Search } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const ProductsFilters = () => {
+interface ProductFilters {
+    allCategories: Category[];
+}
+
+const ProductsFilters = ({ allCategories }: ProductFilters) => {
     const [query, setQuery] = useState<string>("");
     const [category, setCategory] = useState<string | null>(null);
 
     const router = useRouter();
 
-    const handleFilter = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleFilter = () => {
         const searchParams = new URLSearchParams(window.location.search);
 
         if (query) searchParams.set("q", query.toLowerCase());
@@ -38,9 +41,15 @@ const ProductsFilters = () => {
         router.push(newPathname, { scroll: false });
     };
 
+    useEffect(() => {
+        if (category) {
+            handleFilter();
+        }
+    }, [category]);
+
     return (
-        <form onSubmit={handleFilter} className="mb-6">
-            <div className="flex max-lg:flex-col max-lg:gap-4 items-center justify-between">
+        <form className="mb-6">
+            <div className="flex max-lg:flex-col-reverse max-lg:gap-4 items-center justify-between">
                 <div className="lg:max-w-md w-full relative">
                     <Input
                         type="text"
@@ -48,7 +57,11 @@ const ProductsFilters = () => {
                         onChange={(e) => setQuery(e.target.value)}
                         value={query}
                     />
-                    <button className="absolute right-2.5 top-2.5">
+                    <button
+                        type="button"
+                        className="absolute right-2.5 top-2.5"
+                        onClick={handleFilter}
+                    >
                         <Search size={20} />
                     </button>
                 </div>
@@ -58,12 +71,15 @@ const ProductsFilters = () => {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectLabel>Fruits</SelectLabel>
-                            <SelectItem value="apple">Apple</SelectItem>
-                            <SelectItem value="banana">Banana</SelectItem>
-                            <SelectItem value="blueberry">Blueberry</SelectItem>
-                            <SelectItem value="grapes">Grapes</SelectItem>
-                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                            <SelectLabel>Categories</SelectLabel>
+                            {allCategories.map((category) => (
+                                <SelectItem
+                                    key={category._id}
+                                    value={category._id}
+                                >
+                                    {category.label}
+                                </SelectItem>
+                            ))}
                         </SelectGroup>
                     </SelectContent>
                 </Select>

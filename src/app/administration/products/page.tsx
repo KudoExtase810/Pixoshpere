@@ -14,6 +14,7 @@ import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import Category from "@/models/category";
 import ProductFilters from "@/components/administration/products/ProductFilters";
+import NoResults from "@/components/administration/NoResults";
 
 const Products = async ({
     searchParams,
@@ -86,9 +87,7 @@ const Products = async ({
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 totalDocs={totalProducts}

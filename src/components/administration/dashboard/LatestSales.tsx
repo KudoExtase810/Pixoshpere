@@ -16,15 +16,13 @@ interface props {
 
 const LatestSales = ({ latestOrders }: props) => {
     return (
-        <Card className="col-span-3">
+        <Card className="col-span-4 md:col-span-3">
             <CardHeader>
                 <CardTitle>Latest Sales</CardTitle>
-                <CardDescription>
-                    You made 265 sales this month.
-                </CardDescription>
+                <CardDescription>Your 10 latest sales.</CardDescription>
             </CardHeader>
             <CardContent>
-                <ScrollArea className="h-80 pr-4">
+                <ScrollArea className="lg:h-80">
                     <div className="space-y-8">
                         {latestOrders.length ? (
                             latestOrders.map((order) => (

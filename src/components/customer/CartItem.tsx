@@ -20,7 +20,6 @@ const CartItem = ({ item }: CartItemProps) => {
                 height={110}
                 width={110}
                 quality={100}
-                unoptimized
                 alt={item.title}
                 src={item.images[0].url}
             />
@@ -34,7 +33,7 @@ const CartItem = ({ item }: CartItemProps) => {
                             </Link>
                         </h2>
                         <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
-                            {item.category.label}
+                            {item.category?.label}
                         </p>
                     </div>
                     <p className="font-semibold">

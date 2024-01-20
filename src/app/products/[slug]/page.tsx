@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
 import ProductImages from "@/components/ProductImages";
 import parseHTML from "html-react-parser";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
     await connectDB();
@@ -39,7 +40,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
 
     return (
         <div className="container">
-            <div className="flex gap-16 py-8">
+            <div className="flex max-[860px]:flex-col gap-16 max-[860px]:gap-6 py-8">
                 <ProductImages
                     salePercentage={
                         product.salePrice &&
@@ -55,7 +56,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                     <h1 className="mb-4 text-4xl font-bold tracking-tight">
                         {product.title}
                     </h1>
-                    <div className="mb-4 font-medium">
+                    <div className="mb-4 text-lg font-medium">
                         <span
                             className={cn(
                                 "inline",
@@ -65,16 +66,16 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
                         >
                             {formatPrice(product.price)}
                         </span>
-                        {product.salePrice && (
+                        {product.salePrice ? (
                             <span className="inline ml-2">
                                 {formatPrice(product.salePrice)}
                             </span>
-                        )}
+                        ) : null}
                     </div>
                     {/* add on sale to prod */}
-                    <div className="max-w-sm break-words tiptap">
+                    <ScrollArea className="max-w-lg min-[860px]:h-64 break-words tiptap">
                         {parseHTML(product.description)}
-                    </div>
+                    </ScrollArea>
                     <div className="flex items-center gap-1.5 mt-4 font-medium text-neutral-600 dark:text-neutral-500">
                         {product.quantity > 0 ? (
                             <>

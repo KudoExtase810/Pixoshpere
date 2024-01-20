@@ -10,6 +10,7 @@ import User from "@/models/user";
 import UserRow from "@/components/administration/users/UserRow";
 import connectDB from "@/lib/connectdb";
 import UserFilters from "@/components/administration/users/UserFilters";
+import NoResults from "@/components/administration/NoResults";
 
 const Users = async ({
     searchParams,
@@ -84,9 +85,7 @@ const Users = async ({
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 totalDocs={totalDocs}

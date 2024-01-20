@@ -10,11 +10,16 @@ const badgeVariants = cva(
             variant: {
                 default:
                     "border-transparent bg-primary text-primary-foreground",
-                pending: "border-transparent bg-yellow-500 text-white",
-                processing: "border-transparent bg-orange-500 text-white",
-                shipped: "border-transparent bg-blue-600 text-white",
-                delivered: "border-transparent bg-green-500 text-white",
-                canceled: "border-transparent bg-red-600 text-white",
+                pending:
+                    "border-transparent bg-yellow-500 text-white uppercase tracking-wide",
+                processing:
+                    "border-transparent bg-orange-500 text-white uppercase tracking-wide",
+                shipped:
+                    "border-transparent bg-blue-600 text-white uppercase tracking-wide",
+                delivered:
+                    "border-transparent bg-green-500 text-white uppercase tracking-wide",
+                canceled:
+                    "border-transparent bg-red-600 text-white uppercase tracking-wide",
                 sale: "border-transparent bg-red-500 text-white",
             },
         },

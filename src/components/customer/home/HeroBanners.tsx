@@ -16,11 +16,9 @@ export const HeroBanners = () => {
         <Carousel className="w-full mb-4" plugins={[plugin.current]}>
             <CarouselContent>
                 <CarouselItem>
-                    <div className="w-full h-[800px] flex items-center relative bg-[url(/images/banner2.png)] bg-cover">
-                        <div className="container mx-auto">
-                            <h1 className="styled text-white">
-                                Awesome 8-bit planets.
-                            </h1>
+                    <div className="w-full h-[720px] flex items-center relative bg-[url(/images/geforce-banner.webp)] bg-cover">
+                        <div className="container mx-auto text-white">
+                            <h1 className="styled ">Awesome 8-bit planets.</h1>
                             <p className="styled text-lg mb-6">
                                 Explore the cosmos with our pixel art planet
                                 collection.
@@ -35,13 +33,13 @@ export const HeroBanners = () => {
                     </div>
                 </CarouselItem>
                 <CarouselItem>
-                    <div className="w-full h-[800px] flex items-center relative bg-[url(/images/banner1.png)] bg-cover">
-                        <div className="container mx-auto">
-                            <h1 className="styled text-fuchsia-500">
+                    <div className="w-full h-[720px] flex items-center relative bg-[url(/images/laptop-banner.webp)] bg-cover">
+                        <div className="container mx-auto text-white">
+                            <h1 className="styled ">
                                 Your Source for Stunning <br />
                                 Pixel Art Planets
                             </h1>
-                            <p className="styled text-lg mb-6 text-fuchsia-500">
+                            <p className="styled text-lg mb-6 ">
                                 Embark on a celestial journey with our curated
                                 collection of pixel art planets.
                             </p>

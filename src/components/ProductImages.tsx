@@ -21,7 +21,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
     };
 
     // No need to render the whole carousel thing if we only have 1 image
-    if (images.length === 1)
+    if (images.length === 99)
         return (
             <div className="flex gap-5">
                 <div className="h-[500px]">
@@ -50,7 +50,6 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                         width={500}
                         height={500}
                         src={images[0].url}
-                        unoptimized
                         alt={alt}
                     />
                 </div>
@@ -58,9 +57,9 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
         );
 
     return (
-        <div className="flex gap-5">
-            <ScrollArea className="h-[500px]">
-                <div className="flex flex-col gap-2 mr-4">
+        <div className="flex gap-5 max-sm:flex-col">
+            <ScrollArea className="sm:h-[500px]">
+                <div className="grid grid-cols-1 max-sm:grid-cols-4 gap-2 mr-4">
                     {images.map((image, idx) => (
                         <button
                             onClick={() => jumpToImage(idx)}
@@ -81,19 +80,22 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                     ))}
                 </div>
             </ScrollArea>
-            <Carousel className="w-[500px]" setApi={setApi}>
+            <Carousel
+                className="w-[500px] max-lg:w-[420px] max-md:w-[500px] max-sm:w-full"
+                setApi={setApi}
+            >
                 <CarouselContent>
                     {images.map((image) => (
                         <CarouselItem key={image.url}>
                             <div className="relative">
-                                {salePercentage && (
+                                {salePercentage ? (
                                     <Badge
                                         className="absolute top-4 right-4"
                                         variant="sale"
                                     >
                                         {salePercentage}
                                     </Badge>
-                                )}
+                                ) : null}
                                 <Image
                                     className="rounded-md"
                                     width={500}

@@ -21,7 +21,6 @@ const OrderFilters = () => {
     const sortingMethods: SortingMethods = [
         { label: "Date", value: "createdAt" },
         { label: "Total", value: "total" },
-        { label: "Payment", value: "paymentMethod" },
     ];
 
     return (

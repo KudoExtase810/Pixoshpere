@@ -1,5 +1,5 @@
-.tiptap h2 {
-    @apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+.tiptap h3 {
+    @apply scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0;
 }
 .tiptap ul {
     @apply my-6 ml-6 list-disc [&>li]:mt-2;

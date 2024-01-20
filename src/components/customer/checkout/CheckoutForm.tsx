@@ -10,8 +10,9 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useCart } from "@/contexts/CartContext";
 
-import { notifyError } from "@/lib/utils";
+import { notifyError, notifySuccess } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
 import { useForm } from "react-hook-form";
@@ -25,9 +26,15 @@ interface CheckoutFormProps {
         tax: number;
         total: number;
     };
+    coupon: string | undefined;
 }
 
-const CheckoutForm = ({ userDetails, orderData }: CheckoutFormProps) => {
+const CheckoutForm = ({
+    userDetails,
+    coupon,
+    orderData,
+}: CheckoutFormProps) => {
+    const { cartItems, emptyCart } = useCart();
     const checkoutSchema = z.object({
         email: z.string().min(1).email(),
         firstName: z.string().min(1).max(36),
@@ -52,7 +59,23 @@ const CheckoutForm = ({ userDetails, orderData }: CheckoutFormProps) => {
 
     const handleCheckout = async (values: CheckoutSchema) => {
         try {
-            const res = await axios.post("/api/order", values);
+            const order = {
+                products: cartItems.map((item) => {
+                    return { id: item._id, quantity: item.quantityInCart };
+                }),
+                // customer: userDetails._id,
+                customer: "65774c8b6031918a927f2691",
+                appliedCoupon: coupon,
+                tax: orderData.tax,
+                shippingCost: orderData.shippingCost,
+                details: {
+                    streetAddress: values.streetAddress,
+                    city: values.city,
+                    zipCode: values.zipCode,
+                },
+            };
+            const { data } = await axios.post("/api/orders", order);
+            notifySuccess(data.message);
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
         }
@@ -197,7 +220,7 @@ const CheckoutForm = ({ userDetails, orderData }: CheckoutFormProps) => {
                         {form.formState.isSubmitting ? (
                             <LoadingSpinner />
                         ) : (
-                            "Pay now"
+                            "Submit"
                         )}
                     </Button>
                 </form>

@@ -93,7 +93,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
         defaultValues: {
             title: selectedProduct?.title ?? "",
             price: selectedProduct?.price,
-            salePrice: selectedProduct?.salePrice,
+            salePrice: selectedProduct?.salePrice || 0,
             category: selectedProduct?.category?._id ?? "",
             quantity: selectedProduct?.quantity ?? 1,
             priority: selectedProduct?.priority ?? 0,

@@ -10,12 +10,10 @@ import {
     Underline,
     List,
     ListOrdered,
-    Heading2,
+    Heading3,
 } from "lucide-react";
 
 import { Toggle } from "@/components/ui/toggle";
-
-import { toast } from "sonner";
 
 interface props {
     description: string;
@@ -33,16 +31,15 @@ const TextEditor = ({ onChange, description }: props) => {
         },
         onUpdate({ editor }) {
             onChange(editor.getHTML());
-            toast(editor.getHTML());
         },
     });
 
     const togglesData = [
         {
             type: "heading",
-            icon: <Heading2 size={18} />,
+            icon: <Heading3 size={18} />,
             action: () =>
-                editor?.chain().focus().toggleHeading({ level: 2 }).run(),
+                editor?.chain().focus().toggleHeading({ level: 3 }).run(),
         },
         {
             type: "bold",

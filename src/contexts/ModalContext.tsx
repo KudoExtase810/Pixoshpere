@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 type ModalState = {
     delete: boolean;
     message: boolean;
+    orderData: boolean;
+    orderStatus: boolean;
 };
 
 type Modal = keyof ModalState;
@@ -25,6 +27,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [modalState, setModalState] = useState<ModalState>({
         delete: false,
         message: false,
+        orderData: false,
+        orderStatus: false,
     });
 
     function toggle(type: Modal) {
@@ -42,6 +46,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         setModalState({
             delete: false,
             message: false,
+            orderData: false,
+            orderStatus: false,
         });
     }, [pathname]);
 

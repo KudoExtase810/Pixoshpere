@@ -12,6 +12,7 @@ import Message from "@/models/message";
 import connectDB from "@/lib/connectdb";
 import MessageModal from "@/components/administration/messages/MessageModal";
 import MessageFilters from "@/components/administration/messages/MessageFilters";
+import NoResults from "@/components/administration/NoResults";
 
 const Messages = async ({
     searchParams,
@@ -75,9 +76,7 @@ const Messages = async ({
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 showingDocs={messages.length}

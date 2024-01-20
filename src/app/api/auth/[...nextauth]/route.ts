@@ -40,13 +40,19 @@ const authOptions = {
                 return {
                     ...token,
                     _id: user.id,
+                    hello: "world",
                 };
             }
 
-            return token;
+            return { ...token, hello: "world" };
         },
         async session({ session, token, user }) {
-            return { ...session, user: token.user };
+            return {
+                ...session,
+                user: token.user,
+                hello: "world",
+                usEER: user,
+            };
         },
     },
     pages: { signIn: "/login" },

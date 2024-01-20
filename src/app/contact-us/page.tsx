@@ -4,7 +4,7 @@ import User from "@/models/user";
 import { getServerSession } from "next-auth";
 import React from "react";
 
-const Support = async () => {
+const ContactUs = async () => {
     const session = await getServerSession();
 
     const userEmail = session?.user?.email;
@@ -14,9 +14,9 @@ const Support = async () => {
     return (
         <div className="container">
             <FAQ />
-            <ContactForm userDetails={user} />
+            <ContactForm userDetails={JSON.parse(JSON.stringify(user))} />
         </div>
     );
 };
 
-export default Support;
+export default ContactUs;

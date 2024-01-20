@@ -15,7 +15,7 @@ const Checkout = async () => {
 
     return (
         <div className="container">
-            <CheckoutSection userDetails={user!} />
+            <CheckoutSection userDetails={JSON.parse(JSON.stringify(user))} />
         </div>
     );
 };

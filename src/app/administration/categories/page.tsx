@@ -12,6 +12,7 @@ import CategoryDrawer from "@/components/administration/categories/CategoryDrawe
 import Category from "@/models/category";
 import connectDB from "@/lib/connectdb";
 import CategoryFilters from "@/components/administration/categories/CategoryFilters";
+import NoResults from "@/components/administration/NoResults";
 
 const Categories = async ({
     searchParams,
@@ -100,9 +101,7 @@ const Categories = async ({
                     </Table>
                 </div>
             ) : (
-                <p className="flex items-center justify-center h-64">
-                    No results were found.
-                </p>
+                <NoResults />
             )}
             <PaginationControls
                 showingDocs={categories.length}

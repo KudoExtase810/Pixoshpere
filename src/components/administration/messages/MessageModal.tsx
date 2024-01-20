@@ -16,6 +16,8 @@ const MessageModal = () => {
     const { actionData, setActionData } = useActionData();
     const selectedMessage = actionData as Message;
 
+    if (!selectedMessage) return null;
+
     return (
         <Dialog
             open={isOpen("message")}
@@ -27,22 +29,22 @@ const MessageModal = () => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-xl">
-                        {selectedMessage?.subject}
+                        {selectedMessage.subject}
                     </DialogTitle>
                     <p className="text-sm text-muted-foreground">
-                        {dayjs(selectedMessage?.createdAt).format(
+                        {dayjs(selectedMessage.createdAt).format(
                             "DD MMM YYYY | HH:mm"
                         )}
                     </p>
                     <DialogDescription className="text-primary">
-                        {selectedMessage?.content}
+                        {selectedMessage.content}
                     </DialogDescription>
                     <p className="ml-auto">
                         By{" "}
-                        <span className="text-cyan-500">{`${selectedMessage?.sender.firstName} ${selectedMessage?.sender.lastName}`}</span>{" "}
+                        <span className="text-cyan-500">{`${selectedMessage.sender.firstName} ${selectedMessage.sender.lastName}`}</span>{" "}
                         /{" "}
                         <span className="text-cyan-500">
-                            {selectedMessage?.sender.email}
+                            {selectedMessage.sender.email}
                         </span>
                     </p>
                 </DialogHeader>

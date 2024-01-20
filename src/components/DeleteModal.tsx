@@ -30,14 +30,8 @@ const DeleteModal = () => {
         | "products"
         | "categories"
         | "coupons"
+        | "orders"
         | "messages";
-
-    // const headings = {
-    //     user: `Delete ${(actionData as User)?.username}?`,
-    //     article: `Delete ${(actionData as Article)?.title}?`,
-    //     category: `Delete the "${(actionData as Category)?.label}" category?`,
-    //     tag: `Delete the "${(actionData as Tag)?.label}" tag?`,
-    // };
 
     const getDeleteURL = () => {
         let api_url;
@@ -52,6 +46,9 @@ const DeleteModal = () => {
             case "coupons":
                 api_url = `/api/coupons/${actionData?._id}`;
                 break;
+
+            case "orders":
+                api_url = `/api/orders${actionData?._id}`;
 
             case "messages":
                 api_url = `/api/messages/${actionData?._id}`;
