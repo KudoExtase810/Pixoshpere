@@ -1,14 +1,15 @@
 import ContactForm from "@/components/customer/contact-us/ContactForm";
 import FAQ from "@/components/customer/contact-us/FAQ";
 import User from "@/models/user";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "@/auth/utils";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const ContactUs = async () => {
-    const session = await getServerSession();
+    const { isLoggedIn, userId } = await getServerSession();
+    if (!isLoggedIn) redirect("/login");
 
-    const userEmail = session?.user?.email;
-    const user = await User.findOne<User>({ email: userEmail }).select(
+    const user = await User.findById<User>(userId).select(
         "email firstName lastName phone"
     );
     return (

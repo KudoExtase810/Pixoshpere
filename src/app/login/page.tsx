@@ -1,10 +1,10 @@
+import { getServerSession } from "@/auth/utils";
 import LoginForm from "@/components/customer/LoginForm";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const Login = async () => {
-    const session = await getServerSession();
-    if (session) redirect("/");
+    const { isLoggedIn } = await getServerSession();
+    if (isLoggedIn) redirect("/");
 
     return (
         <>

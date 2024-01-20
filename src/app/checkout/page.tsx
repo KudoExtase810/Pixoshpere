@@ -1,15 +1,13 @@
 import CheckoutSection from "@/components/customer/checkout/CheckoutSection";
 import User from "@/models/user";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "@/auth/utils";
 import { redirect } from "next/navigation";
 
 const Checkout = async () => {
-    const session = await getServerSession();
+    const { isLoggedIn, userId } = await getServerSession();
+    if (!isLoggedIn) redirect("/login");
 
-    if (!session) redirect("/login");
-
-    const userEmail = session.user.email;
-    const user = await User.findOne<User>({ email: userEmail }).select(
+    const user = await User.findById<User>(userId).select(
         "email firstName lastName phone"
     );
 

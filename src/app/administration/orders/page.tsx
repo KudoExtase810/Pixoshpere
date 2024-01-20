@@ -11,9 +11,9 @@ import OrderRow from "@/components/administration/orders/OrderRow";
 import Order from "@/models/order";
 import connectDB from "@/lib/connectdb";
 import OrderFilters from "@/components/administration/orders/OrderFilters";
-import OrderModal from "@/components/administration/orders/OrderStatusModal";
 import NoResults from "@/components/administration/NoResults";
 import OrderStatusModal from "@/components/administration/orders/OrderStatusModal";
+import OrderDetailsModal from "@/components/administration/orders/OrderDetailsModal";
 
 const Orders = async ({
     searchParams,
@@ -51,7 +51,7 @@ const Orders = async ({
 
     return (
         <>
-            <OrderModal />
+            <OrderDetailsModal />
             <OrderStatusModal />
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 Orders

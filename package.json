@@ -34,7 +34,6 @@
         "@tiptap/starter-kit": "^2.1.12",
         "array-move": "^4.0.0",
         "axios": "^1.6.2",
-        "bcrypt": "^5.1.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "dayjs": "^1.11.10",
@@ -45,7 +44,6 @@
         "lucide-react": "^0.312.0",
         "mongoose": "^8.0.1",
         "next": "^14.0.3",
-        "next-auth": "^4.24.5",
         "next-themes": "^0.2.1",
         "react": "^18",
         "react-day-picker": "^8.10.0",
@@ -62,7 +60,6 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
-        "@types/bcrypt": "^5.0.2",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",

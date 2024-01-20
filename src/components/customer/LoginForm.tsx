@@ -12,7 +12,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { notifyError, notifySuccess } from "@/lib/utils";
-import { signIn } from "next-auth/react";
+import axios, { isAxiosError } from "axios";
 
 const LoginForm = () => {
     const loginSchema = z.object({
@@ -33,17 +33,15 @@ const LoginForm = () => {
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
     const handleLogin = async (values: LoginSchema) => {
-        const res = await signIn("credentials", {
-            ...values,
-            redirect: false,
-        });
-
-        if (res?.error) return notifyError(res.error);
-
-        notifySuccess("Successfully logged in.");
-        // We refresh instead of redirecting because
-        // the server will auto redirect once user is logged in
-        router.refresh();
+        try {
+            const { data } = await axios.post("/api/auth/sign-in", values);
+            notifySuccess(data.message);
+            // We refresh instead of redirecting because
+            // the server will auto redirect once user is logged in
+            router.refresh();
+        } catch (error) {
+            isAxiosError(error) && notifyError(error.response?.data.message);
+        }
     };
 
     return (

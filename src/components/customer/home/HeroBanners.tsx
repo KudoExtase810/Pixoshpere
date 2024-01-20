@@ -18,10 +18,13 @@ export const HeroBanners = () => {
                 <CarouselItem>
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/geforce-banner.webp)] bg-cover">
                         <div className="container mx-auto text-white">
-                            <h1 className="styled ">Awesome 8-bit planets.</h1>
+                            <h1 className="styled ">
+                                Your source for everything tech related.
+                            </h1>
                             <p className="styled text-lg mb-6">
-                                Explore the cosmos with our pixel art planet
-                                collection.
+                                Uncover the latest in laptops, hardware, and
+                                tech innovations tailored for your digital
+                                lifestyle.
                             </p>
                             <Button
                                 className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
@@ -36,12 +39,12 @@ export const HeroBanners = () => {
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/laptop-banner.webp)] bg-cover">
                         <div className="container mx-auto text-white">
                             <h1 className="styled ">
-                                Your Source for Stunning <br />
-                                Pixel Art Planets
+                                Your source for everything tech related
                             </h1>
                             <p className="styled text-lg mb-6 ">
-                                Embark on a celestial journey with our curated
-                                collection of pixel art planets.
+                                Uncover the latest in laptops, hardware, and
+                                tech innovations tailored for your digital
+                                lifestyle.
                             </p>
                             <Button
                                 className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"

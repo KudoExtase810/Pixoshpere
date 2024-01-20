@@ -14,7 +14,7 @@ const OrderSchema = new mongoose.Schema(
             enum: ["pending", "processing", "shipped", "delivered", "canceled"],
         },
         customer: {
-            type: mongoose.SchemaTypes.ObjectId,
+            type: String,
             ref: User.modelName,
             required: true,
         },
@@ -22,6 +22,7 @@ const OrderSchema = new mongoose.Schema(
         shippingCost: Number,
         total: { type: Number, required: true },
         appliedCoupon: String,
+        discount: { type: Number, min: 0, default: 0 },
         details: {
             streetAddress: String,
             city: String,

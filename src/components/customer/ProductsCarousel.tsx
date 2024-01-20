@@ -11,14 +11,21 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Skeleton } from "../ui/skeleton";
 
 interface props {
     title: string;
     hideControls?: boolean;
     products: Product[];
+    isLoading?: boolean;
 }
 
-const ProductsCarousel = ({ title, hideControls = false, products }: props) => {
+const ProductsCarousel = ({
+    title,
+    hideControls = false,
+    products,
+    isLoading = false,
+}: props) => {
     return (
         <section className="py-8">
             <div className="flex justify-between items-center mb-4">
@@ -42,17 +49,34 @@ const ProductsCarousel = ({ title, hideControls = false, products }: props) => {
                 }
                 className="w-full"
             >
-                <CarouselContent>
-                    {products.map((product) => (
-                        <CarouselItem
-                            key={product._id}
-                            className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
-                        >
-                            <SingleProduct product={product} />
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-                {!hideControls && (
+                {!isLoading ? (
+                    <CarouselContent>
+                        {products.map((product) => (
+                            <CarouselItem
+                                key={product._id}
+                                className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                            >
+                                <SingleProduct product={product} />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                ) : (
+                    <CarouselContent>
+                        {[...new Array(6)].map((_, idx) => (
+                            <CarouselItem
+                                key={idx}
+                                className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                            >
+                                <div className="flex flex-col gap-1.5">
+                                    <Skeleton className="aspect-1 rounded-md mb-1" />
+                                    <Skeleton className="rounded-sm w-4/5 h-5" />
+                                    <Skeleton className="rounded-sm w-2/5 h-5" />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                )}
+                {!hideControls && !isLoading && (
                     <div className="relative w-11/12 mx-auto mt-6">
                         <CarouselPrevious />
                         <CarouselNext />

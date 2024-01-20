@@ -1,10 +1,10 @@
 import SignUpForm from "@/components/customer/SignUpForm";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "@/auth/utils";
 import { redirect } from "next/navigation";
 
 const SignUp = async () => {
-    const session = await getServerSession();
-    if (session) redirect("/");
+    const { isLoggedIn } = await getServerSession();
+    if (isLoggedIn) redirect("/");
 
     return <SignUpForm />;
 };

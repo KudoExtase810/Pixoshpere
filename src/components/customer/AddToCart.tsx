@@ -7,9 +7,10 @@ import { cn, notifyError } from "@/lib/utils";
 interface props {
     product: Product;
     className?: React.HTMLAttributes<HTMLDivElement>["className"];
+    disabled?: boolean;
 }
 
-const AddToCart = ({ product, className }: props) => {
+const AddToCart = ({ product, className, disabled }: props) => {
     const { inCart, addItem, getItemQuantity, updateItemQuantity } = useCart();
     const quantityInCart = getItemQuantity(product._id);
 

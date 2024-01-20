@@ -11,40 +11,19 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 import CartItem from "./CartItem";
+import { ShoppingBasket } from "lucide-react";
 
 const Cart = () => {
     const { toggle, isOpen, cartItems, removeItem, total, isEmpty } = useCart();
-
-    // const handleCheckout = async () => {
-    //     setIsRedirecting(true);
-    //     const checkedoutItems = cartItems.map((item) => ({
-    //         _id: item._id,
-    //         quantity: item.quantity,
-    //     }));
-
-    //     const response = await fetch("/api/checkout", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({ checkedoutItems }),
-    //     });
-    //     const data = await response.json();
-    //     const { token } = data;
-    //     setIsRedirecting(false);
-    //     router.push(`/checkout/${token}`);
-    // };
 
     return (
         <Sheet open={isOpen} onOpenChange={toggle}>
             <SheetContent className="max-[500px]:px-3 min-w-[300px] md:min-w-[520px] overflow-y-auto">
                 <SheetHeader>
                     <SheetTitle>Your Shopping Cart</SheetTitle>
-                    <SheetDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                    </SheetDescription>
+                    {/* <SheetDescription>
+                        You can easily 
+                    </SheetDescription> */}
                 </SheetHeader>
                 {!isEmpty ? (
                     <div className="mt-6">
@@ -74,9 +53,15 @@ const Cart = () => {
                         </Button>
                     </div>
                 ) : (
-                    <div className="mt-6">
-                        <p className="text-center">
-                            Your cart is currently empty.
+                    <div className="mt-6 flex flex-col items-center gap-2">
+                        <ShoppingBasket size={124} strokeWidth={1.8} />
+                        <p className="text-center text-xl">
+                            Your cart is currently empty. You can view our
+                            products from{" "}
+                            <Link href="/products" className="text-cyan-500">
+                                here
+                            </Link>
+                            .
                         </p>
                     </div>
                 )}

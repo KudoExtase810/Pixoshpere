@@ -37,11 +37,11 @@ const RegisterForm = () => {
 
     const handleSignUp = async (values: SignUpSchema) => {
         try {
-            await axios.post("/api/auth/sign-up", values);
-            notifySuccess(
-                "Successfully signed up. Check your email to finish the process."
-            );
+            const { data } = await axios.post("/api/auth/sign-up", values);
+            router.push("/login");
+            notifySuccess(data.message);
         } catch (error) {
+            console.log(error);
             isAxiosError(error) && notifyError(error.response?.data.message);
         }
     };

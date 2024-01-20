@@ -39,7 +39,6 @@ type Product = Base & {
 type Order = Base & {
     products: Product[];
     status: "pending" | "processing" | "shipped" | "delivered" | "canceled";
-
     customer: User;
     total: number;
     appliedCoupon: string;
@@ -48,6 +47,7 @@ type Order = Base & {
         city: string;
         zipCode: string;
     };
+    discount: number;
 };
 
 type Coupon = Base & {
@@ -58,8 +58,6 @@ type Coupon = Base & {
     isDisabled: boolean;
     minAmount: number;
     timesApplied: number;
-    allowedProducts?: string[];
-    allowedCategories: string[];
 };
 
 type Message = Base & {

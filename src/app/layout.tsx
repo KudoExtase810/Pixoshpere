@@ -7,11 +7,11 @@ import Footer from "@/components/customer/Footer";
 import Cart from "@/components/customer/Cart";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { AuthProvider } from "@/components/AuthProvider";
 import ModalContextProvider from "@/contexts/ModalContext";
 import ActionContextProvider from "@/contexts/ActionContext";
 import CartContextProvider from "@/contexts/CartContext";
-import { getServerSession } from "next-auth";
+
+import { getServerSession } from "@/auth/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +25,7 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await getServerSession();
-    const isAdmin = true;
+    const { isLoggedIn, isAdmin } = await getServerSession();
 
     return (
         <html lang="en">
@@ -36,24 +35,22 @@ export default async function RootLayout({
                     enableSystem={false}
                     defaultTheme="light"
                 >
-                    <AuthProvider>
-                        <ActionContextProvider>
-                            <CartContextProvider>
-                                <ModalContextProvider>
-                                    <Navbar
-                                        isLoggedIn={session !== null}
-                                        isAdmin={isAdmin}
-                                    />
-                                    <main className="mx-auto">
-                                        <Toaster richColors duration={5000} />
-                                        <Cart />
-                                        {children}
-                                    </main>
-                                    <Footer />
-                                </ModalContextProvider>
-                            </CartContextProvider>
-                        </ActionContextProvider>
-                    </AuthProvider>
+                    <ActionContextProvider>
+                        <CartContextProvider>
+                            <ModalContextProvider>
+                                <Navbar
+                                    isLoggedIn={isLoggedIn}
+                                    isAdmin={isAdmin}
+                                />
+                                <main className="mx-auto">
+                                    <Toaster richColors duration={5000} />
+                                    <Cart />
+                                    {children}
+                                </main>
+                                <Footer />
+                            </ModalContextProvider>
+                        </CartContextProvider>
+                    </ActionContextProvider>
                 </ThemeProvider>
             </body>
         </html>

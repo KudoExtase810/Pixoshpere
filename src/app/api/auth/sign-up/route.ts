@@ -1,17 +1,18 @@
 import User from "@/models/user";
+import { auth } from "@/auth/lucia";
+import * as context from "next/headers";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import connectDB from "@/lib/connectdb";
 
 export async function POST(request: Request) {
     try {
-        await connectDB();
+        // await connectDB();
 
-        const body = await request.json();
+        const { firstName, lastName, email, password, phone } =
+            await request.json();
 
         const namesInUse = await User.exists({
-            firstName: body.firstName,
-            lastName: body.lastName,
+            firstName,
+            lastName,
         });
         if (namesInUse)
             return NextResponse.json(
@@ -22,20 +23,39 @@ export async function POST(request: Request) {
                 { status: 409 }
             );
 
-        const emailInUse = await User.exists({ email: body.email });
+        const emailInUse = await User.exists({ email });
         if (emailInUse)
             return NextResponse.json(
                 { message: "Email already in use." },
                 { status: 409 }
             );
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(body.password, salt);
+        const user = await auth.createUser({
+            key: {
+                providerId: "email",
+                providerUserId: email,
+                password,
+            },
+            attributes: {
+                email,
+                firstName,
+                lastName,
+                phone,
+            },
+        });
 
-        await User.create({ ...body, password: hashedPassword });
+        // ? Uncomment the code below in order to login the user when they create a new account
+        // const session = await auth.createSession({
+        //     userId: user.userId,
+        //     attributes: {},
+        // });
+
+        // const authRequest = auth.handleRequest(request.method, context);
+        // authRequest.setSession(session);
 
         return NextResponse.json(
-            { message: "User has been registered." },
+            { message: "Your account has been successfully created." },
+
             { status: 201 }
         );
     } catch (error: any) {

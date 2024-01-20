@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 type ModalState = {
     delete: boolean;
     message: boolean;
-    orderData: boolean;
+    orderDetails: boolean;
     orderStatus: boolean;
 };
 
@@ -27,7 +27,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [modalState, setModalState] = useState<ModalState>({
         delete: false,
         message: false,
-        orderData: false,
+        orderDetails: false,
         orderStatus: false,
     });
 
@@ -46,7 +46,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         setModalState({
             delete: false,
             message: false,
-            orderData: false,
+            orderDetails: false,
             orderStatus: false,
         });
     }, [pathname]);

@@ -14,6 +14,12 @@ export const auth = lucia({
     sessionCookie: {
         expires: false,
     },
+    getUserAttributes: (data: User) => {
+        return {
+            isAdmin: data.isAdmin,
+            isVerified: data.isVerified,
+        };
+    },
 
     adapter: mongoose({
         User,

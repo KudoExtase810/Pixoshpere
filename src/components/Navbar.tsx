@@ -13,12 +13,12 @@ import {
     navigationMenuTriggerStyle,
     ListItem,
 } from "@/components/ui/navigation-menu";
-import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import TopSearch from "./customer/TopSearch";
-import { cn } from "@/lib/utils";
+import { cn, notifyError } from "@/lib/utils";
 import React from "react";
+import axios, { isAxiosError } from "axios";
 
 const Navbar = ({
     isLoggedIn,
@@ -29,6 +29,7 @@ const Navbar = ({
 }) => {
     const { theme, setTheme } = useTheme();
     const { open: openCart, itemsCount } = useCart();
+    const router = useRouter();
     const pathname = usePathname();
     const isAdminSide = pathname.includes("administration");
 
@@ -81,6 +82,15 @@ const Navbar = ({
     // Hide the navbar in these paths
     const hiddenNavbarPaths = ["/login", "/sign-up"];
     if (hiddenNavbarPaths.includes(pathname)) return null;
+
+    const signOut = async () => {
+        const res = await axios.post("/api/auth/sign-out");
+        if (res.status === 200) {
+            router.refresh();
+        } else {
+            notifyError(res.data.message);
+        }
+    };
 
     return (
         <header className="sticky top-0 py-3.5 bg-neutral-200/60 dark:bg-black/60 backdrop-blur text-sm z-50">
@@ -175,7 +185,7 @@ const Navbar = ({
                         <Button
                             variant={null}
                             className="px-2"
-                            onClick={() => signOut()}
+                            onClick={signOut}
                         >
                             <LogOut />
                             <span className="sr-only">Log out</span>

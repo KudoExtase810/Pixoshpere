@@ -63,8 +63,7 @@ const CheckoutForm = ({
                 products: cartItems.map((item) => {
                     return { id: item._id, quantity: item.quantityInCart };
                 }),
-                // customer: userDetails._id,
-                customer: "65774c8b6031918a927f2691",
+                customer: userDetails._id,
                 appliedCoupon: coupon,
                 tax: orderData.tax,
                 shippingCost: orderData.shippingCost,

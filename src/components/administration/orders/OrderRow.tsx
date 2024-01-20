@@ -18,6 +18,11 @@ const OrderRow = ({ order }: { order: Order }) => {
         toggle("orderStatus");
     };
 
+    const viewDetails = () => {
+        setActionData(order);
+        toggle("orderDetails");
+    };
+
     const handleDelete = () => {
         setActionData(order);
         toggle("delete");
@@ -32,6 +37,7 @@ const OrderRow = ({ order }: { order: Order }) => {
             </TableCell>
             <TableCell className="flex items-center gap-0.5">
                 <Button
+                    onClick={viewDetails}
                     variant="ghost"
                     className="p-1 h-min text-green-500 hover:text-green-600"
                 >
