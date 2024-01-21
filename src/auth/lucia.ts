@@ -6,8 +6,6 @@ import Key from "@/models/key";
 import Session from "@/models/session";
 import connectDB from "@/lib/connectdb";
 
-connectDB();
-
 export const auth = lucia({
     env: process.env.NODE_ENV === "development" ? "DEV" : "PROD",
     middleware: nextjs_future(),

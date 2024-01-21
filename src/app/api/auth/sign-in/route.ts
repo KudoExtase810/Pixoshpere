@@ -2,11 +2,14 @@ import { auth } from "@/auth/lucia";
 import * as context from "next/headers";
 import { NextResponse } from "next/server";
 import { LuciaError } from "lucia";
+import connectDB from "@/lib/connectdb";
 
 export const POST = async (request: Request) => {
     try {
         const data = await request.json();
         const { email, password } = data;
+
+        await connectDB();
 
         const key = await auth.useKey("email", email.toLowerCase(), password);
         const session = await auth.createSession({

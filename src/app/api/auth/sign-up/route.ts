@@ -2,10 +2,11 @@ import User from "@/models/user";
 import { auth } from "@/auth/lucia";
 import * as context from "next/headers";
 import { NextResponse } from "next/server";
+import connectDB from "@/lib/connectdb";
 
 export async function POST(request: Request) {
     try {
-        // await connectDB();
+        await connectDB();
 
         const { firstName, lastName, email, password, phone } =
             await request.json();
