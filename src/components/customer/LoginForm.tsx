@@ -40,6 +40,7 @@ const LoginForm = () => {
             // the server will auto redirect once user is logged in
             router.refresh();
         } catch (error) {
+            console.log(error);
             isAxiosError(error) && notifyError(error.response?.data.message);
         }
     };
