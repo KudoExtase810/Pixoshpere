@@ -41,6 +41,7 @@ export const POST = async (request: Request) => {
                 }
             );
         }
+        console.log(e);
         return NextResponse.json(
             {
                 error: "An unknown error occurred",
