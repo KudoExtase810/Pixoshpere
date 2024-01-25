@@ -29,7 +29,9 @@ const CartItem = ({ item }: CartItemProps) => {
                     <div>
                         <h2 className="font-bold">
                             <Link href={`/products/${item.title}`}>
-                                {item.title}
+                                {item.title.length > 30
+                                    ? item.title.slice(0, 30) + "..."
+                                    : item.title}
                             </Link>
                         </h2>
                         <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">

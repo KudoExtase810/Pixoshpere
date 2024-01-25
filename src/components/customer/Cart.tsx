@@ -53,15 +53,17 @@ const Cart = () => {
                         </Button>
                     </div>
                 ) : (
-                    <div className="mt-6 flex flex-col items-center gap-2">
+                    <div className="mt-6 flex flex-col items-center gap-2 text-center">
                         <ShoppingBasket size={124} strokeWidth={1.8} />
-                        <p className="text-center text-xl">
-                            Your cart is currently empty. You can view our
-                            products from{" "}
-                            <Link href="/products" className="text-cyan-500">
+                        <p className=" text-xl">Your cart is currently empty</p>
+                        <p>
+                            You can view our products from{" "}
+                            <Link
+                                href="/products"
+                                className="text-cyan-500 hover:text-cyan-600"
+                            >
                                 here
                             </Link>
-                            .
                         </p>
                     </div>
                 )}

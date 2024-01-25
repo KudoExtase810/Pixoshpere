@@ -37,7 +37,7 @@ type Product = Base & {
 };
 
 type Order = Base & {
-    products: Product[];
+    products: { title: string; price: number; quantityBought: number }[];
     status: "pending" | "processing" | "shipped" | "delivered" | "canceled";
     customer: User;
     total: number;

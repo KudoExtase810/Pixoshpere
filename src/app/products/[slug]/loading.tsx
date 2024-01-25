@@ -1,4 +1,3 @@
-import AddToCart from "@/components/customer/AddToCart";
 import { Separator } from "@/components/ui/separator";
 
 import ProductsCarousel from "@/components/customer/ProductsCarousel";

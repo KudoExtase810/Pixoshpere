@@ -27,7 +27,7 @@ const FAQ = () => {
 
     return (
         <section className="w-full py-8" id="faq">
-            <h2 className="pb-3 text-4xl font-semibold">
+            <h2 className="pb-3 text-2xl font-semibold">
                 Frequently Asked Questions
             </h2>
             <Accordion type="single" collapsible>

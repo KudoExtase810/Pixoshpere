@@ -6,7 +6,7 @@ import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
 import { redirect } from "next/navigation";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
-import ProductImages from "@/components/ProductImages";
+import ProductImages from "@/components/customer/products/ProductImages";
 import parseHTML from "html-react-parser";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

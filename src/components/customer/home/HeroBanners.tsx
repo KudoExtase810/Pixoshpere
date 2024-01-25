@@ -17,7 +17,7 @@ export const HeroBanners = () => {
             <CarouselContent>
                 <CarouselItem>
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/geforce-banner.webp)] bg-cover">
-                        <div className="container mx-auto text-white">
+                        <div className="container mx-auto text-white z-[3]">
                             <h1 className="styled ">
                                 Your source for everything tech related.
                             </h1>
@@ -30,14 +30,16 @@ export const HeroBanners = () => {
                                 className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
-                                <Link href="/products">Start Exploring</Link>
+                                <Link href="/products">View Products</Link>
                             </Button>
                         </div>
+                        {/* Uncomment the line below if something is wrong with the constrast */}
+                        {/* <div className="bg-zinc-900 absolute inset-0 w-full h-full z-[2] bg-opacity-30" /> */}
                     </div>
                 </CarouselItem>
                 <CarouselItem>
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/laptop-banner.webp)] bg-cover">
-                        <div className="container mx-auto text-white">
+                        <div className="container mx-auto text-white z-[3]">
                             <h1 className="styled ">
                                 Your source for everything tech related
                             </h1>
@@ -50,9 +52,11 @@ export const HeroBanners = () => {
                                 className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
-                                <Link href="/products">View Planets</Link>
+                                <Link href="/products">Shop Now</Link>
                             </Button>
                         </div>
+                        {/* Uncomment the line below if something is wrong with the constrast */}
+                        {/* <div className="bg-zinc-900 absolute inset-0 w-full h-full z-[2] bg-opacity-30" /> */}
                     </div>
                 </CarouselItem>
             </CarouselContent>

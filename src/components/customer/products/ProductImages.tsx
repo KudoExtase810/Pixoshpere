@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "../../ui/scroll-area";
 import { type CarouselApi } from "@/components/ui/carousel";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../../ui/carousel";
 import { useState } from "react";
-import { Badge } from "./ui/badge";
+import { Badge } from "../../ui/badge";
 
 interface ProductImagesProps {
     images: Product["images"];
@@ -20,7 +20,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
         api?.scrollTo(idx);
     };
 
-    // No need to render the whole carousel thing if we only have 1 image
+    // No need to render the whole carousel thing if we only have 1 image only
     if (images.length === 99)
         return (
             <div className="flex gap-5">

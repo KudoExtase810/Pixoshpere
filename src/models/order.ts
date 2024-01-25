@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-import Product from "./product";
 import User from "@/models/user";
+
 const OrderSchema = new mongoose.Schema(
     {
         products: {
-            type: [mongoose.SchemaTypes.ObjectId],
-            ref: Product.modelName,
+            type: [{ title: String, price: Number, quantityBought: Number }],
             required: true,
         },
         status: {

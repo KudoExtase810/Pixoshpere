@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import "@/styles/tiptap.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/customer/Footer";
 import Cart from "@/components/customer/Cart";
 import { Toaster } from "sonner";
@@ -12,6 +12,8 @@ import ActionContextProvider from "@/contexts/ActionContext";
 import CartContextProvider from "@/contexts/CartContext";
 
 import { getServerSession } from "@/auth/utils";
+import MobileSidebarContextProvider from "@/contexts/MobileSidebarContext";
+import MobileSidebar from "@/components/navbar/MobileSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,23 +35,26 @@ export default async function RootLayout({
                 <ThemeProvider
                     attribute="class"
                     enableSystem={false}
-                    defaultTheme="light"
+                    defaultTheme="dark"
                 >
                     <ActionContextProvider>
-                        <CartContextProvider>
-                            <ModalContextProvider>
-                                <Navbar
-                                    isLoggedIn={isLoggedIn}
-                                    isAdmin={isAdmin}
-                                />
-                                <main className="mx-auto">
-                                    <Toaster richColors duration={5000} />
-                                    <Cart />
-                                    {children}
-                                </main>
-                                <Footer />
-                            </ModalContextProvider>
-                        </CartContextProvider>
+                        <MobileSidebarContextProvider>
+                            <CartContextProvider>
+                                <ModalContextProvider>
+                                    <Navbar
+                                        isLoggedIn={isLoggedIn}
+                                        isAdmin={isAdmin}
+                                    />
+                                    <main className="mx-auto">
+                                        <Toaster richColors duration={5000} />
+                                        <Cart />
+                                        <MobileSidebar isAdmin={isAdmin} />
+                                        {children}
+                                    </main>
+                                    <Footer />
+                                </ModalContextProvider>
+                            </CartContextProvider>
+                        </MobileSidebarContextProvider>
                     </ActionContextProvider>
                 </ThemeProvider>
             </body>

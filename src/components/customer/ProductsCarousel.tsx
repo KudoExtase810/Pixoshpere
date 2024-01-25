@@ -54,7 +54,7 @@ const ProductsCarousel = ({
                         {products.map((product) => (
                             <CarouselItem
                                 key={product._id}
-                                className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                                className="basis-1/2 sm:basis-1/4 lg:basis-1/5"
                             >
                                 <SingleProduct product={product} />
                             </CarouselItem>
@@ -65,7 +65,7 @@ const ProductsCarousel = ({
                         {[...new Array(6)].map((_, idx) => (
                             <CarouselItem
                                 key={idx}
-                                className="basis-1/3 sm:basis-1/4 lg:basis-1/5"
+                                className="basis-1/2 sm:basis-1/4 lg:basis-1/5"
                             >
                                 <div className="flex flex-col gap-1.5">
                                     <Skeleton className="aspect-1 rounded-md mb-1" />
@@ -77,9 +77,9 @@ const ProductsCarousel = ({
                     </CarouselContent>
                 )}
                 {!hideControls && !isLoading && (
-                    <div className="relative w-11/12 mx-auto mt-6">
-                        <CarouselPrevious />
-                        <CarouselNext />
+                    <div className="pt-8 px-1 flex justify-between">
+                        <CarouselPrevious className="static" />
+                        <CarouselNext className="static" />
                     </div>
                 )}
             </Carousel>

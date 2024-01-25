@@ -60,9 +60,9 @@ const ContactForm = ({ userDetails }: ContactFormProps) => {
         }
     };
     return (
-        <section>
-            <h2 className="pb-3 text-4xl font-semibold">
-                More questions in mind?
+        <section className="pt-8">
+            <h2 className="pb-4 text-4xl font-semibold">
+                Get in touch with us
             </h2>
             <Form {...form}>
                 <form

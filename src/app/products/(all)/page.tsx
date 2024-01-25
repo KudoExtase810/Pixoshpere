@@ -1,12 +1,9 @@
 import Animate from "@/components/Animate";
-import BlurImage from "@/components/BlurImage";
-import FormatPricing from "@/components/FormatPricing";
-import ProductsFilters from "@/components/customer/ProductsFilters";
+import ProductsFilters from "@/components/customer/products/ProductsFilters";
 import SingleProduct from "@/components/customer/SingleProduct";
 import connectDB from "@/lib/connectdb";
 import Category from "@/models/category";
 import Product from "@/models/product";
-import Link from "next/link";
 import React from "react";
 
 const Products = async ({

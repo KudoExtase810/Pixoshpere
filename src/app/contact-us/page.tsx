@@ -1,9 +1,7 @@
 import ContactForm from "@/components/customer/contact-us/ContactForm";
-import FAQ from "@/components/customer/contact-us/FAQ";
 import User from "@/models/user";
 import { getServerSession } from "@/auth/utils";
 import { redirect } from "next/navigation";
-import React from "react";
 
 const ContactUs = async () => {
     const { isLoggedIn, userId } = await getServerSession();
@@ -14,7 +12,6 @@ const ContactUs = async () => {
     );
     return (
         <div className="container">
-            <FAQ />
             <ContactForm userDetails={JSON.parse(JSON.stringify(user))} />
         </div>
     );
