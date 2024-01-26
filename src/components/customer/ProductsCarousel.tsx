@@ -12,12 +12,14 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "../ui/skeleton";
+import { useRef } from "react";
 
 interface props {
     title: string;
     hideControls?: boolean;
     products: Product[];
     isLoading?: boolean;
+    autoPlay?: boolean;
 }
 
 const ProductsCarousel = ({
@@ -25,7 +27,14 @@ const ProductsCarousel = ({
     hideControls = false,
     products,
     isLoading = false,
+    autoPlay,
 }: props) => {
+    const plugin = useRef(
+        Autoplay({
+            delay: 3000,
+            stopOnInteraction: true,
+        })
+    );
     return (
         <section className="py-8">
             <div className="flex justify-between items-center mb-4">
@@ -42,6 +51,7 @@ const ProductsCarousel = ({
             </div>
 
             <Carousel
+                plugins={autoPlay ? [plugin.current] : []}
                 opts={
                     {
                         // align: "center",

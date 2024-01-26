@@ -30,10 +30,11 @@ const formSchema = z.object({
 });
 
 interface ContactFormProps {
-    userDetails: User | null;
+    isLoggedIn: boolean;
+    userDetails: { email: ""; firstName: ""; lastName: ""; phone: "" };
 }
 
-const ContactForm = ({ userDetails }: ContactFormProps) => {
+const ContactForm = ({ isLoggedIn, userDetails }: ContactFormProps) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -47,6 +48,8 @@ const ContactForm = ({ userDetails }: ContactFormProps) => {
         },
     });
     const sendMessage = async (values: z.infer<typeof formSchema>) => {
+        if (!isLoggedIn)
+            return notifyError("You need to be logged in to continue.");
         try {
             if (!userDetails)
                 return notifyError(
