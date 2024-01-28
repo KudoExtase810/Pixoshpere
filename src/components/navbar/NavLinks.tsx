@@ -135,9 +135,9 @@ const NavLinks = ({ pathname, isAdmin, isAdminSide }: NavLinksProps) => {
                         } else {
                             return (
                                 <li key={link.label}>
-                                    <h5 className="text-cyan-500 mb-2 flex items-center gap-2">
+                                    <h5 className="text-teal-500 mb-2 flex items-center gap-2">
                                         <span>{link.label}</span>
-                                        <div className="bg-cyan-500 h-0.5 w-full" />
+                                        <div className="bg-teal-500 h-0.5 w-full" />
                                     </h5>
                                     <ul className="flex flex-col gap-3 ml-2.5">
                                         {link.subLinks.map((subLink) => (

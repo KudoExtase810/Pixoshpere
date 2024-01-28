@@ -24,7 +24,7 @@ const BlurImage = ({
     unoptimized,
     quality,
 }: BlurImageProps) => {
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     return (
         <Image
             alt={alt}
@@ -35,13 +35,13 @@ const BlurImage = ({
             unoptimized={unoptimized}
             quality={quality}
             className={cn(
-                "duration-700 ease-in-out group-hover:opacity-75 object-cover",
+                "duration-700 ease-in-out md:group-hover:opacity-75 object-cover",
                 className,
                 isLoading
                     ? "scale-110 blur-2xl grayscale"
                     : "scale-100 blur-0 grayscale-0"
             )}
-            onLoad={() => setLoading(false)}
+            onLoad={() => setIsLoading(false)}
         />
     );
 };

@@ -54,7 +54,7 @@ const SingleProduct = ({
             </Link>
             <Button
                 variant="default"
-                className="absolute rounded-sm bg-cyan-500 hover:bg-cyan-600 text-white left-1/2 -translate-x-1/2 z-10 w-[96%] text-center bottom-[68px] transition-all duration-700 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+                className="absolute rounded-sm bg-teal-500 hover:bg-teal-600 text-white left-1/2 -translate-x-1/2 z-10 w-[96%] text-center bottom-[64px] transition-all duration-700 md:opacity-0 md:pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
                 onClick={() =>
                     alreadyInCart ? removeItem(product._id) : addItem(product)
                 }

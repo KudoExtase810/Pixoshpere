@@ -1,29 +1,29 @@
 "use client";
+
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
-import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
+
+import { ShoppingBasket } from "lucide-react";
+
+import { useCart } from "@/contexts/CartContext";
+
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 import CartItem from "./CartItem";
-import { ShoppingBasket } from "lucide-react";
 
 const Cart = () => {
-    const { toggle, isOpen, cartItems, removeItem, total, isEmpty } = useCart();
+    const { toggle, isOpen, cartItems, total, isEmpty } = useCart();
 
     return (
         <Sheet open={isOpen} onOpenChange={toggle}>
             <SheetContent className="max-[500px]:px-3 min-w-[300px] md:min-w-[520px] overflow-y-auto">
                 <SheetHeader>
                     <SheetTitle>Your Shopping Cart</SheetTitle>
-                    {/* <SheetDescription>
-                        You can easily 
-                    </SheetDescription> */}
                 </SheetHeader>
                 {!isEmpty ? (
                     <div className="mt-6">
@@ -60,7 +60,7 @@ const Cart = () => {
                             You can view our products from{" "}
                             <Link
                                 href="/products"
-                                className="text-cyan-500 hover:text-cyan-600"
+                                className="text-teal-500 hover:text-teal-600"
                             >
                                 here
                             </Link>

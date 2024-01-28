@@ -3,13 +3,14 @@
 import { useState } from "react";
 import CheckoutForm from "./CheckoutForm";
 import CheckoutItems from "./CheckoutItems";
+import { useCart } from "@/contexts/CartContext";
 
 interface CheckoutSectionProps {
     userDetails: User;
 }
 
 const CheckoutSection = ({ userDetails }: CheckoutSectionProps) => {
-    const [subTotal, setSubTotal] = useState(0);
+    const { total: subTotal } = useCart();
     const [shippingCost, setShippingCost] = useState(0);
     const [tax, setTax] = useState(0);
     const [coupon, setCoupon] = useState<string>();

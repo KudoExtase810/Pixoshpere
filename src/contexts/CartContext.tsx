@@ -70,7 +70,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const removeItem = (itemID: string) => {
         setCartItems([...cartItems].filter((item) => item._id !== itemID));
-        notifySuccess("Item removed from cart.");
+        // notifySuccess("Item removed from cart.");
     };
 
     const emptyCart = () => {

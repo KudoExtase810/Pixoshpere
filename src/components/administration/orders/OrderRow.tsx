@@ -30,7 +30,9 @@ const OrderRow = ({ order }: { order: Order }) => {
     return (
         <TableRow>
             <TableCell className="font-medium">{`${order.customer.firstName} ${order.customer.lastName}`}</TableCell>
-            <TableCell>{dayjs().format("DD MMM YYYY | HH:mm")}</TableCell>
+            <TableCell>
+                {dayjs(order.createdAt).format("DD MMM YYYY | HH:mm")}
+            </TableCell>
             <TableCell>{formatPrice(order.total)}</TableCell>
             <TableCell>
                 <Badge variant={order.status}>{order.status}</Badge>

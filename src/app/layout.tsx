@@ -28,7 +28,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     const { isLoggedIn, isAdmin } = await getServerSession();
-
+    console.log("HIT HIT HIT HIT HIT");
     return (
         <html lang="en">
             <body className={inter.className}>

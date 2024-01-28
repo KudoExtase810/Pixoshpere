@@ -10,7 +10,12 @@ export async function POST(request: Request) {
         const orderData = await request.json();
 
         const { products, appliedCoupon, tax, shippingCost } = orderData as {
-            products: { id: string; quantity: number }[];
+            products: {
+                id: string;
+                title: string;
+                quantityBought: number;
+                price: number;
+            }[];
             customer: string;
             appliedCoupon?: string;
             tax: number;
@@ -38,11 +43,11 @@ export async function POST(request: Request) {
                     product.id.toString() === purchasedProduct._id.toString()
             )!;
 
-            const quantityOrdered = matchingProduct?.quantity;
+            const quantityBought = matchingProduct?.quantityBought;
             const currentItemPrice =
                 purchasedProduct.salePrice || purchasedProduct.price;
 
-            total += currentItemPrice * quantityOrdered;
+            total += currentItemPrice * quantityBought;
         });
         // add the taxes + shpping cost
         total += tax + shippingCost;
@@ -52,7 +57,22 @@ export async function POST(request: Request) {
             total = 6900;
         }
 
-        await Order.create({ ...orderData, products: productIds, total });
+        await Order.create({
+            ...orderData,
+            products: purchasedProducts.map((product) => {
+                return {
+                    id: product._id,
+                    title: product.title,
+                    quantityBought: products.find(
+                        (boughtProduct) =>
+                            product._id.toString() ===
+                            boughtProduct.id.toString()
+                    )?.quantityBought,
+                    price: product.salePrice || product.price,
+                };
+            }),
+            total,
+        });
 
         // Increment sales for each product & decrement the quantity
         for (let i = 0; i < purchasedProducts.length; i++) {
@@ -62,7 +82,7 @@ export async function POST(request: Request) {
                     product.id.toString() === purchasedProduct._id.toString()
             )!;
 
-            const quantityOrdered = matchingProduct?.quantity;
+            const quantityOrdered = matchingProduct?.quantityBought;
 
             await Product.updateOne(
                 { _id: purchasedProduct._id },

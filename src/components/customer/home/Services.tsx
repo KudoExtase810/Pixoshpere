@@ -26,7 +26,7 @@ const Services = () => {
     ];
 
     return (
-        <ul className="flex justify-between max-lg:flex-col max-lg:items-center gap-4 py-8">
+        <ul className="grid grid-cols-4 place-items-center max-lg:grid-cols-2 max-sm:grid-cols-1 max-lg:items-center gap-4 py-8">
             {data.map((feature, idx) => (
                 <li className="flex gap-4 items-center" key={idx}>
                     <Image
@@ -36,7 +36,8 @@ const Services = () => {
                         unoptimized
                         alt={feature.title}
                     />
-                    <div>
+
+                    <div className="max-lg:w-60">
                         <p className="font-semibold text-lg max-xl:text-base max-lg:text-lg mb-1">
                             {feature.title}
                         </p>

@@ -14,13 +14,13 @@ const Home = async () => {
         <>
             <HeroBanners />
             <div className="container">
-                <Services />
                 <ProductsCarousel
                     title="Featured Products"
                     products={JSON.parse(JSON.stringify(products))}
                 />
-                <Partners />
+                <Services />
                 <FAQ />
+                <Partners />
             </div>
         </>
     );

@@ -61,7 +61,12 @@ const CheckoutForm = ({
         try {
             const order = {
                 products: cartItems.map((item) => {
-                    return { id: item._id, quantity: item.quantityInCart };
+                    return {
+                        id: item._id,
+                        title: item.title,
+                        quantityBought: item.quantityInCart,
+                        price: item.salePrice || item.price,
+                    };
                 }),
                 customer: userDetails._id,
                 appliedCoupon: coupon,

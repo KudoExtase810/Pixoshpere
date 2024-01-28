@@ -61,7 +61,7 @@ const SortableImages = ({
                 ))}
             </SortableList>
             {images.length > 1 && (
-                <ul className="flex flex-col gap-1 text-sm text-cyan-500">
+                <ul className="flex flex-col gap-1 text-sm text-teal-500">
                     <li>
                         <p>You can drag the images to re-arrange them.</p>
                     </li>

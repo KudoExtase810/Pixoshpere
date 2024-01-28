@@ -27,7 +27,7 @@ export const HeroBanners = () => {
                                 lifestyle.
                             </p>
                             <Button
-                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
+                                className="bg-teal-500 hover:bg-teal-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
                                 <Link href="/products">View Products</Link>
@@ -49,7 +49,7 @@ export const HeroBanners = () => {
                                 lifestyle.
                             </p>
                             <Button
-                                className="bg-cyan-500 hover:bg-cyan-600 text-white py-6 px-10 text-base"
+                                className="bg-teal-500 hover:bg-teal-600 text-white py-6 px-10 text-base"
                                 asChild
                             >
                                 <Link href="/products">Shop Now</Link>

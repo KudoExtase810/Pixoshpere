@@ -21,7 +21,7 @@ const ProfileMenu = ({ signOut }: ProfileMenuProps) => {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant={null}
-                    className="px-2 flex items-center gap-1.5 text-cyan-500 hover:text-cyan-600"
+                    className="px-2 flex items-center gap-1.5 text-teal-500 hover:text-teal-600"
                 >
                     <CircleUserRound /> <span>Alaa K.</span>
                 </Button>
@@ -40,12 +40,12 @@ const ProfileMenu = ({ signOut }: ProfileMenuProps) => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <Link href="/account" className="w-full">
+                        <Link href="/profile" className="w-full">
                             My Account
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link href="/profile/account" className="w-full">
+                        <Link href="/profile/orders" className="w-full">
                             Order History
                         </Link>
                     </DropdownMenuItem>

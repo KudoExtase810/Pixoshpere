@@ -10,17 +10,21 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
-import { Search } from "lucide-react";
-import { FormEvent, useEffect, useState } from "react";
+import { ListFilter, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useProductFilters } from "@/contexts/ProductFiltersContext";
 
 interface ProductFilters {
-    allCategories: Category[];
+    allCategories: Pick<Category, "label" | "_id">[];
 }
 
 const ProductsFilters = ({ allCategories }: ProductFilters) => {
     const [query, setQuery] = useState<string>("");
     const [category, setCategory] = useState<string | null>(null);
+
+    const { open: showFiltersDrawer } = useProductFilters();
 
     const router = useRouter();
 
@@ -65,24 +69,34 @@ const ProductsFilters = ({ allCategories }: ProductFilters) => {
                         <Search size={20} />
                     </button>
                 </div>
-                <Select onValueChange={(value) => setCategory(value)}>
-                    <SelectTrigger className="lg:max-w-md">
-                        <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Categories</SelectLabel>
-                            {allCategories.map((category) => (
-                                <SelectItem
-                                    key={category._id}
-                                    value={category._id}
-                                >
-                                    {category.label}
-                                </SelectItem>
-                            ))}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
+                <div className="flex gap-2 max-lg:w-full">
+                    <Select onValueChange={(value) => setCategory(value)}>
+                        <SelectTrigger className="w-full lg:w-96">
+                            <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Categories</SelectLabel>
+                                {allCategories.map((category) => (
+                                    <SelectItem
+                                        key={category._id}
+                                        value={category._id}
+                                    >
+                                        {category.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        className="hover:text-teal-500"
+                        onClick={showFiltersDrawer}
+                    >
+                        <ListFilter size={28} />
+                    </Button>
+                </div>
             </div>
         </form>
     );

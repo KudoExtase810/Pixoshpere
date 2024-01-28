@@ -41,9 +41,9 @@ const MessageModal = () => {
                     </DialogDescription>
                     <p className="ml-auto">
                         By{" "}
-                        <span className="text-cyan-500">{`${selectedMessage.sender.firstName} ${selectedMessage.sender.lastName}`}</span>{" "}
+                        <span className="text-teal-500">{`${selectedMessage.sender.firstName} ${selectedMessage.sender.lastName}`}</span>{" "}
                         /{" "}
-                        <span className="text-cyan-500">
+                        <span className="text-teal-500">
                             {selectedMessage.sender.email}
                         </span>
                     </p>

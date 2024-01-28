@@ -4,7 +4,14 @@ import User from "@/models/user";
 const OrderSchema = new mongoose.Schema(
     {
         products: {
-            type: [{ title: String, price: Number, quantityBought: Number }],
+            type: [
+                {
+                    id: String,
+                    title: String,
+                    price: Number,
+                    quantityBought: Number,
+                },
+            ],
             required: true,
         },
         status: {

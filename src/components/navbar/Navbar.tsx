@@ -67,7 +67,7 @@ const Navbar = ({
                     {!isLoggedIn && (
                         <Button
                             asChild
-                            className="bg-cyan-500 hover:bg-cyan-600"
+                            className="bg-teal-500 hover:bg-teal-600"
                         >
                             <Link href="/login">Sign In</Link>
                         </Button>

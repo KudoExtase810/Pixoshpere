@@ -100,7 +100,7 @@ const OrderStatusModal = () => {
                     Order by{" "}
                     <Link
                         href={`/administration/users?email=${selectedOrder.customer.email}`}
-                        className="text-cyan-500"
+                        className="text-teal-500"
                     >{`${selectedOrder.customer.firstName} ${selectedOrder.customer.lastName}`}</Link>
                 </p>
             </DialogContent>
