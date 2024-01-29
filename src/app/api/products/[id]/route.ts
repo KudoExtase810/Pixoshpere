@@ -1,6 +1,5 @@
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
-import { NextResponse } from "next/server";
 
 export async function PUT(
     request: Request,
@@ -17,18 +16,18 @@ export async function PUT(
         );
 
         if (!product) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Product not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Product updated with success." },
             { status: 200 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
 
@@ -41,17 +40,17 @@ export async function DELETE(
         const product = await Product.findByIdAndDelete(params.id);
 
         if (!product) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Product not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Product deleted successfully" },
             { status: 200 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

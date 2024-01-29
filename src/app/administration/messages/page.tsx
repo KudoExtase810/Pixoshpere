@@ -37,10 +37,11 @@ const Messages = async ({
         sortObj[sortBy] = 1;
     }
 
-    const messages = await Message.find<Message>(queryObj)
+    const messages = (await Message.find<Message>(queryObj)
         .limit(limit)
         .skip(skip)
-        .sort(sortObj);
+        .sort(sortObj)
+        .lean()) as Message[];
 
     const totalDocs = await Message.countDocuments(queryObj);
 

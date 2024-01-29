@@ -11,11 +11,12 @@ const Dashboard = async () => {
     await connectDB();
     const totalCustomers = await User.countDocuments({ isAdmin: false });
 
-    const latestOrders = await Order.find<Order>()
+    const latestOrders = (await Order.find()
         .limit(10)
         .sort({ createdAt: "descending" })
         .select("customer total")
-        .populate({ path: "customer", select: "email firstName lastName" });
+        .populate({ path: "customer", select: "email firstName lastName" })
+        .lean()) as Pick<Order, "_id" | "customer" | "total">[];
 
     const totalRevenueResult = await Order.aggregate([
         {

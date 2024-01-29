@@ -44,11 +44,12 @@ const Products = async ({
         sortObj[sortBy] = 1;
     }
 
-    const products = await Product.find<Product>(queryObj)
+    const products = (await Product.find<Product>(queryObj)
         .limit(limit)
         .skip(skip)
         .sort(sortObj)
-        .populate("category");
+        .populate("category")
+        .lean()) as Product[];
 
     const totalProducts = await Product.countDocuments(queryObj);
 

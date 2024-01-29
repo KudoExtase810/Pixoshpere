@@ -38,14 +38,15 @@ const Orders = async ({
         sortObj[sortBy] = 1;
     }
 
-    const orders = await Order.find<Order>(queryObj)
+    const orders = (await Order.find<Order>(queryObj)
         .limit(limit)
         .skip(skip)
         .sort(sortObj)
         .populate({
             path: "customer",
             select: "firstName lastName phone email",
-        });
+        })
+        .lean()) as Order[];
 
     const totalDocs = await Order.countDocuments(queryObj);
 

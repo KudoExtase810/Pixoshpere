@@ -1,6 +1,5 @@
 import connectDB from "@/lib/connectdb";
 import Coupon from "@/models/coupon";
-import { NextResponse } from "next/server";
 
 export async function GET(
     _request: Request,
@@ -11,15 +10,15 @@ export async function GET(
         const coupon = await Coupon.findById(params.id);
 
         if (!coupon) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(coupon, { status: 200 });
+        return Response.json(coupon, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
 
@@ -38,18 +37,18 @@ export async function PUT(
         );
 
         if (!coupon) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Coupon updated with success." },
             { status: 200 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
 
@@ -62,17 +61,17 @@ export async function DELETE(
         const coupon = await Coupon.findByIdAndDelete(params.id);
 
         if (!coupon) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Coupon not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Coupon deleted successfully" },
             { status: 200 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

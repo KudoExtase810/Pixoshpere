@@ -36,13 +36,14 @@ const Users = async ({
         sortObj[sortBy] = 1;
     }
 
-    const users = await User.find<User>({
+    const users = (await User.find<User>({
         ...queryObj,
         isAdmin: role === "admin",
     })
         .limit(limit)
         .skip(skip)
-        .sort(sortObj);
+        .sort(sortObj)
+        .lean()) as User[];
 
     const totalDocs = await User.countDocuments(queryObj);
 

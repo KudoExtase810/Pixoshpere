@@ -1,5 +1,4 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 const ADMIN_KEY = process.env.SECRET_ADMIN_API_KEY;
 

@@ -1,6 +1,6 @@
 import { auth } from "@/auth/lucia";
 import * as context from "next/headers";
-import { NextResponse } from "next/server";
+
 import { LuciaError } from "lucia";
 import connectDB from "@/lib/connectdb";
 
@@ -20,7 +20,7 @@ export const POST = async (request: Request) => {
         const authRequest = auth.handleRequest(request.method, context);
         authRequest.setSession(session);
 
-        return NextResponse.json(
+        return Response.json(
             {
                 message: "Successfully logged in",
             },
@@ -35,7 +35,7 @@ export const POST = async (request: Request) => {
                 e.message === "AUTH_INVALID_PASSWORD")
         ) {
             // user does not exist or invalid password
-            return NextResponse.json(
+            return Response.json(
                 {
                     message: "Incorrect username or password",
                 },
@@ -45,7 +45,7 @@ export const POST = async (request: Request) => {
             );
         }
         console.log(e);
-        return NextResponse.json(
+        return Response.json(
             {
                 error: "An unknown error occurred",
             },

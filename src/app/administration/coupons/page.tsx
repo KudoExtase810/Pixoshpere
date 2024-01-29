@@ -15,7 +15,7 @@ import Coupon from "@/models/coupon";
 
 const Coupons = async () => {
     await connectDB();
-    const coupons = await Coupon.find<Coupon>({});
+    const coupons = (await Coupon.find<Coupon>({}).lean()) as Coupon[];
     const totalDocs = 0;
     return (
         <>

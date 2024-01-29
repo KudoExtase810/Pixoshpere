@@ -10,20 +10,28 @@ import {
 import { Button } from "../ui/button";
 import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ProfileMenuProps {
     signOut: () => Promise<void>;
+    userDetails: Pick<User, "firstName" | "lastName" | "email">;
 }
 
-const ProfileMenu = ({ signOut }: ProfileMenuProps) => {
+const ProfileMenu = ({ signOut, userDetails }: ProfileMenuProps) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant={null}
-                    className="px-2 flex items-center gap-1.5 text-teal-500 hover:text-teal-600"
+                    className={cn(
+                        "px-2 flex items-center gap-1.5 text-teal-500 hover:text-teal-600",
+                        userDetails.firstName.length > 8 && "text-xs"
+                    )}
                 >
-                    <CircleUserRound /> <span>Alaa K.</span>
+                    <CircleUserRound />
+                    <span>{`${
+                        userDetails.firstName
+                    } ${userDetails.lastName.charAt(0)}.`}</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="center" forceMount>
@@ -33,7 +41,7 @@ const ProfileMenu = ({ signOut }: ProfileMenuProps) => {
                             shadcn
                         </p>
                         <p className="text-xs leading-none text-muted-foreground truncate">
-                            {"alaakudo@gmail.com"}
+                            {userDetails.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>

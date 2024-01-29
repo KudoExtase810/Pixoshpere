@@ -1,6 +1,5 @@
 import Category from "@/models/category";
 import connectDB from "@/lib/connectdb";
-import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     try {
@@ -65,9 +64,9 @@ export async function GET(request: Request) {
 
         const totalDocs = await Category.countDocuments(queryObj);
 
-        return NextResponse.json({ categories, totalDocs }, { status: 200 });
+        return Response.json({ categories, totalDocs }, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
 
@@ -79,11 +78,11 @@ export async function POST(request: Request) {
 
         await Category.create(body);
 
-        return NextResponse.json(
+        return Response.json(
             { message: "New category created successfully." },
             { status: 201 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

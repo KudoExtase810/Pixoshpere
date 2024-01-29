@@ -1,7 +1,7 @@
 import User from "@/models/user";
 import { auth } from "@/auth/lucia";
 import * as context from "next/headers";
-import { NextResponse } from "next/server";
+
 import connectDB from "@/lib/connectdb";
 
 export async function POST(request: Request) {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
             lastName,
         });
         if (namesInUse)
-            return NextResponse.json(
+            return Response.json(
                 {
                     message:
                         "The combination of this first & last name already exists.",
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
         const emailInUse = await User.exists({ email });
         if (emailInUse)
-            return NextResponse.json(
+            return Response.json(
                 { message: "Email already in use." },
                 { status: 409 }
             );
@@ -54,12 +54,12 @@ export async function POST(request: Request) {
         // const authRequest = auth.handleRequest(request.method, context);
         // authRequest.setSession(session);
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Your account has been successfully created." },
 
             { status: 201 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

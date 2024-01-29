@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatPrice } from "@/lib/utils";
 
 interface props {
-    latestOrders: Order[];
+    latestOrders: Pick<Order, "_id" | "customer" | "total">[];
 }
 
 const LatestSales = ({ latestOrders }: props) => {

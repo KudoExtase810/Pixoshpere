@@ -1,6 +1,5 @@
 import connectDB from "@/lib/connectdb";
 import Message from "@/models/message";
-import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
@@ -10,7 +9,7 @@ export async function POST(request: Request) {
 
         await Message.create(messageData);
 
-        return NextResponse.json(
+        return Response.json(
             {
                 message:
                     "Your message has been successfully sent. If a reply is expected, please check your email for updates.",
@@ -18,6 +17,6 @@ export async function POST(request: Request) {
             { status: 201 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

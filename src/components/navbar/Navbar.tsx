@@ -13,13 +13,13 @@ import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useMobileSidebar } from "@/contexts/MobileSidebarContext";
 
-const Navbar = ({
-    isLoggedIn,
-    isAdmin,
-}: {
+interface NavbarProps {
     isLoggedIn: boolean;
     isAdmin: boolean;
-}) => {
+    userDetails: Pick<User, "firstName" | "lastName" | "email">;
+}
+
+const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
     const { theme, setTheme } = useTheme();
     const { open: openCart, itemsCount } = useCart();
     const { open: openMobileSidebar } = useMobileSidebar();
@@ -106,7 +106,10 @@ const Navbar = ({
                     )}
                     {/* Profile dropdown */}
                     {isLoggedIn && !isAdminSide && (
-                        <ProfileMenu signOut={signOut} />
+                        <ProfileMenu
+                            userDetails={userDetails}
+                            signOut={signOut}
+                        />
                     )}
                     {/* Mobile sidebar */}
                     <Button

@@ -14,6 +14,7 @@ import CartContextProvider from "@/contexts/CartContext";
 import { getServerSession } from "@/auth/utils";
 import MobileSidebarContextProvider from "@/contexts/MobileSidebarContext";
 import MobileSidebar from "@/components/navbar/MobileSidebar";
+import User from "@/models/user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,12 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const { isLoggedIn, isAdmin } = await getServerSession();
-    console.log("HIT HIT HIT HIT HIT");
+    const { isLoggedIn, isAdmin, userId } = await getServerSession();
+
+    const userDetails = (await User.findById(userId)
+        .select("firstName lastName email")
+        .lean()) as Pick<User, "firstName" | "lastName" | "email">;
+
     return (
         <html lang="en">
             <body className={inter.className}>
@@ -42,6 +47,7 @@ export default async function RootLayout({
                             <CartContextProvider>
                                 <ModalContextProvider>
                                     <Navbar
+                                        userDetails={userDetails}
                                         isLoggedIn={isLoggedIn}
                                         isAdmin={isAdmin}
                                     />

@@ -1,6 +1,5 @@
 import connectDB from "@/lib/connectdb";
 import Message from "@/models/message";
-import { NextResponse } from "next/server";
 
 export async function DELETE(
     _request: Request,
@@ -11,17 +10,17 @@ export async function DELETE(
         const message = await Message.findByIdAndDelete(params.id);
 
         if (!message) {
-            return NextResponse.json(
+            return Response.json(
                 { message: "Message not found." },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(
+        return Response.json(
             { message: "Message deleted successfully" },
             { status: 200 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }

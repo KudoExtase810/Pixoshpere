@@ -12,9 +12,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
     await connectDB();
-    const product = await Product.findOne<Product>({
+    const product = (await Product.findOne<Product>({
         slug: params.slug,
-    }).populate("category");
+    })
+        .populate("category")
+        .lean()) as Product;
 
     if (!product) redirect("/products");
 

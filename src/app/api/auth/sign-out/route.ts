@@ -2,15 +2,13 @@ import { auth } from "@/auth/lucia";
 import connectDB from "@/lib/connectdb";
 import * as context from "next/headers";
 
-import { NextResponse } from "next/server";
-
 export const POST = async (request: Request) => {
     await connectDB();
     const authRequest = auth.handleRequest(request.method, context);
     // check if user is authenticated
     const session = await authRequest.validate();
     if (!session) {
-        return NextResponse.json(
+        return Response.json(
             { message: "You are already logged out." },
             {
                 status: 401,
@@ -21,7 +19,7 @@ export const POST = async (request: Request) => {
     await auth.invalidateSession(session.sessionId);
     // delete session cookie
     authRequest.setSession(null);
-    return NextResponse.json(
+    return Response.json(
         {
             message: "User logged out",
         },

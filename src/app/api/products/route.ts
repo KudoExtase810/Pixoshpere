@@ -1,6 +1,5 @@
 import Product from "@/models/product";
 import connectDB from "@/lib/connectdb";
-import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     try {
@@ -16,9 +15,9 @@ export async function GET(request: Request) {
         const products = await Product.find(queryObj)
             .select("title slug category price salePrice images.url")
             .populate("category");
-        return NextResponse.json({ products }, { status: 200 });
+        return Response.json({ products }, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
 
@@ -30,11 +29,11 @@ export async function POST(request: Request) {
 
         await Product.create(body);
 
-        return NextResponse.json(
+        return Response.json(
             { message: "New product created successfully." },
             { status: 201 }
         );
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        return Response.json({ message: error.message }, { status: 500 });
     }
 }
