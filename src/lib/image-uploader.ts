@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 
 export const uploadImage = async (file: File) => {
     const formData = new FormData();
@@ -17,6 +17,11 @@ export const uploadImage = async (file: File) => {
     };
 };
 
-export const deleteImage = async () => {
-    console.log("image deleted");
+export const deleteImage = async (publicId: string) => {
+    const { data } = await axios.post(
+        "https://api.cloudinary.com/v1_1/duqkgxds7/image/destroy",
+        { public_id: publicId, api_key: "myapikey", signature: "???" }
+    );
+
+    return { message: data.response.message };
 };

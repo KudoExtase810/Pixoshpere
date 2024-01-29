@@ -1,4 +1,5 @@
 import connectDB from "@/lib/connectdb";
+import { deleteImage } from "@/lib/image-uploader";
 import Product from "@/models/product";
 
 export async function PUT(
@@ -37,13 +38,20 @@ export async function DELETE(
 ) {
     try {
         await connectDB();
-        const product = await Product.findByIdAndDelete(params.id);
+        const product = await Product.findById<Product>(params.id);
 
         if (!product) {
             return Response.json(
                 { message: "Product not found." },
                 { status: 404 }
             );
+        }
+
+        // Delete all the product's images from cloudinary
+        for (let i = 0; i < product.images.length; i++) {
+            const imgPublicId = product.images[i].publicId;
+            const { message } = await deleteImage(imgPublicId);
+            console.log(message);
         }
 
         return Response.json(

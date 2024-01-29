@@ -25,7 +25,7 @@ const Orders = async () => {
                 <OrderHistory orders={userOrders} />
             ) : (
                 <p className="text-center">
-                    You haven't placed any orders yet.
+                    You haven&apos;t placed any orders yet.
                 </p>
             )}
         </div>
