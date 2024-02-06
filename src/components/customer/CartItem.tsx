@@ -16,7 +16,7 @@ const CartItem = ({ item }: CartItemProps) => {
     return (
         <li className="flex py-4 gap-4">
             <Image
-                className="rounded-md"
+                className="rounded-md max-h-[110px]"
                 height={110}
                 width={110}
                 quality={100}

@@ -15,6 +15,7 @@ import { getServerSession } from "@/auth/utils";
 import MobileSidebarContextProvider from "@/contexts/MobileSidebarContext";
 import MobileSidebar from "@/components/navbar/MobileSidebar";
 import User from "@/models/user";
+import AuthModal from "@/components/auth/AuthModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,6 +55,7 @@ export default async function RootLayout({
                                     <main className="mx-auto">
                                         <Toaster richColors duration={5000} />
                                         <Cart />
+                                        <AuthModal />
                                         <MobileSidebar isAdmin={isAdmin} />
                                         {children}
                                     </main>

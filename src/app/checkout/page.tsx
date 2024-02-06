@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 const Checkout = async () => {
     const { isLoggedIn, userId } = await getServerSession();
-    if (!isLoggedIn) redirect("/login");
+    if (!isLoggedIn) redirect("/");
 
     const user = await User.findById<User>(userId).select(
         "email firstName lastName phone"

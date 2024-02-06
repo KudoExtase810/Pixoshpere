@@ -28,7 +28,7 @@ import { uploadImage } from "@/lib/image-uploader";
 
 import axios, { isAxiosError } from "axios";
 
-import TextEditor from "../TextEditor";
+import TextEditor from "./TextEditor";
 import LoadingSpinner from "../../LoadingSpinner";
 import { useRouter } from "next/navigation";
 import { useActionData } from "@/contexts/ActionContext";

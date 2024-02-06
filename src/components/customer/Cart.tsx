@@ -21,7 +21,7 @@ const Cart = () => {
 
     return (
         <Sheet open={isOpen} onOpenChange={toggle}>
-            <SheetContent className="max-[500px]:px-3 min-w-[300px] md:min-w-[520px] overflow-y-auto">
+            <SheetContent className="max-[500px]:px-3 min-w-[95%] sm:min-w-[85%] md:min-w-[520px] overflow-y-auto">
                 <SheetHeader>
                     <SheetTitle>Your Shopping Cart</SheetTitle>
                 </SheetHeader>

@@ -74,7 +74,14 @@ const ProductsFilters = ({ allCategories }: ProductFilters) => {
                         <SelectTrigger className="w-full lg:w-96">
                             <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent
+                            // https://github.com/radix-ui/primitives/issues/1658
+                            ref={(ref) =>
+                                ref?.addEventListener("touchend", (e) =>
+                                    e.preventDefault()
+                                )
+                            }
+                        >
                             <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
                                 {allCategories.map((category) => (

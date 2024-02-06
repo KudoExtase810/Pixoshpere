@@ -4,6 +4,7 @@ import { useState, createContext, useContext, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 type ModalState = {
+    auth: boolean;
     delete: boolean;
     message: boolean;
     orderDetails: boolean;
@@ -25,6 +26,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
 
     const [modalState, setModalState] = useState<ModalState>({
+        auth: false,
         delete: false,
         message: false,
         orderDetails: false,
@@ -44,6 +46,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         setModalState({
+            auth: false,
             delete: false,
             message: false,
             orderDetails: false,

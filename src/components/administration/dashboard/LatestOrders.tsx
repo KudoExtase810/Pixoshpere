@@ -16,7 +16,7 @@ interface props {
 
 const LatestOrders = ({ latestOrders }: props) => {
     return (
-        <Card className="col-span-4 md:col-span-3">
+        <Card className="col-span-4 md:col-span-3 relative">
             <CardHeader>
                 <CardTitle>Latest Orders</CardTitle>
                 <CardDescription>The 10 most recent orders.</CardDescription>
@@ -45,7 +45,7 @@ const LatestOrders = ({ latestOrders }: props) => {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center mt-[25%] text-muted-foreground">
+                            <p className="text-center lg:absolute top-1/2 left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 text-muted-foreground">
                                 You haven&apos;t made any sales yet.
                             </p>
                         )}

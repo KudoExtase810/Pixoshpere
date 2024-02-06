@@ -12,6 +12,7 @@ import axios from "axios";
 import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useMobileSidebar } from "@/contexts/MobileSidebarContext";
+import { useModal } from "@/contexts/ModalContext";
 
 interface NavbarProps {
     isLoggedIn: boolean;
@@ -23,13 +24,10 @@ const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
     const { theme, setTheme } = useTheme();
     const { open: openCart, itemsCount } = useCart();
     const { open: openMobileSidebar } = useMobileSidebar();
+    const { toggle } = useModal();
     const router = useRouter();
     const pathname = usePathname();
     const isAdminSide = pathname.includes("administration");
-
-    // Hide the navbar in these paths
-    const hiddenNavbarPaths = ["/login", "/sign-up"];
-    if (hiddenNavbarPaths.includes(pathname)) return null;
 
     const signOut = async () => {
         const res = await axios.post("/api/auth/sign-out");
@@ -39,6 +37,8 @@ const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
             notifyError(res.data.message);
         }
     };
+
+    const showAuthModal = () => toggle("auth");
 
     return (
         <header className="sticky top-0 py-3.5 bg-neutral-200/60 dark:bg-black/60 backdrop-blur text-sm z-50">
@@ -66,10 +66,10 @@ const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
                     {/* Sign in button */}
                     {!isLoggedIn && (
                         <Button
-                            asChild
                             className="bg-teal-500 hover:bg-teal-600"
+                            onClick={showAuthModal}
                         >
-                            <Link href="/login">Sign In</Link>
+                            Sign In
                         </Button>
                     )}
                     {/* Theme toggle */}

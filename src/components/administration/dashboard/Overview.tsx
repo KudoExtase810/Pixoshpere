@@ -112,34 +112,40 @@ const Overview = ({ orders }: OverviewProps) => {
     ];
 
     return (
-        <Card className="col-span-4">
+        <Card className="col-span-4 relative">
             <CardHeader>
                 <CardTitle>Overview</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
-                <ResponsiveContainer width="100%" height={350}>
-                    <BarChart data={data}>
-                        <XAxis
-                            dataKey="name"
-                            stroke="#888888"
-                            fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
-                        />
-                        <YAxis
-                            stroke="#888888"
-                            fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
-                            tickFormatter={(value) => `$${value}`}
-                        />
-                        <Bar
-                            dataKey="total"
-                            fill="#14B8A6"
-                            radius={[4, 4, 0, 0]}
-                        />
-                    </BarChart>
-                </ResponsiveContainer>
+                {orders.length ? (
+                    <ResponsiveContainer width="100%" height={350}>
+                        <BarChart data={data}>
+                            <XAxis
+                                dataKey="name"
+                                stroke="#888888"
+                                fontSize={12}
+                                tickLine={false}
+                                axisLine={false}
+                            />
+                            <YAxis
+                                stroke="#888888"
+                                fontSize={12}
+                                tickLine={false}
+                                axisLine={false}
+                                tickFormatter={(value) => `$${value}`}
+                            />
+                            <Bar
+                                dataKey="total"
+                                fill="#14B8A6"
+                                radius={[4, 4, 0, 0]}
+                            />
+                        </BarChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <p className="text-center lg:absolute top-1/2 left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 text-muted-foreground">
+                        You haven&apos;t made any sales yet.
+                    </p>
+                )}
             </CardContent>
         </Card>
     );
