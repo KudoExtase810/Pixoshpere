@@ -41,7 +41,7 @@ const Cart = () => {
                                     The total may change in the next step.
                                 </p>
                             </div>
-                            <span className="font-medium">
+                            <span className="font-medium max-sm:text-sm">
                                 {formatPrice(total)}
                             </span>
                         </div>

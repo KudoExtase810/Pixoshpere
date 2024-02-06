@@ -58,10 +58,10 @@ const OrderHistory = ({ orders }: OrderHistoryProps) => {
                             <TableCell>{formatPrice(order.total)}</TableCell>
                             <TableCell>
                                 <Button
-                                    onClick={() => {
-                                        setActionData(order as Order);
-                                        toggle("orderDetails");
-                                    }}
+                                    // onClick={() => {
+                                    //     setActionData(order as Order);
+                                    //     toggle("orderDetails");
+                                    // }}
                                     variant="ghost"
                                     className="p-1 h-min text-green-500 hover:text-green-600"
                                 >
