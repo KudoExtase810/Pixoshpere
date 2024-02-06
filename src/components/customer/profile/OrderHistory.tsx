@@ -10,6 +10,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useActionData } from "@/contexts/ActionContext";
+import { useModal } from "@/contexts/ModalContext";
 import { formatPrice } from "@/lib/utils";
 import dayjs from "dayjs";
 import { ReceiptText } from "lucide-react";
@@ -22,8 +24,11 @@ interface OrderHistoryProps {
 }
 
 const OrderHistory = ({ orders }: OrderHistoryProps) => {
+    const { setActionData } = useActionData();
+    const { toggle } = useModal();
+
     return (
-        <div className="border rounded-md">
+        <div className="border rounded-md whitespace-nowrap">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -53,7 +58,10 @@ const OrderHistory = ({ orders }: OrderHistoryProps) => {
                             <TableCell>{formatPrice(order.total)}</TableCell>
                             <TableCell>
                                 <Button
-                                    // onClick={viewDetails}
+                                    onClick={() => {
+                                        setActionData(order as Order);
+                                        toggle("orderDetails");
+                                    }}
                                     variant="ghost"
                                     className="p-1 h-min text-green-500 hover:text-green-600"
                                 >

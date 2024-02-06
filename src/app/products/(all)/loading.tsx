@@ -4,7 +4,7 @@ import React from "react";
 const ProductsLoading = () => {
     return (
         <div className="container">
-            <h1 className="page-title">All products</h1>
+            <h1 className="pb-4 pt-6 text-4xl font-semibold">All products</h1>
 
             <div className="flex max-lg:flex-col-reverse max-lg:gap-4 items-center justify-between mb-6">
                 <Skeleton className="w-full lg:max-w-md h-9" />

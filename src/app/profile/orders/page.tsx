@@ -1,4 +1,5 @@
 import { getServerSession } from "@/auth/utils";
+import OrderDetailsModal from "@/components/OrderDetailsModal";
 import OrderHistory from "@/components/customer/profile/OrderHistory";
 import { Separator } from "@/components/ui/separator";
 import Order from "@/models/order";
@@ -13,22 +14,25 @@ const Orders = async () => {
     >[];
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h3 className="text-lg font-medium">Order History</h3>
-                <p className="text-sm text-muted-foreground">
-                    View details about your latest orders
-                </p>
+        <>
+            <OrderDetailsModal />
+            <div className="space-y-6">
+                <div>
+                    <h3 className="text-lg font-medium">Order History</h3>
+                    <p className="text-sm text-muted-foreground">
+                        View details about your latest orders
+                    </p>
+                </div>
+                <Separator />
+                {userOrders.length > 0 ? (
+                    <OrderHistory orders={userOrders} />
+                ) : (
+                    <p className="text-center">
+                        You haven&apos;t placed any orders yet.
+                    </p>
+                )}
             </div>
-            <Separator />
-            {userOrders.length > 0 ? (
-                <OrderHistory orders={userOrders} />
-            ) : (
-                <p className="text-center">
-                    You haven&apos;t placed any orders yet.
-                </p>
-            )}
-        </div>
+        </>
     );
 };
 

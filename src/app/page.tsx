@@ -8,7 +8,15 @@ import FAQ from "@/components/customer/home/FAQ";
 
 const Home = async () => {
     await connectDB();
-    const products = await Product.find().populate("category");
+    const featuredProducts = await Product.find({
+        isFeatured: true,
+        isHidden: false,
+    })
+        .sort({
+            priority: "ascending",
+        })
+        .select("-description")
+        .lean();
 
     return (
         <>
@@ -16,7 +24,7 @@ const Home = async () => {
             <div className="container">
                 <ProductsCarousel
                     title="Featured Products"
-                    products={JSON.parse(JSON.stringify(products))}
+                    products={JSON.parse(JSON.stringify(featuredProducts))}
                 />
                 <Services />
                 <FAQ />

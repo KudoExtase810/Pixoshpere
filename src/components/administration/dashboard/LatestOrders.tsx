@@ -14,12 +14,12 @@ interface props {
     latestOrders: Pick<Order, "_id" | "customer" | "total">[];
 }
 
-const LatestSales = ({ latestOrders }: props) => {
+const LatestOrders = ({ latestOrders }: props) => {
     return (
         <Card className="col-span-4 md:col-span-3">
             <CardHeader>
-                <CardTitle>Latest Sales</CardTitle>
-                <CardDescription>Your 10 latest sales.</CardDescription>
+                <CardTitle>Latest Orders</CardTitle>
+                <CardDescription>The 10 most recent orders.</CardDescription>
             </CardHeader>
             <CardContent>
                 <ScrollArea className="lg:h-80">
@@ -56,4 +56,4 @@ const LatestSales = ({ latestOrders }: props) => {
     );
 };
 
-export default LatestSales;
+export default LatestOrders;

@@ -16,6 +16,8 @@ import { notifyError, notifySuccess } from "@/lib/utils";
 import axios, { isAxiosError } from "axios";
 import { useRouter, usePathname } from "next/navigation";
 
+type Deletable = "products" | "categories" | "coupons" | "messages";
+
 const DeleteModal = () => {
     const router = useRouter();
     const pathname = usePathname();
@@ -26,39 +28,13 @@ const DeleteModal = () => {
 
     // We can pass the type as a prop but we'll have to remove the delete modal
     // from the admin layout and put in every page we need it in instead
-    const type = pathname.replace("/administration/", "") as
-        | "products"
-        | "categories"
-        | "coupons"
-        | "orders"
-        | "messages";
+    const type = pathname.replace("/administration/", "") as Deletable;
 
-    const getDeleteURL = () => {
-        let api_url;
-
-        switch (type) {
-            case "products":
-                api_url = `/api/products/${actionData?._id}`;
-                break;
-            case "categories":
-                api_url = `/api/categories/${actionData?._id}`;
-                break;
-            case "coupons":
-                api_url = `/api/coupons/${actionData?._id}`;
-                break;
-
-            case "orders":
-                api_url = `/api/orders${actionData?._id}`;
-
-            case "messages":
-                api_url = `/api/messages/${actionData?._id}`;
-                break;
-
-            default:
-                throw new Error("Invalid type passed to the delete modal.");
-        }
-
-        return api_url;
+    const apiUrls: Record<Deletable, string> = {
+        products: `/api/products/${actionData?._id}`,
+        categories: `/api/categories/${actionData?._id}`,
+        coupons: `/api/coupons/${actionData?._id}`,
+        messages: `/api/messages/${actionData?._id}`,
     };
 
     const checkData = () => {
@@ -75,7 +51,7 @@ const DeleteModal = () => {
             const { error } = checkData();
             if (error) return notifyError(error);
 
-            const url = getDeleteURL();
+            const url = apiUrls[type];
             const { data } = await axios.delete(url);
             notifySuccess(data.message);
             router.refresh();

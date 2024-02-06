@@ -1,6 +1,6 @@
 import GeneralData from "@/components/administration/dashboard/GeneralData";
 import Overview from "@/components/administration/dashboard/Overview";
-import LatestSales from "@/components/administration/dashboard/LatestSales";
+import LatestOrders from "@/components/administration/dashboard/LatestOrders";
 import Order from "@/models/order";
 import User from "@/models/user";
 import dayjs from "dayjs";
@@ -20,6 +20,11 @@ const Dashboard = async () => {
 
     const totalRevenueResult = await Order.aggregate([
         {
+            $match: {
+                status: "delivered",
+            },
+        },
+        {
             $group: {
                 _id: null,
                 totalSum: { $sum: "$total" },
@@ -32,6 +37,7 @@ const Dashboard = async () => {
         {
             $match: {
                 createdAt: { $gte: startOfMonth.toDate() },
+                status: "delivered",
             },
         },
         {
@@ -47,6 +53,7 @@ const Dashboard = async () => {
         {
             $match: {
                 createdAt: { $gte: startOfDay.toDate() },
+                status: "delivered",
             },
         },
         {
@@ -56,6 +63,14 @@ const Dashboard = async () => {
             },
         },
     ]);
+
+    const startOfYear = dayjs().startOf("year");
+    const ordersForThisYear = await Order.find({
+        createdAt: { $gte: startOfYear.toDate() },
+        status: "delivered",
+    })
+        .select("createdAt total")
+        .lean();
 
     return (
         <>
@@ -78,8 +93,12 @@ const Dashboard = async () => {
                 }}
             />
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mb-8">
-                <Overview />
-                <LatestSales latestOrders={latestOrders} />
+                <Overview
+                    orders={JSON.parse(JSON.stringify(ordersForThisYear))}
+                />
+                <LatestOrders
+                    latestOrders={JSON.parse(JSON.stringify(latestOrders))}
+                />
             </div>
         </>
     );

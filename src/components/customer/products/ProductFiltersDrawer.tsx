@@ -19,6 +19,7 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 import { useProductFilters } from "@/contexts/ProductFiltersContext";
 import { Switch } from "@/components/ui/switch";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ProductFiltersDrawerProps {
     highestPrice: number;
@@ -33,19 +34,48 @@ const formSchema = z.object({
 
 const ProductFiltersDrawer = ({ highestPrice }: ProductFiltersDrawerProps) => {
     const { isOpen, toggle } = useProductFilters();
+    const router = useRouter();
+    const readOnlySearchParams = useSearchParams();
+    const minPrice = Number(readOnlySearchParams.get("min"));
+    const maxPrice = Number(readOnlySearchParams.get("max"));
+    const hideOutOfStock = Boolean(readOnlySearchParams.get("hide-oos"));
+    const onSaleOnly = Boolean(readOnlySearchParams.get("onsale"));
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            minPrice: 0,
-            maxPrice: highestPrice,
-            onSaleOnly: false,
-            hideOutOfStock: false,
+            minPrice: minPrice ?? 0,
+            maxPrice: maxPrice || highestPrice,
+            onSaleOnly: onSaleOnly ?? false,
+            hideOutOfStock: hideOutOfStock ?? false,
         },
     });
 
-    const applyFilters = () => {
-        //
+    const applyFilters = (values: z.infer<typeof formSchema>) => {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        if (values.minPrice)
+            searchParams.set("min", JSON.stringify(values.minPrice));
+        else searchParams.set("min", "0");
+
+        if (values.maxPrice)
+            searchParams.set("max", JSON.stringify(values.maxPrice));
+        else searchParams.delete("max");
+
+        if (values.onSaleOnly)
+            searchParams.set("onsale", JSON.stringify(values.onSaleOnly));
+        else searchParams.delete("onsale");
+
+        if (values.hideOutOfStock)
+            searchParams.set("hide-oos", JSON.stringify(values.hideOutOfStock));
+        else searchParams.delete("hide-oos");
+
+        // Generate the new pathname with the updated search params
+        const newPathname = `${
+            window.location.pathname
+        }?${searchParams.toString()}`;
+
+        router.push(newPathname, { scroll: false });
     };
 
     return (

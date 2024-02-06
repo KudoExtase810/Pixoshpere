@@ -12,7 +12,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "../ui/skeleton";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 
 interface props {
     title: string;
@@ -35,10 +35,31 @@ const ProductsCarousel = ({
             stopOnInteraction: true,
         })
     );
+
+    // Get styles based on the length of the products array
+    const getStyles = (length: number) => {
+        switch (length) {
+            case 1:
+                return "basis-1/2 sm:basis-1/3";
+            case 2:
+                return "basis-1/2 sm:basis-1/3";
+            case 3:
+                return "basis-1/2 sm:basis-1/3";
+            case 4:
+                return "basis-1/2 sm:basis-1/3 lg:basis-1/4";
+            default:
+                return "basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5";
+        }
+    };
+
+    const styles = useMemo(() => getStyles(products.length), [products.length]);
+
     return (
         <section className="py-8">
             <div className="flex justify-between items-center mb-4">
-                <h3 className="styled">{title}</h3>
+                <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+                    {title}
+                </h2>
                 <div className="relative">
                     <Link
                         href="/products"
@@ -62,10 +83,7 @@ const ProductsCarousel = ({
                 {!isLoading ? (
                     <CarouselContent>
                         {products.map((product) => (
-                            <CarouselItem
-                                key={product._id}
-                                className="basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5"
-                            >
+                            <CarouselItem key={product._id} className={styles}>
                                 <SingleProduct product={product} />
                             </CarouselItem>
                         ))}

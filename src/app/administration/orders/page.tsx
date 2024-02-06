@@ -13,7 +13,7 @@ import connectDB from "@/lib/connectdb";
 import OrderFilters from "@/components/administration/orders/OrderFilters";
 import NoResults from "@/components/administration/NoResults";
 import OrderStatusModal from "@/components/administration/orders/OrderStatusModal";
-import OrderDetailsModal from "@/components/administration/orders/OrderDetailsModal";
+import OrderDetailsModal from "@/components/OrderDetailsModal";
 
 const Orders = async ({
     searchParams,
@@ -23,6 +23,7 @@ const Orders = async ({
     const query = searchParams.q;
     const sortBy = searchParams.sortBy || "createdAt";
     const page = parseInt(searchParams.page || "1");
+    const showDelivered = searchParams.showDelivered === "true";
     const limit = 10;
     const skip = (page - 1) * limit;
 
@@ -33,12 +34,16 @@ const Orders = async ({
         queryObj.label = { $regex: query, $options: "i" };
     }
 
+    if (!showDelivered) {
+        queryObj.status = { $ne: "delivered" };
+    }
+
     const sortObj: any = {};
     if (sortBy) {
         sortObj[sortBy] = 1;
     }
 
-    const orders = (await Order.find<Order>(queryObj)
+    const orders = (await Order.find(queryObj)
         .limit(limit)
         .skip(skip)
         .sort(sortObj)

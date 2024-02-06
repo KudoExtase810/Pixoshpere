@@ -18,10 +18,10 @@ export const HeroBanners = () => {
                 <CarouselItem>
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/geforce-banner.webp)] bg-cover">
                         <div className="container mx-auto text-white z-[3]">
-                            <h1 className="styled ">
+                            <h1 className="title ">
                                 Your source for everything tech related.
                             </h1>
-                            <p className="styled text-lg mb-6">
+                            <p className="title text-lg mb-6">
                                 Uncover the latest in laptops, hardware, and
                                 tech innovations tailored for your digital
                                 lifestyle.
@@ -40,10 +40,10 @@ export const HeroBanners = () => {
                 <CarouselItem>
                     <div className="w-full h-[720px] flex items-center relative bg-[url(/images/laptop-banner.webp)] bg-cover">
                         <div className="container mx-auto text-white z-[3]">
-                            <h1 className="styled ">
+                            <h1 className="title ">
                                 Your source for everything tech related
                             </h1>
-                            <p className="styled text-lg mb-6 ">
+                            <p className="title text-lg mb-6 ">
                                 Uncover the latest in laptops, hardware, and
                                 tech innovations tailored for your digital
                                 lifestyle.

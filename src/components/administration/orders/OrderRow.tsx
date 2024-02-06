@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Trash, ReceiptText, Pencil } from "lucide-react";
+import { ReceiptText, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -23,10 +23,6 @@ const OrderRow = ({ order }: { order: Order }) => {
         toggle("orderDetails");
     };
 
-    const handleDelete = () => {
-        setActionData(order);
-        toggle("delete");
-    };
     return (
         <TableRow>
             <TableCell className="font-medium">{`${order.customer.firstName} ${order.customer.lastName}`}</TableCell>
@@ -51,13 +47,6 @@ const OrderRow = ({ order }: { order: Order }) => {
                     className="p-1 h-min text-blue-500 hover:text-blue-600"
                 >
                     <Pencil size={20} />
-                </Button>
-                <Button
-                    onClick={handleDelete}
-                    variant="ghost"
-                    className="p-1 h-min text-red-500 hover:text-red-600"
-                >
-                    <Trash size={20} />
                 </Button>
             </TableCell>
         </TableRow>

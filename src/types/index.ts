@@ -30,7 +30,7 @@ type Product = Base & {
     }[];
     description: string;
     isHidden: boolean;
-    hideWhenOutOfStock: boolean;
+    isFeatured: boolean;
     salePrice: number;
     category: Category;
     sales: number;

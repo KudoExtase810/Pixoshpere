@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         const purchasedProducts = (await Product.find({
             _id: { $in: productIds },
         })
-            .select("price salePrice")
+            .select("title price salePrice")
             .lean()) as Product[];
 
         // calculate the total

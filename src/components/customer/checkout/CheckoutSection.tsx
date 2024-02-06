@@ -18,7 +18,7 @@ const CheckoutSection = ({ userDetails }: CheckoutSectionProps) => {
     const total = subTotal + shippingCost + tax;
     return (
         <>
-            <h1 className="styled">Checkout</h1>
+            <h1 className="pb-4 pt-6 text-4xl font-semibold">Checkout</h1>
             <div className="flex flex-col lg:flex-row">
                 <CheckoutForm
                     orderData={{

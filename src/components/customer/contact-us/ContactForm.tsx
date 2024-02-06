@@ -63,10 +63,10 @@ const ContactForm = ({ isLoggedIn, userDetails }: ContactFormProps) => {
         }
     };
     return (
-        <section className="pt-8">
-            <h2 className="pb-4 text-4xl font-semibold">
+        <section>
+            <h1 className="pb-4 pt-6 text-4xl font-semibold">
                 Get in touch with us
-            </h2>
+            </h1>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(sendMessage)}

@@ -60,6 +60,7 @@ const formSchema = z.object({
         })
         .min(0, "The quantity must be greater than or equal to zero")
         .max(500, "The quantity cannot exceed 500"),
+    isFeatured: z.boolean(),
     priority: z.coerce
         .number({
             invalid_type_error: "This field must be a number",
@@ -96,6 +97,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
             salePrice: selectedProduct?.salePrice || 0,
             category: selectedProduct?.category?._id ?? "",
             quantity: selectedProduct?.quantity ?? 1,
+            isFeatured: selectedProduct?.isFeatured ?? false,
             priority: selectedProduct?.priority ?? 0,
             description: selectedProduct?.description ?? "",
             isHidden: selectedProduct?.isHidden ?? false,
@@ -120,6 +122,11 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
             setLoadedImages(selectedProduct.images);
         }
     }, [selectedProduct]);
+
+    useEffect(() => {
+        // This effect will run whenever the value of isFeatured changes
+        form.trigger("priority"); // Trigger validation for the 'priority' field
+    }, [form.watch("isFeatured")]); // Re-run the effect when isFeatured changes
 
     const createProduct = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -219,8 +226,8 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 />
                             </FormControl>
                             <FormDescription>
-                                Le prix de base de votre produit sans aucune
-                                réduction appliquée.
+                                The base price of your product without any
+                                applied discounts.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -241,8 +248,11 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 />
                             </FormControl>
                             <FormDescription>
-                                Le prix de votre produit avec la réduction
-                                appliquée.
+                                The price of your product with the applied
+                                discount.{" "}
+                                <span className="text-xs text-teal-500">
+                                    (0 means no discount)
+                                </span>
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -261,7 +271,7 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                             >
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Choisissez une catégorie" />
+                                        <SelectValue placeholder="Select a Category" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -297,30 +307,6 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                                 />
                             </FormControl>
 
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="priority"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>
-                                Priority <span className="text-red-600">*</span>
-                            </FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    placeholder="0"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                L&apos;ordre d&apos;affichage du produit dans la
-                                liste.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -371,6 +357,55 @@ const ProductForm = ({ toggleDrawer, allCategories }: props) => {
                         </FormItem>
                     )}
                 />
+
+                <FormField
+                    control={form.control}
+                    name="isFeatured"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel>Mark as featured.</FormLabel>
+                            </div>
+                        </FormItem>
+                    )}
+                />
+
+                {form.getValues("isFeatured") ? (
+                    <FormField
+                        control={form.control}
+                        name="priority"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Priority{" "}
+                                    <span className="text-red-600">*</span>
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type="number"
+                                        placeholder="0"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    The order of this product in the featured
+                                    section{" "}
+                                    <span className="text-xs text-teal-500">
+                                        (products with the smallest priority get
+                                        shown first)
+                                    </span>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                ) : null}
 
                 <FormField
                     control={form.control}
