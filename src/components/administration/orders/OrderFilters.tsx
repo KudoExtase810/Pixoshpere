@@ -12,15 +12,19 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type SortingMethods = { label: string; value: keyof Order }[];
 
 const OrderFilters = () => {
-    const [query, setQuery] = useState("");
-    const [sortBy, setSortBy] = useState<keyof Order>("createdAt");
-    const [showDelivered, setShowDelivered] = useState(false);
+    const searchParams = useSearchParams();
+    const sortBy = searchParams.get("sortBy") || "";
+    const query = searchParams.get("q") || "";
+    const showDelivered = searchParams.get("showDelivered");
+
+    const [storedQuery, setStoredQuery] = useState(query);
 
     const router = useRouter();
 
@@ -29,34 +33,30 @@ const OrderFilters = () => {
         { label: "Total", value: "total" },
     ];
 
-    useEffect(() => {
-        const searchParams = new URLSearchParams();
-        searchParams.set("showDelivered", `${showDelivered}`);
-        const newUrl = `/administration/orders?` + searchParams.toString();
-        router.push(newUrl);
-    }, [showDelivered]);
-
     return (
         <div className="py-4 space-y-4">
             <div className="flex justify-between">
                 <div className="relative w-80">
                     <Input
                         type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Rechercher un produit..."
+                        value={storedQuery}
+                        onChange={(e) => setStoredQuery(e.target.value)}
+                        placeholder="Search customers..."
                     />
-                    <button
+                    <Link
                         className="absolute top-2.5 right-2.5 text-zinc-700"
-                        // onClick={handleFilter}
+                        href={`?q=${storedQuery}&showDelivered=${showDelivered}&sortBy=${sortBy}`}
                     >
                         <Search size={20} />
-                    </button>
+                    </Link>
                 </div>
                 <div className="flex items-center gap-3">
                     <Select
+                        defaultValue={sortBy}
                         onValueChange={(value) =>
-                            setSortBy(value as keyof Order)
+                            router.push(
+                                `?q=${query}&showDelivered=${showDelivered}&sortBy=${value}`
+                            )
                         }
                     >
                         <SelectTrigger className="w-72">
@@ -77,8 +77,12 @@ const OrderFilters = () => {
             <div className="flex items-center gap-2 ml-auto w-fit">
                 <Switch
                     id="airplane-mode"
-                    checked={showDelivered}
-                    onCheckedChange={(newValue) => setShowDelivered(newValue)}
+                    checked={showDelivered === "true"}
+                    onCheckedChange={(value) =>
+                        router.push(
+                            `?q=${query}&showDelivered=${value}&sortBy=${sortBy}`
+                        )
+                    }
                 />
                 <Label htmlFor="airplane-mode">Show Delivered</Label>
             </div>

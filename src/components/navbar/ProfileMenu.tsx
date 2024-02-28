@@ -19,7 +19,7 @@ interface ProfileMenuProps {
 
 const ProfileMenu = ({ signOut, userDetails }: ProfileMenuProps) => {
     return (
-        <DropdownMenu>
+        <DropdownMenu >
             <DropdownMenuTrigger asChild>
                 <Button
                     variant={null}

@@ -58,12 +58,6 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const addItem = (item: Product) => {
-        // if (inCart(item._id)) {
-        //     notifyError(
-        //         "This product is already in cart. You may add more from there."
-        //     );
-        //     return;
-        // }
         setCartItems([...cartItems, { ...item, quantityInCart: 1 }]);
         notifySuccess("Item added to cart.");
     };
@@ -75,7 +69,6 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const emptyCart = () => {
         setCartItems([]);
-        notifySuccess("Your cart has been emptied.");
     };
 
     const isEmpty = cartItems.length === 0;
@@ -99,6 +92,11 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
                     : item
             )
         );
+    };
+
+    // Revalidate the content of the cart when it's rendered intially
+    const revalidateCartData = () => {
+        const itemIds = cartItems.map((item) => item._id);
     };
 
     return (

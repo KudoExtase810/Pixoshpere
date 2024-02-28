@@ -11,6 +11,9 @@ import parseHTML from "html-react-parser";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
+    await new Promise<void>((resolve, reject) => {
+        setTimeout(resolve, 10000);
+    });
     await connectDB();
     const product = (await Product.findOne<Product>({
         slug: params.slug,

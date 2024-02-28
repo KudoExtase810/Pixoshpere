@@ -18,7 +18,7 @@ const ProductPage = () => {
                             ))}
                         </div>
                     </div>
-                    <Skeleton className="w-[500px] max-lg:w-[420px] max-md:w-[500px] max-sm:w-full rounded-md" />
+                    <Skeleton className="w-[500px] max-lg:w-[420px] max-md:w-[500px] aspect-1 max-sm:w-full rounded-md" />
                 </div>
                 <div>
                     <Skeleton className="h-6 w-[400px] max-w-full rounded-sm mb-2" />

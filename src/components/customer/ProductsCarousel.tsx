@@ -12,7 +12,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "../ui/skeleton";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 
 interface props {
     title: string;
@@ -45,14 +45,12 @@ const ProductsCarousel = ({
                 return "basis-1/2 sm:basis-1/3";
             case 3:
                 return "basis-1/2 sm:basis-1/3";
-            case 4:
-                return "basis-1/2 sm:basis-1/3 lg:basis-1/4";
             default:
-                return "basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5";
+                return "basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/4";
         }
     };
 
-    const styles = useMemo(() => getStyles(products.length), [products.length]);
+    const styles = getStyles(products.length);
 
     return (
         <section className="py-8">

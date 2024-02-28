@@ -52,8 +52,8 @@ const OrderDetailsModal = () => {
                         {dayjs(selectedOrder.createdAt).format("DD MMM YYYY")}
                     </p>
                 </div>
-                <ScrollArea className="border rounded-md max-h-80  w-[90.99%]">
-                    <Table className="">
+                <div className="border rounded-md whitespace-nowrap overflow-x-auto">
+                    <Table>
                         <TableHeader>
                             <TableRow>
                                 <TableHead>#</TableHead>
@@ -88,12 +88,8 @@ const OrderDetailsModal = () => {
                             ))}
                         </TableBody>
                     </Table>
-                </ScrollArea>
-                <div className="flex mx-auto gap-8">
-                    <div>
-                        <h4>Payment Method</h4>
-                        <p>-</p>
-                    </div>
+                </div>
+                <div className="flex flex-wrap justify-between text-sm gap-3">
                     <div>
                         <h4>Subtotal</h4>
                         <p>{formatPrice(selectedOrder.total)}</p>

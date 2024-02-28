@@ -13,10 +13,36 @@ import {
 import connectDB from "@/lib/connectdb";
 import Coupon from "@/models/coupon";
 
-const Coupons = async () => {
+const Coupons = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined };
+}) => {
+    const query = searchParams.q;
+    const sortBy = searchParams.sortBy || "createdAt";
+    const page = parseInt(searchParams.page || "1");
+
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
     await connectDB();
-    const coupons = (await Coupon.find<Coupon>({}).lean()) as Coupon[];
-    const totalDocs = 0;
+
+    const queryObj: any = {};
+    if (query) {
+        queryObj.code = { $regex: query, $options: "i" };
+    }
+
+    const sortObj: any = {};
+    if (sortBy) {
+        sortObj[sortBy] = 1;
+    }
+    await connectDB();
+    const coupons = (await Coupon.find(queryObj)
+        .limit(limit)
+        .skip(skip)
+        .sort(sortObj)
+        .lean()) as Coupon[];
+    const totalDocs = await Coupon.countDocuments(queryObj);
     return (
         <>
             <CouponDrawer />

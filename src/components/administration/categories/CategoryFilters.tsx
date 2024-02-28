@@ -13,12 +13,20 @@ import { useDrawer } from "@/contexts/DrawerContext";
 import { Plus, Search } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 type SortingMethods = { label: string; value: keyof Category }[];
 
 const CategoryFilters = () => {
-    const [query, setQuery] = useState("");
-    const [sortBy, setSortBy] = useState<keyof Category>("createdAt");
+    const searchParams = useSearchParams();
+    const sortBy =
+        searchParams.get("sortBy") || ("createdAt" as keyof Category);
+    const query = searchParams.get("q") || "";
+
+    const [storedQuery, setStoredQuery] = useState(query);
+
+    const router = useRouter();
 
     const { toggle } = useDrawer();
     const sortingMethods: SortingMethods = [
@@ -32,21 +40,22 @@ const CategoryFilters = () => {
             <div className="relative w-80">
                 <Input
                     type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Rechercher un produit..."
+                    value={storedQuery}
+                    onChange={(e) => setStoredQuery(e.target.value)}
+                    placeholder="Search categories..."
                 />
-                <button
+                <Link
                     className="absolute top-2.5 right-2.5 text-zinc-700"
-                    // onClick={handleFilter}
+                    href={`?q=${storedQuery}&sortBy=${sortBy}`}
                 >
                     <Search size={20} />
-                </button>
+                </Link>
             </div>
             <div className="flex items-center gap-3">
                 <Select
+                    defaultValue={sortBy}
                     onValueChange={(value) =>
-                        setSortBy(value as keyof Category)
+                        router.push(`?q=${query}&sortBy=${value}`)
                     }
                 >
                     <SelectTrigger className="w-72">

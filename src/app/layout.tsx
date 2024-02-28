@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import "@/styles/tiptap.css";
 import Navbar from "@/components/navbar/Navbar";
@@ -10,14 +9,12 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ModalContextProvider from "@/contexts/ModalContext";
 import ActionContextProvider from "@/contexts/ActionContext";
 import CartContextProvider from "@/contexts/CartContext";
-
 import { getServerSession } from "@/auth/utils";
 import MobileSidebarContextProvider from "@/contexts/MobileSidebarContext";
 import MobileSidebar from "@/components/navbar/MobileSidebar";
 import User from "@/models/user";
 import AuthModal from "@/components/auth/AuthModal";
-
-const inter = Inter({ subsets: ["latin"] });
+import { GeistSans } from "geist/font/sans";
 
 export const metadata: Metadata = {
     title: "PixoSphere",
@@ -37,7 +34,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={GeistSans.className}>
                 <ThemeProvider
                     attribute="class"
                     enableSystem={false}

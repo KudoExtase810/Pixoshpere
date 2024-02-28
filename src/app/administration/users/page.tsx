@@ -28,7 +28,7 @@ const Users = async ({
 
     const queryObj: any = {};
     if (query) {
-        queryObj.title = { $regex: query, $options: "i" };
+        queryObj.email = { $regex: query, $options: "i" };
     }
 
     const sortObj: any = {};
@@ -52,7 +52,7 @@ const Users = async ({
             <h1 className="border-b pb-2 pt-6 text-4xl font-semibold">
                 {role === "admin" ? "Admins" : "Customers"}
             </h1>
-            <UserFilters />
+            <UserFilters role={role === "admin" ? "admin" : "customer"} />
             {users.length > 0 ? (
                 <div className="border rounded-md">
                     <Table>

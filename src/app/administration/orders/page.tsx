@@ -14,6 +14,7 @@ import OrderFilters from "@/components/administration/orders/OrderFilters";
 import NoResults from "@/components/administration/NoResults";
 import OrderStatusModal from "@/components/administration/orders/OrderStatusModal";
 import OrderDetailsModal from "@/components/OrderDetailsModal";
+import User from "@/models/user";
 
 const Orders = async ({
     searchParams,
@@ -30,8 +31,13 @@ const Orders = async ({
     await connectDB();
 
     const queryObj: any = {};
+
     if (query) {
-        queryObj.label = { $regex: query, $options: "i" };
+        const customer = (await User.findOne({ email: query })
+            .select("_id")
+            .lean()) as Pick<User, "_id"> | null;
+
+        queryObj.customer = customer?._id;
     }
 
     if (!showDelivered) {
@@ -42,7 +48,7 @@ const Orders = async ({
     if (sortBy) {
         sortObj[sortBy] = 1;
     }
-
+    console.log(queryObj);
     const orders = (await Order.find(queryObj)
         .limit(limit)
         .skip(skip)

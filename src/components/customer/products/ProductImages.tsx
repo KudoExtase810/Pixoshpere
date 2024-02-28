@@ -59,7 +59,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
     return (
         <div className="flex gap-5 max-sm:flex-col">
             <ScrollArea className="sm:h-[500px]">
-                <div className="grid grid-cols-1 max-sm:grid-cols-4 gap-2 mr-4">
+                <div className="grid grid-cols-1 max-sm:grid-cols-4  gap-2 sm:mr-4">
                     {images.map((image, idx) => (
                         <button
                             onClick={() => jumpToImage(idx)}

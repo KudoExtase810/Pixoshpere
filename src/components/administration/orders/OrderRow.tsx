@@ -19,8 +19,8 @@ const OrderRow = ({ order }: { order: Order }) => {
     };
 
     const viewDetails = () => {
-        // setActionData(order);
-        // toggle("orderDetails");
+        setActionData(order);
+        toggle("orderDetails");
     };
 
     return (

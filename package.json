@@ -41,6 +41,7 @@
         "embla-carousel-autoplay": "^8.0.0-rc19",
         "embla-carousel-react": "^8.0.0-rc19",
         "formidable": "^3.5.1",
+        "geist": "^1.2.2",
         "html-react-parser": "^5.1.1",
         "lucia": "^2.7.6",
         "lucide-react": "^0.316.0",

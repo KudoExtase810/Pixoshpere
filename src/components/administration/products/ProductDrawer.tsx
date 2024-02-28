@@ -26,7 +26,7 @@ const ProductDrawer = ({ allCategories }: props) => {
                 !isOpen && setActionData(null);
             }}
         >
-            <SheetContent className="max-[500px]:px-3 min-w-[310px] md:min-w-[640px] lg:min-w-[768px] overflow-y-auto">
+            <SheetContent className="max-[500px]:px-3 min-w-[310px] md:min-w-[640px] lg:min-w-[768px]">
                 <SheetHeader className="mb-4">
                     <SheetTitle>Add a new product</SheetTitle>
                     <SheetDescription>

@@ -17,7 +17,7 @@ const Products = async ({
     const category = searchParams.category;
     const minPrice = Number(searchParams.min || "0");
     const maxPrice = Number(searchParams.max || "0");
-    const hideOutOfStock = Boolean(searchParams["hide-oos"]);
+    const hideOutOfStock = searchParams["hide-oos"] === "true";
     const onSaleOnly = searchParams.onsale === "true";
     const sortBy = searchParams.sortBy;
     const page = parseInt(searchParams.page || "1");

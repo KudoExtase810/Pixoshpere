@@ -3,12 +3,11 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDebouncedCallback } from "use-debounce"; // Import the debouncing hook
+import { useDebouncedCallback } from "use-debounce";
 import { cn, formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { ScrollArea } from "../ui/scroll-area";
 import { Skeleton } from "../ui/skeleton";
-import { Button } from "../ui/button";
 
 interface ProductSearchProps {
     className?: React.HTMLAttributes<HTMLDivElement>["className"];
@@ -62,20 +61,26 @@ const ProductSearch = ({ className }: ProductSearchProps) => {
                 className="absolute top-2.5 right-2.5 text-zinc-700"
             />
             {searchQuery.trim() && (
-                <div className="fade-in-60 transition-all animate-in absolute stext-primary-foreground sbg-foreground rounded-md w-full mt-1 p-1 border bg-background drop-shadow-md">
-                    {isLoading ? (
-                        <LoadingSkeletons />
-                    ) : foundProducts?.length === 0 ? (
-                        <div className="flex h-16 items-center justify-center">
-                            No results found.
-                        </div>
-                    ) : (
-                        <FoundProducts
-                            reset={() => setSearchQuery("")}
-                            products={foundProducts ?? []}
-                        />
-                    )}
-                </div>
+                <>
+                    {/* <div
+                        className="fixed inset-0 h-screen w-screen z-[40]"
+                        onClick={() => setSearchQuery("")}
+                    /> */}
+                    <div className="fade-in-60 transition-all animate-in absolute stext-primary-foreground sbg-foreground rounded-md w-full mt-1 p-1 border bg-background drop-shadow-md z-[50]">
+                        {isLoading ? (
+                            <LoadingSkeletons />
+                        ) : foundProducts?.length === 0 ? (
+                            <div className="flex h-16 items-center justify-center">
+                                No results found.
+                            </div>
+                        ) : (
+                            <FoundProducts
+                                reset={() => setSearchQuery("")}
+                                products={foundProducts ?? []}
+                            />
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );

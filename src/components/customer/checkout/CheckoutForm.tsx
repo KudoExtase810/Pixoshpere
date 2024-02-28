@@ -15,6 +15,7 @@ import { useCart } from "@/contexts/CartContext";
 import { notifyError, notifySuccess } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -57,6 +58,8 @@ const CheckoutForm = ({
         },
     });
 
+    const router = useRouter();
+
     const handleCheckout = async (values: CheckoutSchema) => {
         try {
             const order = {
@@ -80,6 +83,8 @@ const CheckoutForm = ({
             };
             const { data } = await axios.post("/api/orders", order);
             notifySuccess(data.message);
+            emptyCart();
+            router.push("/profile/orders");
         } catch (error) {
             isAxiosError(error) && notifyError(error.response?.data.message);
         }

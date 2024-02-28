@@ -12,13 +12,17 @@ import {
 } from "@/components/ui/select";
 import { useDrawer } from "@/contexts/DrawerContext";
 import { Plus, Search } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 type SortingMethods = { label: string; value: keyof Product }[];
 
 const ProductFilters = () => {
-    const [query, setQuery] = useState("");
-    const [sortBy, setSortBy] = useState<keyof Product>("createdAt");
+    const searchParams = useSearchParams();
+    const sortBy = searchParams.get("sortBy") || ("createdAt" as keyof Product);
+    const query = searchParams.get("q") || "";
+    const [storedQuery, setStoredQuery] = useState(query);
 
     const { toggle } = useDrawer();
 
@@ -31,25 +35,30 @@ const ProductFilters = () => {
         { label: "Quantity", value: "quantity" },
     ];
 
+    const router = useRouter();
+
     return (
         <div className="flex justify-between py-4">
             <div className="relative w-80">
                 <Input
                     type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Rechercher un produit..."
+                    value={storedQuery}
+                    onChange={(e) => setStoredQuery(e.target.value)}
+                    placeholder="Search products..."
                 />
-                <button
+                <Link
                     className="absolute top-2.5 right-2.5 text-zinc-700"
-                    // onClick={handleFilter}
+                    href={`?q=${storedQuery}&sortBy=${sortBy}`}
                 >
                     <Search size={20} />
-                </button>
+                </Link>
             </div>
             <div className="flex items-center gap-3">
                 <Select
-                    onValueChange={(value) => setSortBy(value as keyof Product)}
+                    defaultValue={sortBy}
+                    onValueChange={(value) =>
+                        router.push(`?q=${query}&sortBy=${value}`)
+                    }
                 >
                     <SelectTrigger className="w-72">
                         <SelectValue placeholder="Sort by" />
