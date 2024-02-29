@@ -19,7 +19,7 @@ interface ProfileMenuProps {
 
 const ProfileMenu = ({ signOut, userDetails }: ProfileMenuProps) => {
     return (
-        <DropdownMenu >
+        <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant={null}
@@ -37,8 +37,8 @@ const ProfileMenu = ({ signOut, userDetails }: ProfileMenuProps) => {
             <DropdownMenuContent className="w-56" align="center" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                            shadcn
+                        <p className="text-sm font-medium leading-none truncate">
+                            {`${userDetails.firstName} ${userDetails.lastName}`}
                         </p>
                         <p className="text-xs leading-none text-muted-foreground truncate">
                             {userDetails.email}

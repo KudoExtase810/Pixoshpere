@@ -60,9 +60,9 @@ const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
                 </div>
                 <div className="flex items-center gap-5">
                     {/* Search bar */}
-                    {!isAdminSide && (
+                    {/* {!isAdminSide && (
                         <ProductSearch className="max-lg:hidden" />
-                    )}
+                    )} */}
                     {/* Sign in button */}
                     {!isLoggedIn && (
                         <Button

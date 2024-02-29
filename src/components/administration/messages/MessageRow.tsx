@@ -6,10 +6,8 @@ import { MailOpen, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/contexts/ModalContext";
 import { useActionData } from "@/contexts/ActionContext";
-import { notifySuccess } from "@/lib/utils";
 
 const MessageRow = ({ message }: { message: Message }) => {
-    console.log(message);
     const { toggle: toggleModal } = useModal();
     const { actionData, setActionData } = useActionData();
 
@@ -24,10 +22,7 @@ const MessageRow = ({ message }: { message: Message }) => {
     };
     return (
         <TableRow>
-            <TableCell
-                className="font-medium"
-                onClick={() => notifySuccess(JSON.stringify(actionData))}
-            >
+            <TableCell className="font-medium">
                 {`${message.sender.firstName} ${message.sender.lastName}`}
             </TableCell>
             <TableCell>{message.sender.email}</TableCell>

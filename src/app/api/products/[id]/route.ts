@@ -48,11 +48,11 @@ export async function DELETE(
         }
 
         // Delete all the product's images from cloudinary
-        for (let i = 0; i < product.images.length; i++) {
-            const imgPublicId = product.images[i].publicId;
-            const { message } = await deleteImage(imgPublicId);
-            console.log(message);
-        }
+        // for (let i = 0; i < product.images.length; i++) {
+        //     const imgPublicId = product.images[i].publicId;
+        //     const { message } = await deleteImage(imgPublicId);
+        //     console.log(message);
+        // }
 
         return Response.json(
             { message: "Product deleted successfully" },

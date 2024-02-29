@@ -20,26 +20,22 @@ const GeneralData = ({
             title: "Today's Revenue",
             icon: <Clock9 size={20} className="text-muted-foreground" />,
             value: formatPrice(todaysRevenue),
-            description: "+20.1% from last month",
         },
 
         {
             title: "This Month's Revenue",
             icon: <CalendarDays size={20} className="text-muted-foreground" />,
             value: formatPrice(currentMonthRevenue),
-            description: "+19% from last month",
         },
         {
             title: "All-Time Revenue",
             icon: <DollarSign size={20} className="text-muted-foreground" />,
             value: formatPrice(totalRevenue),
-            description: "+201 since last hour",
         },
         {
             title: "Total Customers",
             icon: <Users size={20} className="text-muted-foreground" />,
             value: totalCustomers,
-            description: "+180.1% from last month",
         },
     ];
 
@@ -55,9 +51,6 @@ const GeneralData = ({
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">{card.value}</div>
-                        <p className="text-xs text-muted-foreground">
-                            {card.description}
-                        </p>
                     </CardContent>
                 </Card>
             ))}
