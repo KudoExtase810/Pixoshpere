@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
+import {useSearchParams} from "next/navigation";
 
 interface props {
     showingDocs: number;

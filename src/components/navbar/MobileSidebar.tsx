@@ -2,7 +2,7 @@
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useMobileSidebar } from "@/contexts/MobileSidebarContext";
 import NavLinks from "./NavLinks";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/lib/navigation";
 
 interface MobileSidebarProps {
     isAdmin: boolean;

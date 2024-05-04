@@ -38,7 +38,7 @@ export async function DELETE(
 ) {
     try {
         await connectDB();
-        const product = await Product.findById<Product>(params.id);
+        const product = await Product.findByIdAndDelete<Product>(params.id);
 
         if (!product) {
             return Response.json(

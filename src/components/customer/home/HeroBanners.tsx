@@ -6,7 +6,7 @@ import {
     CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { useRef } from "react";
 
 export const HeroBanners = () => {
@@ -27,7 +27,8 @@ export const HeroBanners = () => {
                                 lifestyle.
                             </p>
                             <Button
-                                className="bg-teal-500 hover:bg-teal-600 text-white py-6 px-10 text-base"
+                                variant="action"
+                                className="py-6 px-10 text-base"
                                 asChild
                             >
                                 <Link href="/products">View Products</Link>
@@ -49,7 +50,8 @@ export const HeroBanners = () => {
                                 lifestyle.
                             </p>
                             <Button
-                                className="bg-teal-500 hover:bg-teal-600 text-white py-6 px-10 text-base"
+                                variant="action"
+                                className="py-6 px-10 text-base"
                                 asChild
                             >
                                 <Link href="/products">Shop Now</Link>

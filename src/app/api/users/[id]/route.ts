@@ -6,13 +6,11 @@ export async function PUT(
     { params }: { params: { id: string } }
 ) {
     try {
-        const newData: User = await request.json();
+        const newData: Pick<User, "email" | "firstName" | "lastName"> =
+            await request.json();
 
         await connectDB();
-        const user = await User.findByIdAndUpdate(params.id, newData, {
-            runValidators: true,
-        });
-
+        const user = await User.findByIdAndUpdate(params.id, newData);
         if (!user) {
             return Response.json(
                 { message: "User not found." },

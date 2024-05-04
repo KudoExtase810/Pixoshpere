@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link, useRouter } from "@/lib/navigation";
 
 interface NavLinksProps {
     pathname: string;
@@ -64,6 +64,9 @@ const NavLinks = ({ pathname, isAdmin, isAdminSide }: NavLinksProps) => {
     const relevantLinks = (
         isAdminSide ? adminLinks : customerLinks
     ) as typeof adminLinks;
+
+    const router = useRouter();
+
     return (
         <>
             <NavigationMenu className="max-lg:hidden">
@@ -102,9 +105,15 @@ const NavLinks = ({ pathname, isAdmin, isAdminSide }: NavLinksProps) => {
                                         <ul className="grid gap-3 p-3 w-[340px]">
                                             {link.subLinks.map((subLink) => (
                                                 <ListItem
+                                                    //TODO: find better solution for using the next-intl link here without router.push
                                                     key={subLink.label}
                                                     title={subLink.label}
-                                                    href={subLink.href}
+                                                    onClick={() =>
+                                                        router.push(
+                                                            subLink.href
+                                                        )
+                                                    }
+                                                    className="cursor-pointer"
                                                 />
                                             ))}
                                         </ul>

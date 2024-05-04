@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { formatPrice, notifyError, notifySuccess } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import React, { useState } from "react";
 
 interface CheckoutItemsProps {
@@ -39,7 +39,7 @@ const CheckoutItems = ({
                             className="rounded-md"
                             height={110}
                             width={110}
-                            quality={100}
+                            unoptimized
                             alt={item.title}
                             src={item.images[0].url}
                         />

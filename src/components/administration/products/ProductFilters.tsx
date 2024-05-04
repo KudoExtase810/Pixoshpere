@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/select";
 import { useDrawer } from "@/contexts/DrawerContext";
 import { Plus, Search } from "lucide-react";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Link } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation";
+import {useSearchParams} from "next/navigation"
 import React, { useState } from "react";
 
 type SortingMethods = { label: string; value: keyof Product }[];

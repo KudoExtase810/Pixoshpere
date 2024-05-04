@@ -44,7 +44,7 @@
         "geist": "^1.2.2",
         "html-react-parser": "^5.1.1",
         "lucia": "^2.7.6",
-        "lucide-react": "^0.316.0",
+        "lucide-react": "^0.354.0",
         "mongoose": "^8.0.1",
         "next": "^14.0.3",
         "next-intl": "^3.9.1",

@@ -31,7 +31,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                             src={images[0].url}
                             width={100}
                             height={100}
-                            quality={100}
+                            unoptimized
                             className="rounded-md"
                         />
                     </div>
@@ -46,6 +46,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                         </Badge>
                     )}
                     <Image
+                        unoptimized
                         className="rounded-md"
                         width={500}
                         height={500}
@@ -70,7 +71,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                                 src={image.url}
                                 width={100}
                                 height={100}
-                                quality={100}
+                                unoptimized
                                 className="rounded-md"
                             />
                             <span className="sr-only">
@@ -97,6 +98,7 @@ const ProductImages = ({ images, alt, salePercentage }: ProductImagesProps) => {
                                     </Badge>
                                 ) : null}
                                 <Image
+                                    unoptimized
                                     className="rounded-md"
                                     width={500}
                                     height={500}

@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -85,7 +85,7 @@ const LoginForm = ({ toggleView }: LoginFormProps) => {
                             {...register("password")}
                             id="password"
                             type={showPassword ? "text" : "password"}
-                            placeholder="●●●●●●●●●"
+                            placeholder="•••••••••••••••"
                         />
                         <button
                             type="button"

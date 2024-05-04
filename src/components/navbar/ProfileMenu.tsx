@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { CircleUserRound } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 interface ProfileMenuProps {
@@ -29,7 +29,7 @@ const ProfileMenu = ({ signOut, userDetails }: ProfileMenuProps) => {
                     )}
                 >
                     <CircleUserRound />
-                    <span>{`${
+                    <span className="max-sm:hidden">{`${
                         userDetails.firstName
                     } ${userDetails.lastName.charAt(0)}.`}</span>
                 </Button>

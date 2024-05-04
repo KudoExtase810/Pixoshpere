@@ -10,8 +10,9 @@ import {
     SelectItem,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Link } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 type SortingMethods = { label: string; value: keyof User }[];

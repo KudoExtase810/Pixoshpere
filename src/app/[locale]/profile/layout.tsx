@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import { Separator } from "@/components/ui/separator";
 import Sidebar from "@/components/customer/profile/Sidebar";
-import { redirect } from "next/navigation";
+import { redirect } from "@/lib/navigation";
 import { getServerSession } from "@/auth/utils";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ interface ProfileLayoutProps {
 export default async function ProfileLayout({ children }: ProfileLayoutProps) {
     const { isLoggedIn } = await getServerSession();
 
-    if (!isLoggedIn) redirect("/");
+    if (!isLoggedIn) redirect("/?req-auth=true");
 
     return (
         <>

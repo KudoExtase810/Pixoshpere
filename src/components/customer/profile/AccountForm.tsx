@@ -73,10 +73,14 @@ export function AccountForm({ user }: AccountFormProps) {
     });
 
     const updateUser = async (values: AccountFormValues) => {
-        if (initialEmail !== values.email) {
-            return notifySuccess("Confirm your new email address");
-        }
-        const { data } = await axios.put(`/api/users/${user._id}`, values);
+        // if (initialEmail !== values.email) {
+        //     return notifySuccess("Confirm your new email address");
+        // }
+        const { data } = await axios.put(`/api/users/${user._id}`, {
+            email: values.email,
+            firstName: values.firstname,
+            lastName: values.lastname,
+        });
         notifySuccess(data.message);
     };
 

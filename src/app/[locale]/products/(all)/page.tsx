@@ -2,6 +2,7 @@ import NoResults from "@/components/administration/NoResults";
 import Animate from "@/components/Animate";
 import ProductFiltersDrawer from "@/components/customer/products/ProductFiltersDrawer";
 import ProductsFilters from "@/components/customer/products/ProductsFilters";
+import ShowMore from "@/components/customer/products/ShowMore";
 import SingleProduct from "@/components/customer/SingleProduct";
 import ProductFiltersContextProvider from "@/contexts/ProductFiltersContext";
 import connectDB from "@/lib/connectdb";
@@ -99,18 +100,27 @@ const Products = async ({
                 />
             </ProductFiltersContextProvider>
             {products.length > 0 ? (
-                <Animate
-                    isList
-                    className="mb-8 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-                >
-                    {products.map((product) => (
-                        <li key={product._id}>
-                            <SingleProduct
-                                product={JSON.parse(JSON.stringify(product))}
-                            />
-                        </li>
-                    ))}
-                </Animate>
+                <>
+                    <Animate
+                        isList
+                        className="mb-8 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+                    >
+                        {products.map((product) => (
+                            <li key={product._id}>
+                                <SingleProduct
+                                    product={JSON.parse(
+                                        JSON.stringify(product)
+                                    )}
+                                />
+                            </li>
+                        ))}
+                    </Animate>
+                    <ShowMore
+                        totalDocs={totalDocs}
+                        currentPage={page}
+                        limit={limit}
+                    />
+                </>
             ) : (
                 <NoResults />
             )}

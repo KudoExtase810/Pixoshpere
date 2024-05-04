@@ -15,7 +15,7 @@ import { useCart } from "@/contexts/CartContext";
 import { notifyError, notifySuccess } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 import { useForm } from "react-hook-form";
 import z from "zod";
 

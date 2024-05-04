@@ -6,7 +6,7 @@ import { useDrawer } from "@/contexts/DrawerContext";
 import { useActionData } from "@/contexts/ActionContext";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 
 const ProductRow = ({ product }: { product: Product }) => {
     const { toggle: toggleModal } = useModal();

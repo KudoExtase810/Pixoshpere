@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, createContext, useContext, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/lib/navigation";
 import { notifySuccess } from "@/lib/utils";
 import useLocalStorageState from "use-local-storage-state";
 

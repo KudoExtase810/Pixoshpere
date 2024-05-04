@@ -1,11 +1,10 @@
 "use client";
 import { Menu, Moon, ShoppingBag, Sun } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/lib/navigation";
 import { useCart } from "@/contexts/CartContext";
-import ProductSearch from "../customer/ProductSearch";
 import { notifyError } from "@/lib/utils";
 import React from "react";
 import axios from "axios";
@@ -65,10 +64,7 @@ const Navbar = ({ isLoggedIn, isAdmin, userDetails }: NavbarProps) => {
                     )} */}
                     {/* Sign in button */}
                     {!isLoggedIn && (
-                        <Button
-                            className="bg-teal-500 hover:bg-teal-600"
-                            onClick={showAuthModal}
-                        >
+                        <Button variant="action" onClick={showAuthModal}>
                             Sign In
                         </Button>
                     )}

@@ -17,10 +17,10 @@ import {
     SelectItem,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import axios, { isAxiosError } from "axios";
 import { notifyError, notifySuccess } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 
 const OrderStatusModal = () => {
     const { isOpen, toggle } = useModal();

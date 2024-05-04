@@ -12,7 +12,7 @@ import { ShoppingBasket } from "lucide-react";
 
 import { useCart } from "@/contexts/CartContext";
 
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { formatPrice } from "@/lib/utils";
 import CartItem from "./CartItem";
 

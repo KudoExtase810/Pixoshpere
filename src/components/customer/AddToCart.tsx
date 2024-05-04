@@ -27,10 +27,8 @@ const AddToCart = ({ product, className, disabled }: props) => {
     return (
         <Button
             onClick={handleAdd}
-            className={cn(
-                "py-6 px-8 text-base bg-teal-500 hover:bg-teal-600 text-white",
-                className
-            )}
+            variant="action"
+            className={cn("py-6 px-8 text-base", className)}
         >
             {`Add to Cart (${quantityInCart})`}
         </Button>

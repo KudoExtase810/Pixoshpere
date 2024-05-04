@@ -3,7 +3,7 @@
 import SingleProduct from "./SingleProduct";
 import { MoveRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import {
     Carousel,
     CarouselContent,

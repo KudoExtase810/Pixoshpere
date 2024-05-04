@@ -18,7 +18,7 @@ import { notifyError, notifySuccess } from "@/lib/utils";
 import axios, { isAxiosError } from "axios";
 
 import LoadingSpinner from "../../LoadingSpinner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 import { useActionData } from "@/contexts/ActionContext";
 
 const formSchema = z.object({

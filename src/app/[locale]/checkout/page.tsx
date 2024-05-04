@@ -1,11 +1,11 @@
 import CheckoutSection from "@/components/customer/checkout/CheckoutSection";
 import User from "@/models/user";
 import { getServerSession } from "@/auth/utils";
-import { redirect } from "next/navigation";
+import { redirect } from "@/lib/navigation";
 
 const Checkout = async () => {
     const { isLoggedIn, userId } = await getServerSession();
-    if (!isLoggedIn) redirect("/?req_auth=true");
+    if (!isLoggedIn) redirect("/?req-auth=true");
 
     const user = await User.findById<User>(userId).select(
         "email firstName lastName phone"

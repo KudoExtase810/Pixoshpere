@@ -1,13 +1,13 @@
-import { CartItem, useCart } from "@/contexts/CartContext";
+import { CartItem as TCartItem, useCart } from "@/contexts/CartContext";
 import BlurImage from "../BlurImage";
 import { Button } from "@/components/ui/button";
 import { Trash, Plus, Minus } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { formatPrice, notifyError } from "@/lib/utils";
 import Image from "next/image";
 
 interface CartItemProps {
-    item: CartItem;
+    item: TCartItem;
 }
 
 const CartItem = ({ item }: CartItemProps) => {
@@ -19,7 +19,7 @@ const CartItem = ({ item }: CartItemProps) => {
                 className="rounded-md max-h-[110px]"
                 height={110}
                 width={110}
-                quality={100}
+                unoptimized
                 alt={item.title}
                 src={item.images[0].url}
             />
@@ -65,7 +65,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
 export default CartItem;
 
-const QuantityControls = ({ item }: { item: CartItem }) => {
+const QuantityControls = ({ item }: { item: TCartItem }) => {
     const { updateItemQuantity } = useCart();
     const decreaseQty = () => {
         if (item.quantityInCart === 1) {

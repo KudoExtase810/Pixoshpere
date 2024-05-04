@@ -30,7 +30,7 @@ import axios, { isAxiosError } from "axios";
 
 import TextEditor from "./TextEditor";
 import LoadingSpinner from "../../LoadingSpinner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 import { useActionData } from "@/contexts/ActionContext";
 import SortableImages from "./SortableImages";
 

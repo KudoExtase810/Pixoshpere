@@ -1,24 +1,39 @@
 "use client";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Animate from "../Animate";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import { useModal } from "@/contexts/ModalContext";
+import { useSearchParams } from "next/navigation";
 
 type AuthView = "login" | "register";
 
 const AuthModal = () => {
     const [currentView, setCurrentView] = useState<AuthView>("login");
+    const [shouldShowAuthModal, setShouldShowAuthModal] = useState(false);
+
+    const { isOpen, toggle } = useModal();
+
+    const searchParams = useSearchParams();
 
     const toggleView = () => {
         setCurrentView(currentView === "login" ? "register" : "login");
     };
 
-    const { isOpen, toggle } = useModal();
+    useEffect(() => {
+        setShouldShowAuthModal(searchParams.get("req-auth") === "true");
+    }, []);
+
     return (
-        <Dialog open={isOpen("auth")} onOpenChange={() => toggle("auth")}>
+        <Dialog
+            open={shouldShowAuthModal || isOpen("auth")}
+            onOpenChange={() => {
+                !shouldShowAuthModal && toggle("auth");
+                setShouldShowAuthModal(false);
+            }}
+        >
             <DialogContent>
                 <Animate>
                     {currentView === "login" ? (

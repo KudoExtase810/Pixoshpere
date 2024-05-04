@@ -13,8 +13,9 @@ import { useDrawer } from "@/contexts/DrawerContext";
 import { Plus, Search } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useRouter } from "@/lib/navigation";
+import {useSearchParams} from "next/navigation"
+import { Link } from "@/lib/navigation";
 
 type SortingMethods = { label: string; value: keyof Coupon }[];
 

@@ -14,7 +14,7 @@ import { useModal } from "@/contexts/ModalContext";
 import { notifyError, notifySuccess } from "@/lib/utils";
 
 import axios, { isAxiosError } from "axios";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/lib/navigation";
 
 type Deletable = "products" | "categories" | "coupons" | "messages";
 

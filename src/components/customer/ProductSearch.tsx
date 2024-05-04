@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -106,7 +106,6 @@ const FoundProducts = ({
                         >
                             <Image
                                 className="rounded-md"
-                                quality={100}
                                 unoptimized
                                 height={64}
                                 width={64}

@@ -4,16 +4,13 @@ import { Separator } from "@/components/ui/separator";
 import { calcPercentageReduction, cn, formatPrice } from "@/lib/utils";
 import connectDB from "@/lib/connectdb";
 import Product from "@/models/product";
-import { redirect } from "next/navigation";
+import { redirect } from "@/lib/navigation";
 import ProductsCarousel from "@/components/customer/ProductsCarousel";
 import ProductImages from "@/components/customer/products/ProductImages";
 import parseHTML from "html-react-parser";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
-    await new Promise<void>((resolve, reject) => {
-        setTimeout(resolve, 10000);
-    });
     await connectDB();
     const product = (await Product.findOne<Product>({
         slug: params.slug,

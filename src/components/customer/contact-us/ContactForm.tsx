@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useModal } from "@/contexts/ModalContext";
 import { notifyError, notifySuccess } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -47,14 +49,14 @@ const ContactForm = ({ isLoggedIn, userDetails }: ContactFormProps) => {
             content: "",
         },
     });
+
+    const { toggle } = useModal();
+
     const sendMessage = async (values: z.infer<typeof formSchema>) => {
-        if (!isLoggedIn)
-            return notifyError("You need to be logged in to continue.");
         try {
-            if (!userDetails)
-                return notifyError(
-                    "You need to login before submitting a message."
-                );
+            if (!isLoggedIn) {
+                return toggle("auth");
+            }
             const { data } = await axios.post("/api/messages", values);
             notifySuccess(data.message);
             form.reset();

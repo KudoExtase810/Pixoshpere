@@ -19,7 +19,8 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 import { useProductFilters } from "@/contexts/ProductFiltersContext";
 import { Switch } from "@/components/ui/switch";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface ProductFiltersDrawerProps {
     highestPrice: number;
